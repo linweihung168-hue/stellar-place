@@ -1,10 +1,10 @@
 # 札幌站店鋪查詢：使用與更新說明
 
-收錄 Stellar Place、APIA、東急百貨店的店鋪樓層。放在 GitHub Pages 上，任何人打開網址就能用，不用登入，也能加到手機主畫面當 App。
+收錄 Stellar Place、APIA、東急百貨店、大丸的店鋪樓層。放在 GitHub Pages 上，任何人打開網址就能用，不用登入，也能加到手機主畫面當 App。
 
 網址：https://linweihung168-hue.github.io/stellar-place/
 
-## 一、從舊版（只有 Stellar Place）更新到這版
+## 一、從舊版更新到這版
 
 1. 打開 GitHub 的 `stellar-place` repository 頁面。
 2. 點「Add file」→「Upload files」。
@@ -36,6 +36,7 @@
 | Stellar Place | stellar.json |
 | APIA | apia.json |
 | 東急百貨店 | tokyu.json |
+| 大丸 | daimaru.json |
 
 1. 在網頁最下方按「編輯資料」，修改、新增或刪除店鋪。
 2. 在上方選好那個商場，按下方的「匯出資料檔」，會下載對應的 json 檔。
@@ -49,7 +50,7 @@
 | 檔案 | 用途 |
 | --- | --- |
 | index.html | 網頁本體（內含一份資料備份） |
-| stellar.json、apia.json、tokyu.json | 各商場店鋪資料 |
+| stellar.json、apia.json、tokyu.json、daimaru.json | 各商場店鋪資料 |
 | sw.js | 讓網頁離線也能用 |
 | manifest.webmanifest、icon-*.png、apple-touch-icon.png | 加到主畫面時的名稱與圖示 |
 
