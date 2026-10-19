@@ -1,5 +1,5 @@
-const CACHE = "stellar-v1";
-const SHELL = ["./", "./index.html", "./shops.json", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE = "sapporo-shops-v2";
+const SHELL = ["./", "./index.html", "./stellar.json", "./apia.json", "./tokyu.json", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -12,7 +12,7 @@ self.addEventListener("fetch", e => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
-  // Page and data: try the network first so updates show up, fall back to the saved copy offline.
+  // Page and data: network first so updates show up; saved copy when offline.
   if (url.origin === location.origin) {
     e.respondWith(fetch(req).then(res => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }

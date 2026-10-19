@@ -1,7 +1,7 @@
 {
-  "name": "Stellar Place 店鋪查詢",
-  "short_name": "Stellar",
-  "description": "札幌 Stellar Place 店鋪樓層、館別查詢",
+  "name": "札幌站店鋪查詢",
+  "short_name": "札幌站逛街",
+  "description": "札幌站周邊商場店鋪樓層查詢",
   "lang": "zh-Hant",
   "start_url": "./",
   "scope": "./",
