@@ -1327,7 +1327,12 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       else if(b.dataset.cd){ i = +b.dataset.cd; cats.splice(i+1, 0, cats.splice(i,1)[0]); redraw(); }
       else if(b.dataset.cx){ i = +b.dataset.cx; var c = cats.splice(i,1)[0]; onDelete(c); redraw(); }
     });
-    $("catDone").addEventListener("click", function(){ var a = document.activeElement; if(a && a.blur) a.blur(); closeSheet(); after(); });
+    $("catDone").addEventListener("click", function(){
+      var a = document.activeElement; if(a && a.blur) a.blur();
+      var v = $("catAddIn") ? $("catAddIn").value.trim() : "";
+      if(v && v !== NOCAT && cats.indexOf(v) < 0) cats.push(v);
+      closeSheet(); after();
+    });
   }
 
   // ===================== Packing lists =====================
