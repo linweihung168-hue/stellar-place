@@ -360,6 +360,24 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
 .help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
 .help a{color:var(--accent)}
+.swr{position:relative;overflow:hidden;--sx:0px;touch-action:pan-y}
+.sw-acts{position:absolute;top:0;bottom:0;right:0;display:flex;align-items:center;gap:6px;padding:0 2px 0 6px;width:calc(-1 * var(--sx));overflow:hidden;z-index:2;background:var(--bg)}
+.swr.sw-anim .sw-acts{transition:width .2s ease}
+.sw-acts button{flex:1 0 0;min-width:0;height:38px;border:0;border-radius:999px;color:#fff;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;padding:0}
+.sa-move{background:#F0A030}.sa-edit{background:#8E8E93}.sa-del{background:#FF3B30}
+#view-home.sw-anim,#view-shop.sw-anim,#view-buy.sw-anim,#view-pack.sw-anim,#view-set.sw-anim{transition:transform .19s ease}
+.toast{position:fixed;left:16px;right:16px;bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom,0px));z-index:35;max-width:528px;margin:0 auto;background:#1C1C1E;color:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.toast button{margin-left:auto;border:0;background:none;color:#FFC98F;font-weight:700;font-size:15px;padding:4px 2px}
+.nost{font-size:11.5px;color:var(--muted)}
+.add-row{padding:6px 2px}
+.add-btn,.inline-add{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;color:var(--accent);font-size:16px;padding:4px 0;text-align:left;margin:0}
+.add-row .pl,.inline-add .pl{width:28px;text-align:center;font-size:22px;line-height:1;flex:none;color:var(--accent)}
+.inline-add input{flex:1;min-width:0;border:0;background:none;font-size:16px;padding:4px 0;color:var(--ink)}
+.inline-add input:focus{outline:none}
+.addcat-btn{display:block;border:0;background:none;color:var(--accent);font-weight:600;font-size:16px;padding:16px 4px 4px}
+.addcat-form{margin-top:12px;background:var(--surface);border-radius:12px;padding:10px 12px}
+.floor-nohead{margin-top:14px}
+.g-chk{color:var(--accent);font-weight:700}
 .buy-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
 .buy-tools .link-btn{font-size:15px}
 .adder-newcat{flex:1 1 100%!important}
@@ -484,6 +502,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <button class="btn" id="doneBtn">結束編輯</button>
     </div>
   </div>
+  <div class="toast" id="toast" role="status" hidden></div>
   <div class="sheet-bg" id="sheetBg" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 </div>
 
@@ -980,6 +999,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   var view = store(true, VIEW_KEY) || "home";
   if(VIEWS.indexOf(view) < 0) view = "home";
   function setView(v){
+    if(!navSkip && v !== view) navPush();
+    if(v !== view){ adding = { kind: null, cat: null }; addingCat = null; swOpen = null; }
     view = v; store(false, VIEW_KEY, v);
     VIEWS.forEach(function(k){ $("view-"+k).hidden = (k !== v); });
     Array.prototype.forEach.call(document.querySelectorAll("#tabbar [data-view]"), function(b){
@@ -1040,9 +1061,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if(it.who) bits.push("幫"+esc(it.who)+"買");
     if(it.price) bits.push(moneyBoth(it.price*(it.qty||1)));
     if(it.note) bits.push(esc(it.note));
-    return '<li class="row'+(it.done?" done":"")+'">'
+    if(!s) bits.push('<span class="nost">還沒選店家</span>');
+    return '<li class="row swr'+(it.done?" done":"")+'">'+swActs("b", it.id)
       + '<button class="ck" role="checkbox" aria-checked="'+(!!it.done)+'" data-bck="'+it.id+'" aria-label="'+(it.done?"取消已買":"標記已買")+'：'+esc(it.n)+'">'+ICON_CHECK+'</button>'
-      + '<button class="main" data-bedit="'+it.id+'">'+(s ? badge(s) : '<span class="wing none" aria-hidden="true">？</span>')
+      + '<button class="main" data-bedit="'+it.id+'">'+(s ? badge(s) : '')
       + '<span class="names"><span class="ja">'+esc(it.n)+'</span>'+((bits.length || (it.cat && buyMode === "route"))?'<span class="sub">'+(it.cat && buyMode === "route" ? '<span class="tag">'+esc(it.cat)+'</span>' : '')+bits.join("・")+'</span>':'')+'</span>'+ICON_NEXT+'</button></li>';
   }
   function byPlace(a, b){
@@ -1081,7 +1103,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
           + '</div>';
       }
     }
-    h += '<form class="adder" id="buyAdd" autocomplete="off"><input id="buyInput" placeholder="新增要買的東西" enterkeyhint="done" aria-label="新增要買的東西" value="'+esc(buyDraft)+'"><button class="btn primary" type="submit">新增</button></form>'
+    if(buyMode === "route" || !all.length) h += '<form class="adder" id="buyAdd" autocomplete="off"><input id="buyInput" placeholder="新增要買的東西" enterkeyhint="done" aria-label="新增要買的東西" value="'+esc(buyDraft)+'"><button class="btn primary" type="submit">新增</button></form>'
       + '<ul class="sugs" id="buySugs" hidden></ul>';
     if(!all.length){
       h += '<div class="empty-card"><span class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 7.5h12.4l-.9 11.4a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8z"/><path d="M9 10.5V6.8a3 3 0 0 1 6 0v3.7"/></svg></span><b>還沒有要買的東西</b>輸入商品或店名，會自動找出在哪間店、哪一樓。</div>';
@@ -1089,12 +1111,13 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       if(buyMode === "cat"){
         var cg = {};
         todo.forEach(function(it){ var c = it.cat || ""; (cg[c] = cg[c] || []).push(it); });
-        cats.concat([""]).forEach(function(c){
-          var arr = cg[c]; if(!arr || !arr.length) return;
-          arr.sort(byPlace);
-          h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c || NOCAT)+'</span><span class="cnt">'+arr.length+' 樣</span></div><ul class="list">'+arr.map(buyRow).join("")+'</ul></section>';
+        var secs = buyCat === "all" ? cats.concat((cg[""] || !cats.length) ? [""] : []) : [buyCat === "__none" ? "" : buyCat];
+        secs.forEach(function(c){
+          var arr = (cg[c] || []).sort(byPlace);
+          h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c || NOCAT)+'</span><span class="cnt">'+arr.length+' 樣</span></div><ul class="list">'+arr.map(buyRow).join("")
+            + addRowHTML("b", c, adding.kind === "b" && adding.cat === c, "新增")+'</ul></section>';
         });
-        if(!todo.length && !done.length) h += '<p class="route-note">這個分類還沒有東西。</p>';
+        if(buyCat === "all") h += addCatHTML("b", addingCat === "b");
       }
       // group open items by mall + floor = walking route
       var groups = {}, order = [];
@@ -1108,10 +1131,9 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       if(todo.length && buyMode === "route") h += '<p class="route-note">依商場、樓層排成逛街順序</p>';
       order.forEach(function(k){
         var p = k.split("|"), m = MALL[p[1]];
-        h += '<section class="floor"><div class="floor-h">'
-          + (m ? '<span class="fl">'+esc(p[2])+'</span><span class="hint"><b>'+esc(m.name)+'</b>'+(m.hints&&m.hints[p[2]]?"・"+esc(m.hints[p[2]]):"")+'</span>'
-               : '<span class="fl fl-sm">還沒指定店家</span>')
-          + '<span class="cnt">'+groups[k].length+' 樣</span></div><ul class="list">'+groups[k].map(buyRow).join("")+'</ul></section>';
+        h += '<section class="floor'+(m?'':' floor-nohead')+'">'
+          + (m ? '<div class="floor-h"><span class="fl">'+esc(p[2])+'</span><span class="hint"><b>'+esc(m.name)+'</b>'+(m.hints&&m.hints[p[2]]?"・"+esc(m.hints[p[2]]):"")+'</span><span class="cnt">'+groups[k].length+' 樣</span></div>' : '')
+          + '<ul class="list">'+groups[k].map(buyRow).join("")+'</ul></section>';
       });
       if(done.length){
         h += '<section class="floor done-sec"><button class="done-toggle" id="buyDoneToggle" aria-expanded="'+buyShowDone+'">已買到 '+done.length+' 樣<span>'+(buyShowDone?"收起":"展開")+'</span></button>'
@@ -1134,7 +1156,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     h += '</section>';
     $("buyMain").innerHTML = h;
     updateDots();
-    wireBuyInput();
+    if($("buyInput")) wireBuyInput();
+    focusInline();
   }
   function wireBuyInput(){
     var inp = $("buyInput"), ul = $("buySugs");
@@ -1355,7 +1378,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     return h + '</section>';
   }
   function packRow(it){
-    return '<li class="row'+(it.done?" done":"")+'">'
+    return '<li class="row swr'+(it.done?" done":"")+'">'+swActs("p", it.id)
       + '<button class="ck" role="checkbox" aria-checked="'+(!!it.done)+'" data-pck="'+it.id+'" aria-label="'+(it.done?"取消已打包":"標記已打包")+'：'+esc(it.n)+'">'+ICON_CHECK+'</button>'
       + '<button class="main" data-pedit="'+it.id+'"><span class="names"><span class="ja ja-sm">'+esc(it.n)+(it.q>1?' <span class="qty">×'+it.q+'</span>':'')+'</span>'
       + (isCommon(it.n) ? '<span class="sub">★ 常用物品</span>' : '')+'</span></button></li>';
@@ -1367,33 +1390,20 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       h += '<section class="sum" aria-label="進度"><div class="sum-top"><span class="big">'+left+'</span><span class="sum-l">'+(left?"樣還沒打包":"全部打包好了")+'</span><span class="sum-r">'+p.d+' / '+p.t+'</span></div>'
         + '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+p.pct+'"><i style="width:'+p.pct+'%"></i></div>'
         + '<div class="sum-money"><button class="link-btn" id="packCats">管理分類</button><button class="link-btn" id="packHide" aria-pressed="'+packHideDone+'">'+(packHideDone?"顯示已打包":"隱藏已打包")+'</button></div></section>';
+    } else if(COMMON.length){
+      h += '<div class="actions" style="margin-top:14px"><button class="btn" id="packAddCommon">帶入我的常用物品（'+COMMON.length+' 樣）</button></div>';
     }
     var groups = {}; l.items.forEach(function(i){ var c = i.c || ""; (groups[c] = groups[c] || []).push(i); });
-    cats.concat(groups[""] ? [""] : []).forEach(function(c){
+    cats.concat((groups[""] || !cats.length) ? [""] : []).forEach(function(c){
       var arr = groups[c] || [], d = arr.filter(function(i){ return i.done; }).length;
       var shown = arr.filter(function(i){ return !i.done; }).concat(packHideDone ? [] : arr.filter(function(i){ return i.done; }));
-      if(packHideDone && arr.length && !shown.length) return;
-      h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c || NOCAT)+'</span><span class="cnt">'+(arr.length ? d+' / '+arr.length : '0 樣')+'</span></div>'
-        + (shown.length ? '<ul class="list">'+shown.map(packRow).join("")+'</ul>' : '')+'</section>';
+      h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c || NOCAT)+'</span><span class="cnt">'+(arr.length ? d+' / '+arr.length : '')+'</span></div>'
+        + '<ul class="list">'+shown.map(packRow).join("")+addRowHTML("p", c, adding.kind === "p" && adding.cat === c, "新增物品")+'</ul></section>';
     });
-    if(!p.t) h += '<div class="empty-card"><b>清單還是空的</b>在下面輸入要帶的東西，可以順便選分類或新增分類。'+(COMMON.length?'<div class="actions" style="justify-content:center"><button class="btn" id="packAddCommon">帶入我的常用物品（'+COMMON.length+' 樣）</button></div>':'')+'</div>';
-    if(packLastCat && cats.indexOf(packLastCat) < 0) packLastCat = "";
-    h += '<form class="adder adder-pack" id="packAdd" autocomplete="off"><input id="packInput" placeholder="新增物品" aria-label="新增物品">'
-      + '<select id="packCat" aria-label="分類">'+catOptions(cats, packLastCat)+'</select>'
-      + '<button class="btn primary" type="submit">新增</button>'
-      + '<input id="packNewCat" class="adder-newcat" placeholder="新分類名稱" aria-label="新分類名稱" hidden></form>';
+    h += addCatHTML("p", addingCat === "p");
     return h;
   }
-  function wirePackAdd(l){
-    var pick = wireCatSelect("packCat", "packNewCat", l.cats);
-    $("packAdd").addEventListener("submit", function(e){
-      e.preventDefault(); var n = $("packInput").value.trim(); if(!n){ $("packInput").focus(); return; }
-      if($("packCat").value === "__new" && !$("packNewCat").value.trim()){ $("packNewCat").focus(); return; }
-      var c = pick(); packLastCat = c;
-      l.items.push({ id: uid(), c: c, n: n, q: 1, done: false }); savePacks(); renderPack();
-      $("packInput").focus();
-    });
-  }
+  function wirePackAdd(l){ focusInline(); }
   function packCatSheet(l){
     catSheet("行李分類", packCats(l),
       function(o, n){ l.items.forEach(function(i){ if(i.c === o) i.c = n; }); if(packLastCat === o) packLastCat = n; },
@@ -1402,7 +1412,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   }
   $("packMain").addEventListener("click", function(e){
     var t, l = packOpen ? findPack(packOpen) : null;
-    if((t = e.target.closest("[data-popen]"))){ packOpen = t.dataset.popen; packLastCat = ""; renderPack(); window.scrollTo({top:0}); return; }
+    if((t = e.target.closest("[data-popen]"))){ navPush(); packOpen = t.dataset.popen; adding = { kind: null, cat: null }; addingCat = null; renderPack(); window.scrollTo({top:0}); return; }
     if(e.target.closest("[data-pnew]")){ newPackSheet(); return; }
     if((t = e.target.closest("[data-cdel]"))){ COMMON.splice(+t.dataset.cdel, 1); saveCommon(); renderPack(); return; }
     if(!l) return;
@@ -1412,7 +1422,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if(e.target.closest("#packCats")){ packCatSheet(l); return; }
     if(e.target.closest("#packAddCommon")){ var nl = newPack("", true); l.cats = packCats(l); nl.cats.forEach(function(c){ if(l.cats.indexOf(c) < 0) l.cats.push(c); }); l.items = l.items.concat(nl.items); savePacks(); renderPack(); }
   });
-  $("packBack").addEventListener("click", function(){ packOpen = null; renderPack(); window.scrollTo({top:0}); });
+  $("packBack").addEventListener("click", function(){ var top = NAV[NAV.length-1]; if(top && top.v === "pack" && !top.p) NAV.pop(); packOpen = null; renderPack(); window.scrollTo({top:0}); });
   $("packNew").addEventListener("click", newPackSheet);
 
   function newPackSheet(){
@@ -1426,7 +1436,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       var name = $("p_name").value.trim();
       if(!name){ var er = $("p_err"); er.textContent = "請幫清單取個名字。"; er.hidden = false; return; }
       var l = newPack(name, !!($("p_common") && $("p_common").checked));
-      PACKS.lists.push(l); savePacks(); packOpen = l.id; packLastCat = ""; closeSheet(); renderPack(); window.scrollTo({top:0});
+      PACKS.lists.push(l); savePacks(); navPush(); packOpen = l.id; packLastCat = ""; closeSheet(); renderPack(); window.scrollTo({top:0});
     });
   }
   function editPackItem(l, id){
@@ -1848,6 +1858,167 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       + '<p><b>免稅制度</b>日本觀光廳。</p><p><b>匯率</b>ExchangeRate-API，備援 currency-api。</p></div>'
       + '<div class="actions"><button class="btn primary" data-close>好</button></div>', "資料來源");
   }
+
+  // ===================== Swipe actions, undo, edge-swipe back =====================
+  var SW_W = 216, swOpen = null, tStart = null, swallowUntil = 0;
+  function swActs(kind, id){
+    return '<div class="sw-acts" aria-hidden="true">'
+      + '<button type="button" class="sa-move" tabindex="-1" data-sact="move" data-skind="'+kind+'" data-sid="'+id+'">移動</button>'
+      + '<button type="button" class="sa-edit" tabindex="-1" data-sact="edit" data-skind="'+kind+'" data-sid="'+id+'">編輯</button>'
+      + '<button type="button" class="sa-del" tabindex="-1" data-sact="del" data-skind="'+kind+'" data-sid="'+id+'">刪除</button></div>';
+  }
+  function swSet(li, x, anim){ li.classList.toggle("sw-anim", !!anim); li.style.setProperty("--sx", x + "px"); }
+  function swClose(){ if(swOpen){ swSet(swOpen, 0, true); swOpen = null; } }
+  function swallowClick(){ swallowUntil = Date.now() + 350; }
+
+  // back navigation history
+  var NAV = [], navSkip = false;
+  function navPush(){
+    var top = NAV[NAV.length-1], s = { v: view, p: view === "pack" ? packOpen : null };
+    if(top && top.v === s.v && top.p === s.p) return;
+    NAV.push(s); if(NAV.length > 30) NAV.shift();
+  }
+  function canBack(){ return NAV.length > 0 || (view === "pack" && !!packOpen); }
+  function goBack(){
+    var s = NAV.pop();
+    if(!s){ if(view === "pack" && packOpen){ packOpen = null; renderPack(); window.scrollTo({top:0}); } return; }
+    if(s.v === "pack") packOpen = s.p;
+    if(s.v === view){ if(view === "pack") renderPack(); window.scrollTo({top:0}); return; }
+    navSkip = true; setView(s.v); navSkip = false;
+  }
+
+  document.addEventListener("touchstart", function(e){
+    tStart = null;
+    if(e.touches.length !== 1 || !$("sheetBg").hidden) return;
+    var t = e.touches[0], li = e.target.closest(".swr");
+    var edge = t.clientX < 24 && canBack();
+    if(swOpen && li !== swOpen && !e.target.closest(".sw-acts")){ swClose(); swallowClick(); return; }
+    tStart = { x: t.clientX, y: t.clientY, li: edge ? null : li, edge: edge, base: (li && li === swOpen) ? -SW_W : 0, dir: null, dx: 0, sx: 0 };
+  }, { passive: true });
+  document.addEventListener("touchmove", function(e){
+    var s = tStart; if(!s) return;
+    var t = e.touches[0], dx = t.clientX - s.x, dy = t.clientY - s.y;
+    if(!s.dir){ if(Math.abs(dx) < 8 && Math.abs(dy) < 8) return; s.dir = Math.abs(dx) > Math.abs(dy) * 1.2 ? "h" : "v"; }
+    if(s.dir !== "h") return;
+    if(s.edge){ e.preventDefault(); s.dx = dx; $("view-"+view).style.transform = "translateX(" + Math.max(0, dx) + "px)"; return; }
+    if(!s.li) return;
+    e.preventDefault();
+    s.sx = Math.min(0, Math.max(-SW_W - 30, s.base + dx));
+    swSet(s.li, s.sx, false);
+  }, { passive: false });
+  function touchEnd(){
+    var s = tStart; tStart = null;
+    if(!s || s.dir !== "h") return;
+    swallowClick();
+    if(s.edge){
+      var v = $("view-"+view); v.classList.add("sw-anim");
+      if(s.dx > 90){ v.style.transform = "translateX(100%)"; setTimeout(function(){ v.classList.remove("sw-anim"); v.style.transform = ""; goBack(); }, 190); }
+      else { v.style.transform = ""; setTimeout(function(){ v.classList.remove("sw-anim"); }, 220); }
+      return;
+    }
+    if(!s.li) return;
+    if(s.sx < -60){ if(swOpen && swOpen !== s.li) swClose(); swSet(s.li, -SW_W, true); swOpen = s.li; }
+    else { swSet(s.li, 0, true); if(swOpen === s.li) swOpen = null; }
+  }
+  document.addEventListener("touchend", touchEnd);
+  document.addEventListener("touchcancel", touchEnd);
+  document.addEventListener("click", function(e){
+    if(Date.now() < swallowUntil && !e.target.closest(".sw-acts")){ e.stopPropagation(); e.preventDefault(); return; }
+    if(swOpen && !e.target.closest(".sw-acts")){ swClose(); e.stopPropagation(); e.preventDefault(); }
+  }, true);
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-sact]"); if(!b) return;
+    var kind = b.dataset.skind, id = b.dataset.sid, a = b.dataset.sact;
+    swClose();
+    if(kind === "b"){ if(a === "edit") editBuy(id); else if(a === "del") delBuy(id); else moveSheet("b", id); return; }
+    var l = findPack(packOpen); if(!l) return;
+    if(a === "edit") editPackItem(l, id); else if(a === "del") delPack(l, id); else moveSheet("p", id);
+  });
+
+  // ---- delete with undo
+  var toastT = null;
+  function toast(msg, undo){
+    var el = $("toast");
+    el.innerHTML = '<span>'+esc(msg)+'</span>' + (undo ? '<button type="button" id="toastUndo">復原</button>' : '');
+    el.hidden = false; clearTimeout(toastT);
+    toastT = setTimeout(function(){ el.hidden = true; }, 5000);
+    if(undo) $("toastUndo").addEventListener("click", function(){ el.hidden = true; clearTimeout(toastT); undo(); });
+  }
+  function delBuy(id){
+    var i = -1; BUY.items.forEach(function(x, k){ if(x.id === id) i = k; }); if(i < 0) return;
+    var it = BUY.items.splice(i, 1)[0], list = BUY; saveBuy(); renderBuy();
+    toast("已刪除「" + it.n + "」", function(){ list.items.splice(Math.min(i, list.items.length), 0, it); if(list === BUY){ saveBuy(); renderBuy(); } });
+  }
+  function delPack(l, id){
+    var i = -1; l.items.forEach(function(x, k){ if(x.id === id) i = k; }); if(i < 0) return;
+    var it = l.items.splice(i, 1)[0]; savePacks(); renderPack();
+    toast("已刪除「" + it.n + "」", function(){ l.items.splice(Math.min(i, l.items.length), 0, it); savePacks(); renderPack(); });
+  }
+
+  // ---- move to another category
+  function moveSheet(kind, id){
+    var it = null, cats, cur;
+    if(kind === "b"){ it = findBuy(id); cats = buyCats(); }
+    else { var l = findPack(packOpen); if(!l) return; l.items.forEach(function(x){ if(x.id === id) it = x; }); cats = packCats(l); }
+    if(!it) return;
+    cur = (kind === "b" ? it.cat : it.c) || "";
+    function done(c){ if(kind === "b"){ it.cat = c; saveBuy(); renderBuy(); } else { it.c = c; savePacks(); renderPack(); } closeSheet(); }
+    openSheet('<h2>移動「'+esc(it.n)+'」到</h2><ul class="glist glist-card" id="mvList">'
+      + cats.concat([""]).map(function(c){ return '<li class="grow"><button type="button" class="g-btn" data-mv="'+esc(c)+'"><span class="g-t">'+esc(c || NOCAT)+'</span>'+(c === cur ? '<span class="g-chk">✓</span>' : '')+'</button></li>'; }).join("")
+      + '<li class="grow"><form id="mvNew" class="g-add" autocomplete="off"><input id="mvNewIn" placeholder="＋ 新增分類並移過去" aria-label="新增分類並移過去"></form></li></ul>'
+      + '<div class="actions"><button type="button" class="btn" data-close>取消</button></div>', "移動到分類");
+    $("mvList").addEventListener("click", function(e){ var b = e.target.closest("[data-mv]"); if(b) done(b.dataset.mv); });
+    $("mvNew").addEventListener("submit", function(e){ e.preventDefault(); var v = $("mvNewIn").value.trim(); if(!v || v === NOCAT) return; if(cats.indexOf(v) < 0) cats.push(v); done(v); });
+  }
+
+  // ---- inline "+ 新增" rows (packing sections, shopping category mode)
+  function addRowHTML(kind, cat, open, label){
+    if(open) return '<li class="row add-row"><form class="inline-add" data-iakind="'+kind+'" data-iacat="'+esc(cat)+'" autocomplete="off"><span class="pl" aria-hidden="true">＋</span><input id="iaIn" placeholder="'+label+'" enterkeyhint="done" aria-label="'+label+'（'+esc(cat || NOCAT)+'）"></form></li>';
+    return '<li class="row add-row"><button type="button" class="add-btn" data-iaopen="'+kind+'" data-iacat="'+esc(cat)+'"><span class="pl" aria-hidden="true">＋</span>'+label+'</button></li>';
+  }
+  function addCatHTML(kind, open){
+    if(open) return '<form class="inline-add addcat-form" data-nckind="'+kind+'" autocomplete="off"><span class="pl" aria-hidden="true">＋</span><input id="ncIn" placeholder="分類名稱" enterkeyhint="done" aria-label="新增分類名稱"></form>';
+    return '<button type="button" class="addcat-btn" data-ncopen="'+kind+'">＋ 新增分類</button>';
+  }
+  var adding = { kind: null, cat: null }, addingCat = null;
+  function rerender(kind){ if(kind === "b") renderBuy(); else renderPack(); }
+  function focusInline(){
+    var i = $("iaIn") || $("ncIn"); if(!i) return;
+    i.focus();
+    i.addEventListener("blur", function(){
+      var me = i;
+      setTimeout(function(){
+        if(document.activeElement && (document.activeElement.id === "iaIn" || document.activeElement.id === "ncIn")) return;
+        if(me.value.trim() || !document.body.contains(me)) return;
+        var k = adding.kind || addingCat; adding = { kind: null, cat: null }; addingCat = null; if(k) rerender(k);
+      }, 150);
+    });
+  }
+  document.addEventListener("click", function(e){
+    var b;
+    if((b = e.target.closest("[data-iaopen]"))){ adding = { kind: b.dataset.iaopen, cat: b.dataset.iacat }; addingCat = null; rerender(adding.kind); return; }
+    if((b = e.target.closest("[data-ncopen]"))){ addingCat = b.dataset.ncopen; adding = { kind: null, cat: null }; rerender(addingCat); }
+  });
+  document.addEventListener("submit", function(e){
+    var f = e.target, v;
+    if(f.matches(".inline-add[data-iakind]")){
+      e.preventDefault(); v = $("iaIn").value.trim(); if(!v) return;
+      var kind = f.dataset.iakind, cat = f.dataset.iacat;
+      if(kind === "b"){ addBuy(v, "", { cat: cat }); renderBuy(); }
+      else { var l = findPack(packOpen); if(!l) return; l.items.push({ id: uid(), c: cat, n: v, q: 1, done: false }); savePacks(); renderPack(); }
+      return;
+    }
+    if(f.matches(".addcat-form")){
+      e.preventDefault(); v = $("ncIn").value.trim(); var k2 = f.dataset.nckind;
+      if(v && v !== NOCAT){
+        var cats = k2 === "b" ? buyCats() : packCats(findPack(packOpen));
+        if(cats.indexOf(v) < 0) cats.push(v);
+        if(k2 === "b") saveBuy(); else savePacks();
+        addingCat = null; adding = { kind: k2, cat: v };
+      } else addingCat = null;
+      rerender(k2);
+    }
+  });
 
   syncModes(); applyTrip(); renderAll(); setView(view); checkImport(); fxFetch();
 
