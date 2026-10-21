@@ -360,6 +360,11 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
 .help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
 .help a{color:var(--accent)}
+.ck{width:26px;height:26px;border-radius:50%;border:1.8px solid #C7C7CC;background:transparent}
+.ck[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.ck svg{width:15px;height:15px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ck:not([aria-checked="true"]){border-color:#5A5A5E}}
+:root[data-theme="dark"] .ck:not([aria-checked="true"]){border-color:#5A5A5E}
 .swr{position:relative;overflow:hidden;--sx:0px;touch-action:pan-y}
 .sw-acts{position:absolute;top:0;bottom:0;right:0;display:flex;align-items:center;gap:6px;padding:0 2px 0 6px;width:calc(-1 * var(--sx));overflow:hidden;z-index:2;background:var(--bg)}
 .swr.sw-anim .sw-acts{transition:width .2s ease}
