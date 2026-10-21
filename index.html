@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>札幌站店鋪查詢</title>
-<meta name="description" content="札幌站周邊 Stellar Place、APIA、東急百貨店、大丸的店鋪樓層查詢">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#141e33" media="(prefers-color-scheme: dark)">
+<title>Nekobasu</title>
+<meta name="description" content="Nekobasu 旅行小幫手：行程倒數、購物清單、行李清單、匯率，與札幌站四商場店鋪指南">
+<meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="札幌站逛街">
+<meta name="apple-mobile-web-app-title" content="Nekobasu">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap">
 <style>
@@ -159,7 +160,10 @@ footer.foot .edit-row{margin-bottom:6px}
 .form{display:grid;gap:10px}
 .form label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
 .form input,.form select,.form textarea{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 10px;font-size:16px;color:var(--ink)}
-.form .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.form>*,.form label{min-width:0}
+.form input,.form select,.form textarea{width:100%;min-width:0;box-sizing:border-box}
+.sheet{overflow-x:hidden}
 .form .req::after{content:" *";color:var(--danger)}
 .err{color:var(--danger);font-size:13px}
 .confirm{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:10px;font-size:13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -241,24 +245,148 @@ footer.foot .edit-row{margin-bottom:6px}
 .form .seg button{flex:1;padding:9px 8px;font-size:14px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
 @media (max-width:379px){.brand h1{font-size:17px}.brand .mark{width:24px;height:24px}#modes button{padding:6px 8px}}
+
+/* ===== Nekobasu: iOS-style layer ===== */
+:root{--bg:#F2F2F7;--surface:#FFFFFF;--ink:#1C1C1E;--muted:#8A8A8F;--line:#E3E3E8;--accent:#2D6FB0;--accent-ink:#fff;--accent-soft:#E4EEF8;
+ --navy:#1F3A56;--orange:#E8892B;--ok:#2F9E5B;--danger:#D9534A;--fill:#E9E9EE;
+ --f-body:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Noto Sans TC","Zen Kaku Gothic New",system-ui,sans-serif;
+ --f-ja:-apple-system,BlinkMacSystemFont,"Hiragino Sans","PingFang TC","Zen Kaku Gothic New","Noto Sans TC",sans-serif;--r:12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000000;--surface:#1C1C1E;--ink:#F2F2F7;--muted:#98989F;--line:#38383A;--accent:#6AA8E8;--accent-ink:#0b1420;--accent-soft:#1E2D3F;--fill:#2C2C2E;--ok:#4CC27A;--danger:#FF6B61;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#000000;--surface:#1C1C1E;--ink:#F2F2F7;--muted:#98989F;--line:#38383A;--accent:#6AA8E8;--accent-ink:#0b1420;--accent-soft:#1E2D3F;--fill:#2C2C2E;--ok:#4CC27A;--danger:#FF6B61;color-scheme:dark}
+body{font-size:16px;-webkit-font-smoothing:antialiased}
+body::before{background:var(--bg)}
+#view-home,#view-set{padding-bottom:calc(var(--nav-h) + 28px + env(safe-area-inset-bottom,0px))}
+/* large titles */
+header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-bottom:.5px solid var(--line)}
+.lt{display:flex;align-items:baseline;gap:10px;padding-top:4px}
+.lt h1,.vh h1{margin:0;font-family:var(--f-body);font-weight:800;font-size:30px;letter-spacing:-.02em;line-height:1.15}
+.vh h1 small{display:inline;margin-left:8px;font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0}
+.lt-s{font-size:14px;color:var(--muted);font-weight:500}
+.search input{background:var(--fill);border:0;border-radius:11px;padding:10px 38px;font-size:17px}
+.search input:focus{background:var(--fill);box-shadow:0 0 0 3px var(--accent-soft)}
+.malls{border-bottom:0;gap:6px}
+.malls button{border:0;border-radius:999px;margin:0;padding:6px 13px;background:var(--fill);color:var(--ink);font-weight:600;font-size:14px}
+.malls button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chip{border:0;background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg{border:0;background:var(--fill);border-radius:9px;padding:2px;gap:2px}
+.seg button{background:transparent;border-radius:7px;color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.filters select,.pill-btn{border:0;background:var(--fill)}
+.pill-btn[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+/* shop floors as grouped cards */
+#results .floor{margin-top:22px}
+#results .floor-h{width:100%;border:0;background:none;text-align:left;padding:0 4px 8px;align-items:center;color:var(--ink)}
+#results .floor-h .fl{font-family:var(--f-body);font-size:24px;font-weight:800;letter-spacing:-.01em}
+.fold-c{width:18px;height:18px;flex:none;color:var(--muted);transition:transform .15s}
+#results .floor.shut .fold-c{transform:rotate(-90deg)}
+#results .floor.shut .floor-h{padding-bottom:4px}
+#results .list,#commonSec .list{background:var(--surface);border-radius:14px;overflow:hidden}
+#results .row,#commonSec .row{padding-left:14px;padding-right:10px;border-bottom:.5px solid var(--line)}
+#results .row:last-child,#commonSec .row:last-child{border-bottom:0}
+.deal,.notice,.sum,.trip,.empty-card{border:0;border-radius:14px;background:var(--surface)}
+.btn{border-radius:11px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+/* tab bar */
+.tabbar{background:color-mix(in srgb,var(--surface) 88%,transparent);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-top:.5px solid var(--line)}
+.tabbar button{font-size:10.5px;font-weight:600;gap:2px}
+.tabbar svg{width:25px;height:25px}
+/* home */
+.home-top{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 2px 12px}
+.home-date{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.home-brand{display:flex;align-items:center;gap:9px;font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-top:2px}
+.home-brand .logo{width:34px;height:34px;border-radius:8px;box-shadow:0 0 0 .5px var(--line),0 1px 3px rgba(0,0,0,.08)}
+.link-btn{border:0;background:none;color:var(--accent);font-weight:600;font-size:16px;padding:6px 2px}
+.hero{position:relative;overflow:hidden;border-radius:20px;background:linear-gradient(160deg,#1F3A56 0%,#284C70 100%);color:#fff;min-height:178px}
+.hero .sky{position:absolute;left:0;right:0;bottom:0;width:100%;height:62px}
+.hero-in{position:relative;padding:18px 18px 74px}
+.hero-pill{position:absolute;z-index:2;top:14px;right:14px;border:0;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;font-size:13px;font-weight:600;padding:5px 12px}
+.kick{padding-right:70px;font-size:12px;font-weight:700;letter-spacing:.12em;opacity:.75}
+.city{font-size:40px;font-weight:800;letter-spacing:.04em;line-height:1.05;margin-top:6px}
+.cz{font-size:14px;opacity:.85;margin-top:4px}
+.cd{position:absolute;right:18px;bottom:14px;display:flex;align-items:baseline;gap:5px}
+.cd b{font-size:40px;font-weight:800;line-height:1;color:#FFC98F}
+.cd span{font-size:13px;opacity:.9}
+.cd .cd-l{font-size:14px;font-weight:600;opacity:.95}
+.hero-search{position:absolute;left:16px;right:16px;bottom:12px;display:flex;align-items:center;gap:8px;border:0;border-radius:11px;background:rgba(255,255,255,.95);color:#3a3a3c;padding:10px 12px;font-size:15px;text-align:left}
+.hero-search svg{width:17px;height:17px;color:#8a8a8f}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:10px;border:0;background:var(--surface);border-radius:16px;padding:14px;text-align:left;min-height:104px}
+.tile .tt{display:block;font-size:16px;font-weight:700;line-height:1.25}
+.tile .ts{display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
+.ai{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9px;flex:none}
+.ai svg{width:19px;height:19px}
+.ai-pack{background:#5B57D1}.ai-buy{background:#E8892B}.ai-fx{background:#2F9E5B}.ai-shop{background:#D9534A}.ai-fav{background:#D9A400}.ai-tax{background:#2D6FB0}.ai-gray{background:#8E8E93}
+.hsec{margin-top:22px}
+.hsec-h{display:flex;align-items:center}
+.hsec-t{flex:1;display:flex;align-items:center;gap:8px;border:0;background:none;padding:4px 4px 8px;text-align:left;color:var(--ink)}
+.hsec-t b{font-size:20px;font-weight:800;letter-spacing:-.01em}
+.hsec-s{margin-left:auto;font-size:14px;color:var(--muted)}
+.hsec-c{width:18px;height:18px;color:var(--muted);transition:transform .15s}
+.hsec-t[aria-expanded="false"] .hsec-c{transform:rotate(-90deg)}
+/* grouped list */
+.glist{list-style:none;margin:0;padding:0;background:var(--surface);border-radius:14px;overflow:hidden}
+.glist-card{margin-bottom:6px}
+.grow{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 14px;border-bottom:.5px solid var(--line)}
+.grow:last-child{border-bottom:0}
+.grow.done .g-t{color:var(--muted);text-decoration:line-through}
+.g-t{flex:1;min-width:0;font-size:16px}
+.g-t b{display:block;font-weight:600}
+.g-t span{display:block;font-size:13.5px;color:var(--muted);line-height:1.45;margin-top:1px}
+.g-t a{color:var(--accent)}
+.tip{align-items:flex-start;padding-top:12px;padding-bottom:12px}
+.g-v{color:var(--muted);font-size:15px;white-space:nowrap}
+.g-x{border:0;background:none;color:var(--muted);font-size:20px;width:32px;height:32px;border-radius:50%;flex:none}
+.g-btn{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;text-align:left;padding:0;min-height:36px;color:var(--ink)}
+.g-btn .chev{width:16px;height:16px;color:#C4C4C7;flex:none}
+.g-on{color:var(--orange);font-size:12px}
+.g-new{color:var(--accent);font-weight:600}
+.g-add{flex:1;margin:0}
+.g-add input{width:100%;border:0;background:none;font-size:16px;padding:8px 0}
+.g-add input::placeholder{color:var(--accent)}
+.g-add input:focus::placeholder{color:var(--muted)}
+.ck-r{border-radius:50%!important}
+.gh{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:24px 16px 7px}
+.gf{font-size:13px;color:var(--muted);margin:6px 16px 0;line-height:1.5}
+.seg-sm button{padding:5px 10px;font-size:13px}
+.seg-full{display:flex;width:100%;margin-top:4px}.seg-full button{flex:1;padding:8px}
+.mv{border:0;background:var(--fill);border-radius:8px;width:32px;height:30px;font-weight:700;color:var(--ink);flex:none}
+.mv:disabled{opacity:.3}
+.sw{position:relative;width:51px;height:31px;border:0;border-radius:999px;background:var(--fill);flex:none;padding:0;transition:background .15s}
+.sw i{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:left .15s}
+.sw[aria-checked="true"]{background:#34C759}.sw[aria-checked="true"] i{left:22px}
+.about-logo{display:flex;flex-direction:column;align-items:center;gap:4px;margin:34px 0 10px;color:var(--muted);font-size:13px}
+.about-logo .logo{width:58px;height:58px;border-radius:14px;box-shadow:0 0 0 .5px var(--line),0 2px 8px rgba(0,0,0,.08)}
+.about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
+.help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
+.help a{color:var(--accent)}
+.buy-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.buy-tools .link-btn{font-size:15px}
+.adder-newcat{flex:1 1 100%!important}
+.glist-in .grow{gap:8px}
+.cat-in{flex:1;min-width:0;border:0;background:none;font-size:16px;padding:8px 0;color:var(--ink)}
+.cat-in:focus{outline:none;border-bottom:1.5px solid var(--accent)}
+.fld{display:grid;gap:4px;font-size:13px;color:var(--muted);align-content:start}
+.form .fld input,.form .fld select{height:44px}
+.form input[type=checkbox]{width:auto}
+.stepper{display:flex;align-items:center;height:44px;border:1px solid var(--line);background:var(--bg);border-radius:8px;overflow:hidden}
+.stepper .st-b{flex:none;width:44px;height:100%;border:0;background:none;font-size:22px;line-height:1;color:var(--accent)}
+.stepper .st-b:disabled{color:var(--muted);opacity:.4}
+.form .stepper input{flex:1;height:100%;border:0;background:none;border-radius:0;padding:0;text-align:center;font-weight:600}
+.subtot{font-size:14px;color:var(--muted);margin-top:-2px}.subtot b{color:var(--ink);font-weight:700}.subtot span{margin-left:2px}
+#view-buy .floor-h,#view-pack .floor-h{border-bottom:.5px solid var(--line)}
+#view-buy .floor-h .fl,#view-pack .floor-h .fl{font-family:var(--f-body);font-weight:800}
+@media (max-width:379px){.city{font-size:34px}.tile{padding:12px}.lt h1,.vh h1,.home-brand{font-size:27px}}
 </style>
 </head>
 <body>
 
 <div id="app">
-<div id="view-shop">
+<div id="view-home"><main class="wrap" id="homeMain"></main></div>
+<div id="view-shop" hidden>
   <header class="top">
     <div class="wrap">
-      <div class="brand">
-        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 5l2.6 7.4H26l-6 4.5 2.3 7.4L16 19.8l-6.3 4.5L12 16.9 6 12.4h7.4z" fill="currentColor"/></svg>
-        <h1>札幌站 店鋪查詢</h1>
-        <div class="sp"></div>
-        <div class="seg" id="modes" role="group" aria-label="店名顯示">
-          <button data-m="zh" aria-pressed="true">中文</button>
-          <button data-m="ja" aria-pressed="false">日文</button>
-          <button data-m="both" aria-pressed="false">並列</button>
-        </div>
-      </div>
+      <div class="lt"><h1>店鋪指南</h1><span class="lt-s">札幌站・4 商場</span></div>
       <div class="malls" id="malls" role="group" aria-label="商場"></div>
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -287,7 +415,7 @@ footer.foot .edit-row{margin-bottom:6px}
   </main>
 </div>
 <div id="view-buy" hidden>
-  <header class="vh"><div class="wrap"><h1>購買清單</h1>
+  <header class="vh"><div class="wrap"><h1>購買清單<small id="buyTrip"></small></h1>
     <button class="pill-btn" id="buyShare">分享</button>
     <button class="icon-btn" id="buyMore" aria-label="更多選項"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
   </div></header>
@@ -303,10 +431,49 @@ footer.foot .edit-row{margin-bottom:6px}
   </div></header>
   <main class="wrap" id="packMain"></main>
 </div>
+<div id="view-set" hidden>
+  <header class="vh"><div class="wrap"><h1>設定</h1></div></header>
+  <main class="wrap" id="setMain">
+    <div class="gh">顯示</div>
+    <ul class="glist glist-card">
+      <li class="grow"><span class="g-t">店名顯示</span>
+<div class="seg seg-sm" id="modes" role="group" aria-label="店名顯示">
+          <button data-m="zh" aria-pressed="true">中文</button>
+          <button data-m="ja" aria-pressed="false">日文</button>
+          <button data-m="both" aria-pressed="false">並列</button>
+        </div></li>
+      <li class="grow"><span class="g-t">外觀</span><span class="seg seg-sm" id="themeSeg" role="group" aria-label="外觀"><button data-th="auto">跟隨系統</button><button data-th="light">淺色</button><button data-th="dark">深色</button></span></li>
+      <li class="grow"><button class="g-btn" data-act="tiles"><span class="g-t">首頁小工具</span><span class="g-v" id="setTiles"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    </ul>
+    <div class="gh">旅程</div>
+    <ul class="glist glist-card">
+      <li class="grow"><button class="g-btn" data-act="fx"><span class="g-t" id="setFxName">匯率</span><span class="g-v" id="setFx"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li class="grow"><button class="g-btn" data-act="common"><span class="g-t">我的常用物品</span><span class="g-v" id="setCommon"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    </ul>
+    <p class="gf">匯率依目前旅程的貨幣換算成台幣。</p>
+    <div class="gh">資料</div>
+    <ul class="glist glist-card">
+      <li class="grow"><button class="g-btn" data-act="backup"><span class="g-t">備份所有資料</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li class="grow"><button class="g-btn" data-act="restore"><span class="g-t">從備份還原</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li class="grow"><button class="g-btn" data-act="editshop"><span class="g-t">店鋪資料</span><span class="g-v" id="setData"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    </ul>
+    <p class="gf">清單和旅程存在這台裝置。換手機前先備份，再到新手機還原。</p>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
+    <div class="gh">關於</div>
+    <ul class="glist glist-card">
+      <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.0</span></li>
+    </ul>
+    <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
+  </main>
+</div>
 <nav class="tabbar" id="tabbar" aria-label="主選單">
-  <button data-view="shop" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 9.5L6 4.5h12l1.5 5"/><path d="M4.5 9.5h15v.5a2.6 2.6 0 0 1-5 1 2.6 2.6 0 0 1-5 0 2.6 2.6 0 0 1-5-1z"/><path d="M5.5 12.5v7h13v-7"/><path d="M10 19.5v-4h4v4"/></svg>店鋪查詢</button>
-  <button data-view="buy"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 7.5h12.4l-.9 11.4a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8z"/><path d="M9 10.5V6.8a3 3 0 0 1 6 0v3.7"/></svg><span class="dot" id="buyDot" hidden></span></span>購買清單</button>
-  <button data-view="pack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="12.5" rx="2.6"/><path d="M9.5 7V4.8a.8.8 0 0 1 .8-.8h3.4a.8.8 0 0 1 .8.8V7"/><path d="M9 11v5M15 11v5"/><path d="M8.5 19.5v1M15.5 19.5v1"/></svg>行李清單</button>
+  <button data-view="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z"/></svg>首頁</button>
+  <button data-view="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10 6 5h12l1.5 5"/><path d="M4.5 10h15a2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1-5 0"/><path d="M5.8 12.7V19.5h12.4v-6.8"/><path d="M10.2 19.5v-3.8h3.6v3.8"/></svg>店鋪</button>
+  <button data-view="buy"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8.5h12l-.8 10.2a1.8 1.8 0 0 1-1.8 1.6H8.6a1.8 1.8 0 0 1-1.8-1.6z"/><path d="M9.3 11V7.4a2.7 2.7 0 0 1 5.4 0V11"/></svg><span class="dot" id="buyDot" hidden></span></span>購物</button>
+  <button data-view="pack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7.5" width="14" height="11.5" rx="2.6"/><path d="M9.5 7.5V5.6c0-.6.4-1 1-1h3c.6 0 1 .4 1 1v1.9"/><path d="M9 11v4.5M15 11v4.5"/><path d="M8.5 19v1M15.5 19v1"/></svg>行李</button>
+  <button data-view="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.6h3.4l.5 2.3 1.6.9 2.2-.8 1.7 2.9-1.7 1.6v1.9l1.7 1.6-1.7 2.9-2.2-.8-1.6.9-.5 2.3h-3.4l-.5-2.3-1.6-.9-2.2.8-1.7-2.9 1.7-1.6v-1.9L4.3 8.9 6 6l2.2.8 1.6-.9z"/><circle cx="12" cy="12" r="2.9"/></svg>設定</button>
 </nav>
   <div class="bar" id="bar" hidden>
     <div class="wrap">
@@ -363,6 +530,7 @@ footer.foot .edit-row{margin-bottom:6px}
   var CATS = [["all","全部"],["fashion","服飾"],["beauty","美妝"],["living","生活雜貨"],["dining","餐廳咖啡"],["souvenir","伴手禮・食品"],["other","其他"]];
   var CAT_NAME = {}; CATS.forEach(function(c){ CAT_NAME[c[0]] = c[1]; });
   var dealOpen = false;
+  var FOLD = {}; try{ FOLD = JSON.parse(localStorage.getItem("sp-fold-v1")||"{}") || {}; }catch(e){}
   var FAV_KEY = "sp-favs-v2", MODE_KEY = "sp-mode-v1", MALL_KEY = "sp-mall-v1";
   function localKey(m){ return "sp-local-"+m+"-v1"; }
 
@@ -499,14 +667,23 @@ footer.foot .edit-row{margin-bottom:6px}
       if(!cur) return;
       var m = MALL[cur._m], hint = m.hints && m.hints[cur.f];
       var label = (state.mall==="all" ? '<b>'+esc(m.name)+'</b>' : '') + (hint ? (state.mall==="all"?"・":"")+esc(hint) : '');
-      html += '<section class="floor"><div class="floor-h"><span class="fl">'+esc(cur.f)+'</span>'
+      var fk = cur._m+"|"+cur.f, shut = !state.q && !!FOLD[fk];
+      html += '<section class="floor'+(shut?" shut":"")+'"><button class="floor-h" data-fold="'+esc(fk)+'" aria-expanded="'+(!shut)+'"><span class="fl">'+esc(cur.f)+'</span>'
         + (label ? '<span class="hint">'+label+'</span>' : '')
-        + '<span class="cnt">'+buf.length+' 間</span></div><ul class="list">'+buf.map(rowHTML).join("")+'</ul></section>';
+        + '<span class="cnt">'+buf.length+' 間</span><svg class="fold-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>'
+        + (shut ? '' : '<ul class="list">'+buf.map(rowHTML).join("")+'</ul>')+'</section>';
     }
     list.forEach(function(s){ var k = s._m+"|"+s.f; if(k!==curKey){ flush(); curKey=k; cur=s; buf=[]; } buf.push(s); });
     flush();
     $("results").innerHTML = html;
   }
+  $("results").addEventListener("click", function(e){
+    var b = e.target.closest("[data-fold]"); if(!b) return;
+    if(state.q) return;
+    var k = b.dataset.fold; if(FOLD[k]) delete FOLD[k]; else FOLD[k] = 1;
+    try{ localStorage.setItem("sp-fold-v1", JSON.stringify(FOLD)); }catch(e){}
+    render();
+  });
   function shownMalls(){ return state.mall==="all" ? MALLS : [MALL[state.mall]]; }
   function renderMeta(){
     var ms = shownMalls();
@@ -723,7 +900,7 @@ footer.foot .edit-row{margin-bottom:6px}
   document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !$("sheetBg").hidden) closeSheet(); });
 
   // ===================== Lists: shopping & packing (stored on this device) =====================
-  var BUY_KEY = "sp-buy-v1", PACK_KEY = "sp-pack-v1", COMMON_KEY = "sp-common-v1", VIEW_KEY = "sp-view-v1";
+  var BUY_KEY = "sp-buy-v1", PACK_KEY = "sp-pack-v1", COMMON_KEY = "sp-common-v1", VIEW_KEY = "sp-view-v2";
   var SHARE_BASE = "https://linweihung168-hue.github.io/stellar-place/";
   function load(key, def){ try{ var v = JSON.parse(store(true,key)||"null"); return v==null ? def : v; }catch(e){ return def; } }
   function save(key, v){ store(false, key, JSON.stringify(v)); }
@@ -737,36 +914,51 @@ footer.foot .edit-row{margin-bottom:6px}
   var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var ICON_NEXT = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   function toInt(v){ var n = parseInt(String(v||"").replace(/[^\d]/g,""),10); return isNaN(n) ? 0 : n; }
-  function money(n){ return "¥" + Math.round(n).toLocaleString("ja-JP"); }
 
 
-  // ===================== Exchange rate (JPY -> TWD) =====================
-  var FX_KEY = "sp-fx-v1";
-  var FX = load(FX_KEY, null);   // {rate, src:"auto"|"manual", at:"YYYY-MM-DD", from}
-  function fxOk(){ return FX && FX.rate > 0; }
-  function twd(yen){ return "NT$" + Math.round(yen * FX.rate).toLocaleString("zh-TW"); }
-  function moneyBoth(yen){ return money(yen) + (fxOk() ? '<span class="twd">≈ '+twd(yen)+'</span>' : ''); }
+  // ===================== Currencies & exchange rate (per trip currency -> TWD) =====================
+  var CURS = {
+    JPY:{sym:"¥",name:"日圓",dp:0,sample:1000}, KRW:{sym:"₩",name:"韓元",dp:0,sample:10000}, THB:{sym:"฿",name:"泰銖",dp:0,sample:100},
+    VND:{sym:"₫",name:"越南盾",dp:0,sample:100000}, SGD:{sym:"S$",name:"新加坡幣",dp:2,sample:10}, HKD:{sym:"HK$",name:"港幣",dp:1,sample:100},
+    CNY:{sym:"CN¥",name:"人民幣",dp:1,sample:100}, USD:{sym:"US$",name:"美元",dp:2,sample:10}, EUR:{sym:"€",name:"歐元",dp:2,sample:10},
+    GBP:{sym:"£",name:"英鎊",dp:2,sample:10}, AUD:{sym:"A$",name:"澳幣",dp:2,sample:10}, TWD:{sym:"NT$",name:"台幣",dp:0,sample:100}
+  };
+  var CUR_CODE = "JPY";
+  function CUR(){ return CURS[CUR_CODE] || CURS.JPY; }
+  function money(n){ var c = CUR(); return c.sym + Number(n).toLocaleString("en-US", {minimumFractionDigits:0, maximumFractionDigits:c.dp}); }
+  function parseAmt(v){ var n = parseFloat(String(v||"").replace(/[^\d.]/g,"")); return isNaN(n) ? 0 : n; }
+  var FXS_KEY = "sp-fx-v2";
+  var FXS = load(FXS_KEY, null);
+  if(!FXS || typeof FXS !== "object"){ FXS = {}; var old = load("sp-fx-v1", null); if(old && old.rate > 0) FXS.JPY = old; save(FXS_KEY, FXS); }
+  function fxRec(){ return FXS[CUR_CODE]; }
+  function fxOk(){ var r = fxRec(); return CUR_CODE !== "TWD" && !!r && r.rate > 0; }
+  function twd(amt){ return "NT$" + Math.round(amt * fxRec().rate).toLocaleString("zh-TW"); }
+  function moneyBoth(amt){ return money(amt) + (fxOk() ? '<span class="twd">≈ '+twd(amt)+'</span>' : ''); }
   function today(){ var d = new Date(), p = function(n){ return (n<10?"0":"")+n; }; return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
   function fxFetch(){
-    if(BUILD !== "pwa" || (FX && FX.src === "manual")) return;
-    if(FX && FX.at === today()) return;
-    function done(rate, from){ if(!(rate > 0)) throw 0; FX = { rate: rate, src: "auto", at: today(), from: from }; save(FX_KEY, FX); if(view === "buy") renderBuy(); }
-    fetch("https://open.er-api.com/v6/latest/JPY").then(function(r){ return r.json(); })
+    var code = CUR_CODE, r = FXS[code];
+    if(BUILD !== "pwa" || code === "TWD" || (r && r.src === "manual") || (r && r.at === today())) return;
+    function done(rate, from){ if(!(rate > 0)) throw 0; FXS[code] = { rate: rate, src: "auto", at: today(), from: from }; save(FXS_KEY, FXS); if(view === "buy") renderBuy(); if(view === "home") renderHome(); }
+    fetch("https://open.er-api.com/v6/latest/" + code).then(function(r){ return r.json(); })
       .then(function(d){ done(d && d.rates && d.rates.TWD, "ExchangeRate-API"); })
       .catch(function(){
-        return fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json").then(function(r){ return r.json(); })
-          .then(function(d){ done(d && d.jpy && d.jpy.twd, "currency-api"); });
+        var lc = code.toLowerCase();
+        return fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/"+lc+".json").then(function(r){ return r.json(); })
+          .then(function(d){ done(d && d[lc] && d[lc].twd, "currency-api"); });
       }).catch(function(){});
   }
+  function fxRateText(){ var r = fxRec(); var v = r.rate; return (v >= 1 ? Math.round(v*1000)/1000 : v >= 0.01 ? Math.round(v*10000)/10000 : Math.round(v*1000000)/1000000); }
   function fxLine(){
+    if(CUR_CODE === "TWD") return "";
     if(!fxOk()) return '<div class="fx-line"><span>想看台幣？</span><button class="link-btn" id="fxEdit">設定匯率</button></div>';
-    var d = FX.at ? FX.at.slice(5).replace("-","/") : "";
-    return '<div class="fx-line"><span>1 日圓 ≈ '+(Math.round(FX.rate*10000)/10000)+' 台幣・'+(FX.src==="manual"?"手動設定":d+" 自動更新")+'</span><button class="link-btn" id="fxEdit">修改</button></div>';
+    var r = fxRec(), d = r.at ? r.at.slice(5).replace("-","/") : "";
+    return '<div class="fx-line"><span>1 '+CUR().name+' ≈ '+fxRateText()+' 台幣・'+(r.src==="manual"?"手動設定":d+" 自動更新")+'</span><button class="link-btn" id="fxEdit">修改</button></div>';
   }
   function fxSheet(){
-    var canAuto = BUILD === "pwa";
-    openSheet('<h2>匯率</h2><form class="form" id="fxForm" novalidate>'
-      + '<label>1 日圓 = 多少台幣<input id="fx_r" inputmode="decimal" value="'+(fxOk()?FX.rate:"")+'" placeholder="例：0.205"></label>'
+    if(CUR_CODE === "TWD"){ openSheet('<h2>匯率</h2><p>這趟旅程用的是台幣，不需要換算。</p><div class="actions"><button class="btn" data-close>好</button></div>', "匯率"); return; }
+    var canAuto = BUILD === "pwa", c = CUR();
+    openSheet('<h2>匯率・'+esc(c.name)+'</h2><form class="form" id="fxForm" novalidate>'
+      + '<label>1 '+esc(c.name)+' = 多少台幣<input id="fx_r" inputmode="decimal" value="'+(fxOk()?fxRec().rate:"")+'"></label>'
       + '<p class="sub" style="margin:0">填你們實際換匯或刷卡的匯率最準。'+(canAuto?'也可以改回每天自動抓牌價。':'這個版本無法自動抓匯率，請手動輸入。')+'</p>'
       + '<div class="err" id="fx_err" hidden></div>'
       + '<div class="actions"><button type="submit" class="btn primary">儲存</button>'
@@ -777,18 +969,19 @@ footer.foot .edit-row{margin-bottom:6px}
     $("fxForm").addEventListener("submit", function(e){
       e.preventDefault();
       var v = parseFloat(String($("fx_r").value).replace(/[^\d.]/g,""));
-      if(!(v > 0 && v < 10)){ var er = $("fx_err"); er.textContent = "請填像 0.205 這樣的數字（1 日圓換多少台幣）。"; er.hidden = false; return; }
-      FX = { rate: v, src: "manual", at: today() }; save(FX_KEY, FX); closeSheet(); renderBuy();
+      if(!(v > 0 && v < 1000)){ var er = $("fx_err"); er.textContent = "請填一個數字：1 "+c.name+" 可以換多少台幣。"; er.hidden = false; return; }
+      FXS[CUR_CODE] = { rate: v, src: "manual", at: today() }; save(FXS_KEY, FXS); closeSheet(); refreshCurrent();
     });
-    var a = $("fx_auto"); if(a) a.addEventListener("click", function(){ FX = null; store(false, FX_KEY, "null"); closeSheet(); renderBuy(); fxFetch(); });
+    var a = $("fx_auto"); if(a) a.addEventListener("click", function(){ delete FXS[CUR_CODE]; save(FXS_KEY, FXS); closeSheet(); refreshCurrent(); fxFetch(); });
   }
 
   // ---------- views ----------
-  var view = store(true, VIEW_KEY) || "shop";
-  if(["shop","buy","pack"].indexOf(view) < 0) view = "shop";
+  var VIEWS = ["home","shop","buy","pack","set"];
+  var view = store(true, VIEW_KEY) || "home";
+  if(VIEWS.indexOf(view) < 0) view = "home";
   function setView(v){
     view = v; store(false, VIEW_KEY, v);
-    ["shop","buy","pack"].forEach(function(k){ $("view-"+k).hidden = (k !== v); });
+    VIEWS.forEach(function(k){ $("view-"+k).hidden = (k !== v); });
     Array.prototype.forEach.call(document.querySelectorAll("#tabbar [data-view]"), function(b){
       if(b.dataset.view === v) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
     });
@@ -796,12 +989,15 @@ footer.foot .edit-row{margin-bottom:6px}
     if(v === "buy") renderBuy();
     if(v === "pack") renderPack();
     if(v === "shop") render();
+    if(v === "home") renderHome();
+    if(v === "set") renderSet();
     window.scrollTo({top:0});
   }
   $("tabbar").addEventListener("click", function(e){ var b = e.target.closest("[data-view]"); if(b) setView(b.dataset.view); });
   function updateDots(){
     var left = BUY.items.filter(function(i){ return !i.done; }).length, d = $("buyDot");
     d.hidden = !left; d.textContent = left > 99 ? "99+" : String(left);
+    var bt = $("buyTrip"); if(bt && typeof curTrip === "function") bt.textContent = TR.list.length > 1 ? curTrip().city : "";
   }
   function afterFav(){ if(view === "buy") renderBuy(); }
 
@@ -825,11 +1021,13 @@ footer.foot .edit-row{margin-bottom:6px}
   function shopPlace(s){ return MALL[s._m].name + " " + s.f; }
 
   // ===================== Shopping list =====================
-  var buyShowDone = false, buyWho = "all", buyDraft = "";
+  var buyShowDone = false, buyWho = "all", buyDraft = "", buyCat = "all";
+  var BUYMODE_KEY = "sp-buymode-v1", buyMode = store(true, BUYMODE_KEY) === "cat" ? "cat" : "route";
+  function buyCats(){ if(!Array.isArray(BUY.cats)) BUY.cats = []; BUY.items.forEach(function(i){ if(i.cat && BUY.cats.indexOf(i.cat) < 0) BUY.cats.push(i.cat); }); return BUY.cats; }
   function whos(){ var w = {}; BUY.items.forEach(function(i){ if(i.who) w[i.who] = 1; }); return Object.keys(w); }
   function findBuy(id){ for(var i=0;i<BUY.items.length;i++) if(BUY.items[i].id===id) return BUY.items[i]; return null; }
   function addBuy(name, shopKey, extra){
-    var it = { id: uid(), n: name, qty: 1, who: "", price: 0, shop: shopKey || "", done: false, note: "" };
+    var it = { id: uid(), n: name, qty: 1, who: "", price: 0, shop: shopKey || "", done: false, note: "", cat: (buyCat !== "all" && buyCat !== "__none") ? buyCat : "" };
     if(extra) Object.keys(extra).forEach(function(k){ it[k] = extra[k]; });
     BUY.items.push(it); saveBuy(); return it;
   }
@@ -837,6 +1035,7 @@ footer.foot .edit-row{margin-bottom:6px}
     var s = it.shop ? findShop(it.shop) : null;
     var bits = [];
     if(s && names(s).main !== it.n) bits.push(esc(names(s).main));
+    if(s && buyMode === "cat") bits.push(esc(shopPlace(s)));
     if(it.qty > 1) bits.push("×"+it.qty);
     if(it.who) bits.push("幫"+esc(it.who)+"買");
     if(it.price) bits.push(moneyBoth(it.price*(it.qty||1)));
@@ -844,12 +1043,18 @@ footer.foot .edit-row{margin-bottom:6px}
     return '<li class="row'+(it.done?" done":"")+'">'
       + '<button class="ck" role="checkbox" aria-checked="'+(!!it.done)+'" data-bck="'+it.id+'" aria-label="'+(it.done?"取消已買":"標記已買")+'：'+esc(it.n)+'">'+ICON_CHECK+'</button>'
       + '<button class="main" data-bedit="'+it.id+'">'+(s ? badge(s) : '<span class="wing none" aria-hidden="true">？</span>')
-      + '<span class="names"><span class="ja">'+esc(it.n)+'</span>'+(bits.length?'<span class="sub">'+bits.join("・")+'</span>':'')+'</span>'+ICON_NEXT+'</button></li>';
+      + '<span class="names"><span class="ja">'+esc(it.n)+'</span>'+((bits.length || (it.cat && buyMode === "route"))?'<span class="sub">'+(it.cat && buyMode === "route" ? '<span class="tag">'+esc(it.cat)+'</span>' : '')+bits.join("・")+'</span>':'')+'</span>'+ICON_NEXT+'</button></li>';
+  }
+  function byPlace(a, b){
+    var sa = a.shop ? findShop(a.shop) : null, sb = b.shop ? findShop(b.shop) : null;
+    var ka = sa ? mallRank(sa._m)*100 + floorRank(sa.f) : 99999, kb = sb ? mallRank(sb._m)*100 + floorRank(sb.f) : 99999;
+    return ka - kb;
   }
   function renderBuy(){
-    var all = BUY.items, wl = whos();
+    var all = BUY.items, wl = whos(), cats = buyCats(), hasNone = all.some(function(i){ return !i.cat; });
     if(buyWho !== "all" && wl.indexOf(buyWho) < 0) buyWho = "all";
-    var items = all.filter(function(i){ return buyWho === "all" || i.who === buyWho; });
+    if(buyCat !== "all" && !(buyCat === "__none" ? hasNone && cats.length : cats.indexOf(buyCat) >= 0)) buyCat = "all";
+    var items = all.filter(function(i){ return (buyWho === "all" || i.who === buyWho) && (buyCat === "all" || (buyCat === "__none" ? !i.cat : i.cat === buyCat)); });
     var todo = items.filter(function(i){ return !i.done; }), done = items.filter(function(i){ return i.done; });
     var budget = 0, spent = 0;
     items.forEach(function(i){ if(i.price){ var t = i.price*(i.qty||1); budget += t; if(i.done) spent += t; } });
@@ -859,12 +1064,20 @@ footer.foot .edit-row{margin-bottom:6px}
       h += '<section class="sum" aria-label="進度">'
         + '<div class="sum-top"><span class="big">'+todo.length+'</span><span class="sum-l">'+(todo.length?"樣還沒買":"全部買齊了")+'</span><span class="sum-r">已買 '+done.length+' / '+items.length+'</span></div>'
         + '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div>'
-        + (budget ? '<div class="sum-money"><span>預算 <b>'+money(budget)+'</b>'+(fxOk()?'<em>≈ '+twd(budget)+'</em>':'')+'</span><span class="ta-r">已花 <b>'+money(spent)+'</b>'+(fxOk()?'<em>≈ '+twd(spent)+'</em>':'')+'</span></div>' + fxLine() : '')
+        + (budget ? '<div class="sum-money"><span>預計花費 <b>'+money(budget)+'</b>'+(fxOk()?'<em>≈ '+twd(budget)+'</em>':'')+'</span><span class="ta-r">已花 <b>'+money(spent)+'</b>'+(fxOk()?'<em>≈ '+twd(spent)+'</em>':'')+'</span></div>' + fxLine() : '')
         + '</section>';
       if(wl.length){
         h += '<div class="chips who" role="group" aria-label="幫誰買">'
           + [["all","全部"]].concat(wl.map(function(w){ return [w, w]; })).map(function(o){
               return '<button class="chip" data-who="'+esc(o[0])+'" aria-pressed="'+(buyWho===o[0])+'">'+esc(o[1])+'</button>'; }).join("")
+          + '</div>';
+      }
+      h += '<div class="buy-tools"><span class="seg seg-sm" role="group" aria-label="排列方式"><button data-bmode="route" aria-pressed="'+(buyMode==="route")+'">逛街順序</button><button data-bmode="cat" aria-pressed="'+(buyMode==="cat")+'">依分類</button></span>'
+        + '<button class="link-btn" id="buyCatsBtn">'+(cats.length ? "管理分類" : "＋ 新增分類")+'</button></div>';
+      if(cats.length){
+        h += '<div class="chips who" role="group" aria-label="分類">'
+          + [["all","全部分類"]].concat(cats.map(function(c){ return [c, c]; })).concat(hasNone ? [["__none", NOCAT]] : []).map(function(o){
+              return '<button class="chip" data-bcat="'+esc(o[0])+'" aria-pressed="'+(buyCat===o[0])+'">'+esc(o[1])+'</button>'; }).join("")
           + '</div>';
       }
     }
@@ -873,16 +1086,26 @@ footer.foot .edit-row{margin-bottom:6px}
     if(!all.length){
       h += '<div class="empty-card"><span class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 7.5h12.4l-.9 11.4a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8z"/><path d="M9 10.5V6.8a3 3 0 0 1 6 0v3.7"/></svg></span><b>還沒有要買的東西</b>輸入商品或店名，會自動找出在哪間店、哪一樓。</div>';
     } else {
+      if(buyMode === "cat"){
+        var cg = {};
+        todo.forEach(function(it){ var c = it.cat || ""; (cg[c] = cg[c] || []).push(it); });
+        cats.concat([""]).forEach(function(c){
+          var arr = cg[c]; if(!arr || !arr.length) return;
+          arr.sort(byPlace);
+          h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c || NOCAT)+'</span><span class="cnt">'+arr.length+' 樣</span></div><ul class="list">'+arr.map(buyRow).join("")+'</ul></section>';
+        });
+        if(!todo.length && !done.length) h += '<p class="route-note">這個分類還沒有東西。</p>';
+      }
       // group open items by mall + floor = walking route
       var groups = {}, order = [];
-      todo.forEach(function(it){
+      if(buyMode === "route") todo.forEach(function(it){
         var s = it.shop ? findShop(it.shop) : null;
         var k = s ? (mallRank(s._m)*100 + floorRank(s.f)) + "|" + s._m + "|" + s.f : "999|none|";
         if(!groups[k]){ groups[k] = []; order.push(k); }
         groups[k].push(it);
       });
       order.sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); });
-      if(todo.length) h += '<p class="route-note">依商場、樓層排成逛街順序</p>';
+      if(todo.length && buyMode === "route") h += '<p class="route-note">依商場、樓層排成逛街順序</p>';
       order.forEach(function(k){
         var p = k.split("|"), m = MALL[p[1]];
         h += '<section class="floor"><div class="floor-h">'
@@ -906,7 +1129,7 @@ footer.foot .edit-row{margin-bottom:6px}
           + '<button class="star" data-fav="'+esc(favKey(s))+'" aria-pressed="true" aria-label="取消想逛 '+esc(n.main)+'">★</button></li>';
       }).join("") + '</ul>';
     } else {
-      h += '<p class="hint-p">在「店鋪查詢」按店名旁的 ★，那間店會出現在這裡。</p>';
+      h += '<p class="hint-p">在「店鋪」分頁按店名旁的 ★，那間店會出現在這裡。</p>';
     }
     h += '</section>';
     $("buyMain").innerHTML = h;
@@ -939,6 +1162,14 @@ footer.foot .edit-row{margin-bottom:6px}
     if((t = e.target.closest("[data-bck]"))){ var it = findBuy(t.dataset.bck); if(it){ it.done = !it.done; saveBuy(); renderBuy(); } return; }
     if((t = e.target.closest("[data-bedit]"))){ editBuy(t.dataset.bedit); return; }
     if((t = e.target.closest("[data-who]"))){ buyWho = t.dataset.who; renderBuy(); return; }
+    if((t = e.target.closest("[data-bcat]"))){ buyCat = t.dataset.bcat; renderBuy(); return; }
+    if((t = e.target.closest("[data-bmode]"))){ buyMode = t.dataset.bmode; store(false, BUYMODE_KEY, buyMode); renderBuy(); return; }
+    if(e.target.closest("#buyCatsBtn")){
+      catSheet("購物分類", buyCats(),
+        function(o, n){ BUY.items.forEach(function(i){ if(i.cat === o) i.cat = n; }); if(buyCat === o) buyCat = n; },
+        function(c){ BUY.items.forEach(function(i){ if(i.cat === c) i.cat = ""; }); if(buyCat === c) buyCat = "all"; },
+        function(){ saveBuy(); renderBuy(); });
+      return; }
     if(e.target.closest("#buyDoneToggle")){ buyShowDone = !buyShowDone; renderBuy(); return; }
     if(e.target.closest("#fxEdit")){ fxSheet(); }
   });
@@ -948,25 +1179,32 @@ footer.foot .edit-row{margin-bottom:6px}
     var tmp = it.shop;
     openSheet('<h2>編輯</h2><form class="form" id="itemForm" novalidate>'
       + '<label>品名<input id="i_n" value="'+esc(it.n)+'"></label>'
-      + '<div class="two"><label>數量<input id="i_q" type="number" min="1" inputmode="numeric" value="'+(it.qty||1)+'"></label>'
-      + '<label>單價（日圓）<input id="i_p" inputmode="numeric" value="'+(it.price||"")+'" placeholder="可不填"><span class="twd-live" id="i_twd"></span></label></div>'
-      + '<label>幫誰買<input id="i_w" value="'+esc(it.who||"")+'" placeholder="例：媽媽、同事" list="whoList"></label>'
+      + '<div class="two"><div class="fld"><span class="fld-l" id="i_ql">數量</span><div class="stepper" role="group" aria-labelledby="i_ql"><button type="button" class="st-b" id="i_minus" aria-label="減少">−</button><input id="i_q" inputmode="numeric" value="'+(it.qty||1)+'" aria-labelledby="i_ql"><button type="button" class="st-b" id="i_plus" aria-label="增加">＋</button></div></div>'
+      + '<label class="fld">單價（'+CUR().name+'）<input id="i_p" inputmode="decimal" value="'+(it.price||"")+'"></label></div>'
+      + '<div class="subtot" id="i_twd" aria-live="polite"></div>'
+      + '<label>分類<select id="i_c">'+catOptions(buyCats(), it.cat||"")+'</select></label><input id="i_newc" placeholder="新分類名稱" aria-label="新分類名稱" hidden>'
+      + '<label>幫誰買<input id="i_w" value="'+esc(it.who||"")+'" list="whoList"></label>'
       + '<datalist id="whoList">'+whos().map(function(w){ return '<option value="'+esc(w)+'">'; }).join("")+'</datalist>'
       + '<div class="pick"><span class="pick-l">在哪裡買</span><div class="pick-cur" id="i_cur"></div>'
-      + '<input id="i_s" placeholder="搜尋店名，例：ロイズ、ISHIYA" autocomplete="off" aria-label="搜尋店家"><ul class="sugs" id="i_sugs" hidden></ul></div>'
-      + '<label>備註<input id="i_note" value="'+esc(it.note||"")+'" placeholder="例：口味、尺寸、顏色"></label>'
+      + '<input id="i_s" placeholder="搜尋店名" autocomplete="off" aria-label="搜尋店家"><ul class="sugs" id="i_sugs" hidden></ul></div>'
+      + '<label>備註<input id="i_note" value="'+esc(it.note||"")+'"></label>'
       + '<div class="actions"><button type="submit" class="btn primary">儲存</button><button type="button" class="btn" data-close>取消</button>'
       + '<button type="button" class="btn danger" id="i_del">刪除</button></div><div id="i_delzone"></div></form>', "編輯項目");
     function drawCur(){
       var s = tmp ? findShop(tmp) : null;
       $("i_cur").innerHTML = s
         ? badge(s)+'<span class="names"><span class="ja">'+esc(names(s).main)+'</span><span class="sub">'+esc(shopPlace(s))+'</span></span><button type="button" class="pill-btn" id="i_unlink">不指定</button>'
-        : '<span class="sub">還沒指定，可在下方搜尋店名</span>';
+        : '';
+      $("i_cur").hidden = !s;
       var u = $("i_unlink"); if(u) u.addEventListener("click", function(){ tmp = ""; drawCur(); });
     }
     drawCur();
-    function liveTwd(){ var y = toInt($("i_p").value), q = Math.max(1, toInt($("i_q").value)||1); $("i_twd").textContent = (fxOk() && y) ? "≈ " + twd(y) + (q>1 ? "，" + q + " 個共 " + twd(y*q) : "") : ""; }
-    $("i_p").addEventListener("input", liveTwd); $("i_q").addEventListener("input", liveTwd); liveTwd();
+    var pickCat = wireCatSelect("i_c", "i_newc", buyCats());
+    function liveTwd(){ var y = parseAmt($("i_p").value), q = Math.max(1, toInt($("i_q").value)||1), el = $("i_twd");
+      el.innerHTML = y ? '小計 <b>'+money(y*q)+'</b>'+(fxOk() ? '<span>（≈ '+twd(y*q)+'）</span>' : '') : ''; el.hidden = !y; }
+    function step(d){ var q = Math.max(1, (toInt($("i_q").value)||1) + d); $("i_q").value = q; $("i_minus").disabled = q <= 1; liveTwd(); }
+    $("i_minus").addEventListener("click", function(){ step(-1); }); $("i_plus").addEventListener("click", function(){ step(1); });
+    $("i_p").addEventListener("input", liveTwd); $("i_q").addEventListener("input", function(){ $("i_minus").disabled = (toInt(this.value)||1) <= 1; liveTwd(); }); step(0);
     $("i_s").addEventListener("input", function(){
       var list = searchShops(this.value.trim(), 4), ul = $("i_sugs");
       ul.innerHTML = sugHTML(list); ul.hidden = !list.length;
@@ -979,10 +1217,11 @@ footer.foot .edit-row{margin-bottom:6px}
       e.preventDefault();
       it.n = $("i_n").value.trim() || it.n;
       it.qty = Math.max(1, toInt($("i_q").value) || 1);
-      it.price = toInt($("i_p").value);
+      it.price = parseAmt($("i_p").value);
       it.who = $("i_w").value.trim();
       it.note = $("i_note").value.trim();
       it.shop = tmp || "";
+      it.cat = pickCat();
       saveBuy(); closeSheet(); renderBuy();
     });
     $("i_del").addEventListener("click", function(){
@@ -1005,68 +1244,84 @@ footer.foot .edit-row{margin-bottom:6px}
   });
   $("buyShare").addEventListener("click", function(){
     if(!BUY.items.length){ openSheet('<h2>分享購買清單</h2><p>清單還是空的，先加幾樣東西再分享。</p><div class="actions"><button class="btn" data-close>好</button></div>', "分享"); return; }
-    var payload = { t:"b", i: BUY.items.map(function(i){ return [i.n, i.qty||1, i.who||"", i.price||0, i.shop||"", i.note||""]; }) };
+    var payload = { t:"b", c: buyCats(), i: BUY.items.map(function(i){ return [i.n, i.qty||1, i.who||"", i.price||0, i.shop||"", i.note||"", i.cat||""]; }) };
     shareSheet("購買清單", "我的札幌購買清單（"+BUY.items.length+" 樣）", payload);
   });
 
+  // ===================== Categories (shared by shopping & packing) =====================
+  var NOCAT = "未分類";
+  function catOptions(cats, cur){
+    return '<option value=""'+(!cur?" selected":"")+'>'+NOCAT+'</option>'
+      + cats.map(function(c){ return '<option value="'+esc(c)+'"'+(c===cur?" selected":"")+'>'+esc(c)+'</option>'; }).join("")
+      + '<option value="__new">＋ 新增分類…</option>';
+  }
+  // select + hidden "new category" input; returns a function that reads the chosen category (adding a new one to cats)
+  function wireCatSelect(selId, newId, cats){
+    var sel = $(selId), inp = $(newId);
+    function sync(){ inp.hidden = sel.value !== "__new"; if(!inp.hidden) inp.focus(); }
+    sel.addEventListener("change", sync); sync();
+    return function(){
+      if(sel.value !== "__new") return sel.value;
+      var n = inp.value.trim(); if(!n) return "";
+      if(cats.indexOf(n) < 0) cats.push(n);
+      return n;
+    };
+  }
+  // manage a category array: add, rename, reorder, delete
+  function catSheet(title, cats, onRename, onDelete, after){
+    function body(){
+      return (cats.length ? cats.map(function(c, i){
+        return '<li class="grow"><input class="cat-in" data-ci="'+i+'" value="'+esc(c)+'" aria-label="分類名稱">'
+          + '<button type="button" class="mv" data-cu="'+i+'" aria-label="'+esc(c)+' 往上"'+(i===0?" disabled":"")+'>↑</button>'
+          + '<button type="button" class="mv" data-cd="'+i+'" aria-label="'+esc(c)+' 往下"'+(i===cats.length-1?" disabled":"")+'>↓</button>'
+          + '<button type="button" class="g-x" data-cx="'+i+'" aria-label="刪除 '+esc(c)+'">×</button></li>';
+      }).join("") : '<li class="grow"><span class="g-t" style="color:var(--muted)">還沒有分類</span></li>')
+        + '<li class="grow"><form id="catAdd" class="g-add" autocomplete="off"><input id="catAddIn" placeholder="＋ 新增分類" aria-label="新增分類"></form></li>';
+    }
+    openSheet('<h2>'+esc(title)+'</h2><ul class="glist glist-card glist-in" id="catList">'+body()+'</ul>'
+      + '<p class="sub" style="margin:6px 2px 0">點分類名稱可以直接改名。刪除分類不會刪掉物品，物品會移到「'+NOCAT+'」。</p>'
+      + '<div class="actions"><button type="button" class="btn primary" id="catDone">完成</button></div>', title);
+    function redraw(focusAdd){ $("catList").innerHTML = body(); wire(); after(); if(focusAdd) $("catAddIn").focus(); }
+    function wire(){
+      $("catAdd").addEventListener("submit", function(e){ e.preventDefault(); var v = $("catAddIn").value.trim(); if(!v || v === NOCAT) return; if(cats.indexOf(v) < 0) cats.push(v); redraw(true); });
+    }
+    wire();
+    $("catList").addEventListener("change", function(e){
+      var t = e.target.closest("[data-ci]"); if(!t) return;
+      var i = +t.dataset.ci, old = cats[i], v = t.value.trim();
+      if(!v || v === NOCAT || (v !== old && cats.indexOf(v) >= 0)){ t.value = old; return; }
+      if(v !== old){ cats[i] = v; onRename(old, v); after(); }
+    });
+    $("catList").addEventListener("click", function(e){
+      var b = e.target.closest("button"); if(!b) return;
+      var i;
+      if(b.dataset.cu){ i = +b.dataset.cu; cats.splice(i-1, 0, cats.splice(i,1)[0]); redraw(); }
+      else if(b.dataset.cd){ i = +b.dataset.cd; cats.splice(i+1, 0, cats.splice(i,1)[0]); redraw(); }
+      else if(b.dataset.cx){ i = +b.dataset.cx; var c = cats.splice(i,1)[0]; onDelete(c); redraw(); }
+    });
+    $("catDone").addEventListener("click", function(){ var a = document.activeElement; if(a && a.blur) a.blur(); closeSheet(); after(); });
+  }
+
   // ===================== Packing lists =====================
-  var CAT_ORDER = ["證件與錢","3C 電子","衣物","盥洗保養","藥品","雜物","禦寒","溫泉","小孩","工作","其他"];
-  // q: number, "day" = one per day (max 7), "half" = one per two days
-  var BASE = {
-    abroad: [
-      ["證件與錢",["護照","護照照片頁（存手機）","外幣現金","信用卡","提款卡（開通海外提款）","機票／電子登機證","住宿訂房資料","旅平險資料"]],
-      ["3C 電子",["手機","充電器與充電線","行動電源（只能放隨身行李）","網卡／eSIM","轉接頭（依目的地）","耳機"]],
-      ["衣物",[["上衣","day"],["褲子","half"],["內衣褲","day"],["襪子","day"],"睡衣","好走的鞋","外套"]],
-      ["盥洗保養",["牙刷牙膏","洗面乳","保養品","防曬","化妝品","眼鏡／隱形眼鏡"]],
-      ["藥品",["個人常用藥","感冒藥","腸胃藥","止痛藥","OK 繃"]],
-      ["雜物",["摺疊傘","購物袋","面紙／濕紙巾","水壺","筆（填入境資料）","夾鏈袋（裝液體）"]]
-    ],
-    domestic: [
-      ["證件與錢",["身分證","健保卡","現金","信用卡／悠遊卡","住宿訂房資料"]],
-      ["3C 電子",["手機","充電器與充電線","行動電源","耳機"]],
-      ["衣物",[["上衣","day"],["褲子","half"],["內衣褲","day"],["襪子","day"],"睡衣","好走的鞋","外套"]],
-      ["盥洗保養",["牙刷牙膏","洗面乳","保養品","防曬","化妝品","眼鏡／隱形眼鏡"]],
-      ["藥品",["個人常用藥","感冒藥","腸胃藥","OK 繃"]],
-      ["雜物",["摺疊傘","購物袋","面紙／濕紙巾","水壺"]]
-    ]
-  };
-  var ADDONS = [
-    { id:"japan", name:"日本", drop:["轉接頭（依目的地）"],
-      add:[["證件與錢",["Visit Japan Web 入境 QR Code","零錢包（日本硬幣多）"]],["3C 電子",["交通 IC 卡（Suica 等，可綁手機）"]],["雜物",["小垃圾袋（街上垃圾桶少）"]]],
-      tip:"日本插座跟台灣一樣，一般不用轉接頭" },
-    { id:"winter", name:"北海道冬季",
-      add:[["禦寒",["羽絨外套",["發熱衣",3],"毛帽","手套（可滑手機）","圍巾","防水鞋或雪靴","防滑鞋套／冰爪","暖暖包"]],["盥洗保養",["護唇膏","保濕乳液","護手霜"]]] },
-    { id:"onsen", name:"溫泉", add:[["溫泉",["小毛巾","換洗衣物袋","髮圈","卸妝用品"]]] },
-    { id:"kids", name:"親子", add:[["小孩",["小孩證件","兒童常備藥","多一套換洗衣物","零食","玩具或平板","濕紙巾","推車或背巾"]]] },
-    { id:"work", name:"商務", add:[["工作",["筆電與充電器","名片","正式服裝","會議資料"]]] }
-  ];
-  var ADDON = {}; ADDONS.forEach(function(a){ ADDON[a.id] = a; });
-  var packOpen = null, packHideDone = false;
+  var LEGACY_ORDER = ["證件與錢","3C 電子","衣物","盥洗保養","藥品","雜物","禦寒","溫泉","小孩","工作","其他"];
+  var packOpen = null, packHideDone = false, packLastCat = "";
   function findPack(id){ for(var i=0;i<PACKS.lists.length;i++) if(PACKS.lists[i].id===id) return PACKS.lists[i]; return null; }
-  function qtyFor(rule, days){
-    if(rule === "day") return Math.min(Math.max(days,1), 7);
-    if(rule === "half") return Math.max(1, Math.ceil(Math.min(days,7)/2));
-    return typeof rule === "number" ? rule : 1;
+  function packCats(l){
+    if(!Array.isArray(l.cats)){
+      var seen = {}; l.items.forEach(function(i){ if(i.c) seen[i.c] = 1; });
+      l.cats = Object.keys(seen).sort(function(a,b){ var ia = LEGACY_ORDER.indexOf(a), ib = LEGACY_ORDER.indexOf(b); return (ia<0?99:ia) - (ib<0?99:ib); });
+    }
+    l.items.forEach(function(i){ if(i.c && l.cats.indexOf(i.c) < 0) l.cats.push(i.c); });
+    return l.cats;
   }
-  function pushItems(list, groups, days){
-    var have = {}; list.items.forEach(function(i){ have[i.n] = 1; });
-    var added = 0;
-    groups.forEach(function(g){ g[1].forEach(function(x){
-      var n = Array.isArray(x) ? x[0] : x, q = Array.isArray(x) ? qtyFor(x[1], days) : 1;
-      if(have[n]) return; have[n] = 1; added++;
-      list.items.push({ id: uid(), c: g[0], n: n, q: q, done: false });
-    }); });
-    return added;
-  }
-  function buildPack(name, type, days, addons){
-    var list = { id: uid(), name: name, type: type, days: days, addons: addons.slice(), items: [], created: Date.now() };
-    pushItems(list, BASE[type], days);
-    addons.forEach(function(a){ var A = ADDON[a]; if(!A) return;
-      if(A.drop) list.items = list.items.filter(function(i){ return A.drop.indexOf(i.n) < 0; });
-      pushItems(list, A.add, days); });
-    var have = {}; list.items.forEach(function(i){ have[i.n] = 1; });
-    COMMON.forEach(function(c){ if(!have[c.n]){ list.items.push({ id: uid(), c: c.c || "其他", n: c.n, q: c.q || 1, done: false, mine: true }); have[c.n] = 1; } });
-    return list;
+  function newPack(name, withCommon){
+    var l = { id: uid(), name: name, cats: [], items: [], created: Date.now() };
+    if(withCommon) COMMON.forEach(function(c){
+      var cat = c.c && c.c !== "其他" ? c.c : (c.c || "");
+      if(cat && l.cats.indexOf(cat) < 0) l.cats.push(cat);
+      l.items.push({ id: uid(), c: cat, n: c.n, q: c.q || 1, done: false });
+    });
+    return l;
   }
   function packProgress(l){ var d = l.items.filter(function(i){ return i.done; }).length; return { d: d, t: l.items.length, pct: l.items.length ? Math.round(d/l.items.length*100) : 0 }; }
   function isCommon(n){ return COMMON.some(function(c){ return c.n === n; }); }
@@ -1082,20 +1337,19 @@ footer.foot .edit-row{margin-bottom:6px}
   function packIndexHTML(){
     var h = "";
     if(!PACKS.lists.length){
-      h += '<div class="empty-card"><span class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="12.5" rx="2.6"/><path d="M9.5 7V4.8a.8.8 0 0 1 .8-.8h3.4a.8.8 0 0 1 .8.8V7"/><path d="M9 11v5M15 11v5"/><path d="M8.5 19.5v1M15.5 19.5v1"/></svg></span><b>還沒有行李清單</b>選國外或國內、天數和加購包，自動列出要帶的東西。<div class="actions" style="justify-content:center"><button class="btn primary" data-pnew>＋ 建立第一份清單</button></div></div>';
+      h += '<div class="empty-card"><span class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="12.5" rx="2.6"/><path d="M9.5 7V4.8a.8.8 0 0 1 .8-.8h3.4a.8.8 0 0 1 .8.8V7"/><path d="M9 11v5M15 11v5"/><path d="M8.5 19.5v1M15.5 19.5v1"/></svg></span><b>還沒有行李清單</b>建立後自己加分類和要帶的東西。<div class="actions" style="justify-content:center"><button class="btn primary" data-pnew>＋ 建立清單</button></div></div>';
     } else {
       h += PACKS.lists.slice().sort(function(a,b){ return b.created - a.created; }).map(function(l){
-        var p = packProgress(l);
-        var tags = [l.type==="abroad"?"國外":"國內", l.days+" 天"].concat((l.addons||[]).map(function(a){ return ADDON[a] ? ADDON[a].name : ""; }).filter(Boolean));
-        return '<button class="trip" data-popen="'+l.id+'"><span class="trip-main"><span class="ja">'+esc(l.name)+'</span><span class="sub">'+esc(tags.join("・"))+'</span>'
-          + '<span class="prog"><i style="width:'+p.pct+'%"></i></span><span class="sub">'+(p.d===p.t?"全部打包好了":"已打包 "+p.d+" / "+p.t)+'</span></span>'+ICON_NEXT+'</button>';
+        var p = packProgress(l), nc = packCats(l).length;
+        return '<button class="trip" data-popen="'+l.id+'"><span class="trip-main"><span class="ja">'+esc(l.name)+'</span><span class="sub">'+p.t+' 樣'+(nc?'・'+nc+' 個分類':'')+'</span>'
+          + (p.t ? '<span class="prog"><i style="width:'+p.pct+'%"></i></span><span class="sub">'+(p.d===p.t?"全部打包好了":"已打包 "+p.d+" / "+p.t)+'</span>' : '')+'</span>'+ICON_NEXT+'</button>';
       }).join("");
     }
-    h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">我的常用物品</span><span class="cnt">'+COMMON.length+' 樣</span></div>'
-      + '<p class="hint-p">在清單裡編輯物品時勾選「記住」，之後建立新清單會自動帶入。</p>';
+    h += '<section class="floor" id="commonSec"><div class="floor-h"><span class="fl fl-sm">我的常用物品</span><span class="cnt">'+COMMON.length+' 樣</span></div>'
+      + '<p class="hint-p">在清單裡編輯物品時勾選「記住」，建立新清單時可以一次帶入。</p>';
     if(COMMON.length){
       h += '<ul class="list">' + COMMON.map(function(c, i){
-        return '<li class="row"><span class="names"><span class="ja">'+esc(c.n)+'</span><span class="sub">'+esc(c.c||"其他")+(c.q>1?"・×"+c.q:"")+'</span></span><button class="edit-btn" data-cdel="'+i+'" aria-label="不再記住 '+esc(c.n)+'">移除</button></li>';
+        return '<li class="row"><span class="names"><span class="ja">'+esc(c.n)+'</span><span class="sub">'+esc(c.c||NOCAT)+(c.q>1?"・×"+c.q:"")+'</span></span><button class="edit-btn" data-cdel="'+i+'" aria-label="不再記住 '+esc(c.n)+'">移除</button></li>';
       }).join("") + '</ul>';
     }
     return h + '</section>';
@@ -1107,87 +1361,91 @@ footer.foot .edit-row{margin-bottom:6px}
       + (isCommon(it.n) ? '<span class="sub">★ 常用物品</span>' : '')+'</span></button></li>';
   }
   function packDetailHTML(l){
-    var p = packProgress(l), left = p.t - p.d;
-    var tags = [l.type==="abroad"?"國外":"國內", l.days+" 天"].concat((l.addons||[]).map(function(a){ return ADDON[a] ? ADDON[a].name : ""; }).filter(Boolean));
-    var tips = (l.addons||[]).map(function(a){ return ADDON[a] && ADDON[a].tip; }).filter(Boolean);
-    var h = '<section class="sum" aria-label="進度"><div class="sum-top"><span class="big">'+left+'</span><span class="sum-l">'+(left?"樣還沒打包":"全部打包好了")+'</span><span class="sum-r">'+p.d+' / '+p.t+'</span></div>'
-      + '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+p.pct+'"><i style="width:'+p.pct+'%"></i></div>'
-      + '<div class="sum-money"><span>'+esc(tags.join("・"))+'</span><button class="link-btn" id="packHide" aria-pressed="'+packHideDone+'">'+(packHideDone?"顯示已打包":"隱藏已打包")+'</button></div></section>';
-    if(tips.length) h += '<p class="route-note">💡 '+tips.map(esc).join("；")+'</p>';
-    var cats = {};
-    l.items.forEach(function(i){ (cats[i.c] = cats[i.c] || []).push(i); });
-    var order = Object.keys(cats).sort(function(a,b){ var ia = CAT_ORDER.indexOf(a), ib = CAT_ORDER.indexOf(b); return (ia<0?99:ia) - (ib<0?99:ib); });
-    order.forEach(function(c){
-      var arr = cats[c], d = arr.filter(function(i){ return i.done; }).length;
-      var shown = packHideDone ? arr.filter(function(i){ return !i.done; }) : arr.filter(function(i){ return !i.done; }).concat(arr.filter(function(i){ return i.done; }));
-      if(!shown.length && packHideDone) return;
-      h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c)+'</span><span class="cnt">'+d+' / '+arr.length+'</span></div><ul class="list">'+shown.map(packRow).join("")+'</ul></section>';
+    var cats = packCats(l), p = packProgress(l), left = p.t - p.d;
+    var h = '';
+    if(p.t){
+      h += '<section class="sum" aria-label="進度"><div class="sum-top"><span class="big">'+left+'</span><span class="sum-l">'+(left?"樣還沒打包":"全部打包好了")+'</span><span class="sum-r">'+p.d+' / '+p.t+'</span></div>'
+        + '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+p.pct+'"><i style="width:'+p.pct+'%"></i></div>'
+        + '<div class="sum-money"><button class="link-btn" id="packCats">管理分類</button><button class="link-btn" id="packHide" aria-pressed="'+packHideDone+'">'+(packHideDone?"顯示已打包":"隱藏已打包")+'</button></div></section>';
+    }
+    var groups = {}; l.items.forEach(function(i){ var c = i.c || ""; (groups[c] = groups[c] || []).push(i); });
+    cats.concat(groups[""] ? [""] : []).forEach(function(c){
+      var arr = groups[c] || [], d = arr.filter(function(i){ return i.done; }).length;
+      var shown = arr.filter(function(i){ return !i.done; }).concat(packHideDone ? [] : arr.filter(function(i){ return i.done; }));
+      if(packHideDone && arr.length && !shown.length) return;
+      h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c || NOCAT)+'</span><span class="cnt">'+(arr.length ? d+' / '+arr.length : '0 樣')+'</span></div>'
+        + (shown.length ? '<ul class="list">'+shown.map(packRow).join("")+'</ul>' : '')+'</section>';
     });
+    if(!p.t) h += '<div class="empty-card"><b>清單還是空的</b>在下面輸入要帶的東西，可以順便選分類或新增分類。'+(COMMON.length?'<div class="actions" style="justify-content:center"><button class="btn" id="packAddCommon">帶入我的常用物品（'+COMMON.length+' 樣）</button></div>':'')+'</div>';
+    if(packLastCat && cats.indexOf(packLastCat) < 0) packLastCat = "";
     h += '<form class="adder adder-pack" id="packAdd" autocomplete="off"><input id="packInput" placeholder="新增物品" aria-label="新增物品">'
-      + '<select id="packCat" aria-label="分類">'+CAT_ORDER.map(function(c){ return '<option'+(c==="其他"?" selected":"")+'>'+c+'</option>'; }).join("")+'</select>'
-      + '<button class="btn primary" type="submit">新增</button></form>';
+      + '<select id="packCat" aria-label="分類">'+catOptions(cats, packLastCat)+'</select>'
+      + '<button class="btn primary" type="submit">新增</button>'
+      + '<input id="packNewCat" class="adder-newcat" placeholder="新分類名稱" aria-label="新分類名稱" hidden></form>';
     return h;
   }
   function wirePackAdd(l){
+    var pick = wireCatSelect("packCat", "packNewCat", l.cats);
     $("packAdd").addEventListener("submit", function(e){
-      e.preventDefault(); var n = $("packInput").value.trim(); if(!n) return;
-      var c = $("packCat").value;
+      e.preventDefault(); var n = $("packInput").value.trim(); if(!n){ $("packInput").focus(); return; }
+      if($("packCat").value === "__new" && !$("packNewCat").value.trim()){ $("packNewCat").focus(); return; }
+      var c = pick(); packLastCat = c;
       l.items.push({ id: uid(), c: c, n: n, q: 1, done: false }); savePacks(); renderPack();
-      $("packCat").value = c; $("packInput").focus();
+      $("packInput").focus();
     });
+  }
+  function packCatSheet(l){
+    catSheet("行李分類", packCats(l),
+      function(o, n){ l.items.forEach(function(i){ if(i.c === o) i.c = n; }); if(packLastCat === o) packLastCat = n; },
+      function(c){ l.items.forEach(function(i){ if(i.c === c) i.c = ""; }); },
+      function(){ savePacks(); renderPack(); });
   }
   $("packMain").addEventListener("click", function(e){
     var t, l = packOpen ? findPack(packOpen) : null;
-    if((t = e.target.closest("[data-popen]"))){ packOpen = t.dataset.popen; renderPack(); window.scrollTo({top:0}); return; }
+    if((t = e.target.closest("[data-popen]"))){ packOpen = t.dataset.popen; packLastCat = ""; renderPack(); window.scrollTo({top:0}); return; }
     if(e.target.closest("[data-pnew]")){ newPackSheet(); return; }
     if((t = e.target.closest("[data-cdel]"))){ COMMON.splice(+t.dataset.cdel, 1); saveCommon(); renderPack(); return; }
     if(!l) return;
     if((t = e.target.closest("[data-pck]"))){ l.items.forEach(function(i){ if(i.id===t.dataset.pck) i.done = !i.done; }); savePacks(); renderPack(); return; }
     if((t = e.target.closest("[data-pedit]"))){ editPackItem(l, t.dataset.pedit); return; }
-    if(e.target.closest("#packHide")){ packHideDone = !packHideDone; renderPack(); }
+    if(e.target.closest("#packHide")){ packHideDone = !packHideDone; renderPack(); return; }
+    if(e.target.closest("#packCats")){ packCatSheet(l); return; }
+    if(e.target.closest("#packAddCommon")){ var nl = newPack("", true); l.cats = packCats(l); nl.cats.forEach(function(c){ if(l.cats.indexOf(c) < 0) l.cats.push(c); }); l.items = l.items.concat(nl.items); savePacks(); renderPack(); }
   });
   $("packBack").addEventListener("click", function(){ packOpen = null; renderPack(); window.scrollTo({top:0}); });
   $("packNew").addEventListener("click", newPackSheet);
 
-  function addonChips(sel){
-    return ADDONS.map(function(a){ return '<button type="button" class="chip" data-ao="'+a.id+'" aria-pressed="'+(sel.indexOf(a.id)>=0)+'">'+esc(a.name)+'</button>'; }).join("");
-  }
   function newPackSheet(){
-    var type = "abroad", sel = ["japan"];
     openSheet('<h2>建立行李清單</h2><form class="form" id="packForm" novalidate>'
-      + '<label><span class="req">清單名稱</span><input id="p_name" placeholder="例：札幌 11 月" required></label>'
-      + '<div class="two"><label>旅遊類型<span class="seg" id="p_type" role="group"><button type="button" data-ty="abroad" aria-pressed="true">國外</button><button type="button" data-ty="domestic" aria-pressed="false">國內</button></span></label>'
-      + '<label>天數<input id="p_days" type="number" min="1" max="60" inputmode="numeric" value="5"></label></div>'
-      + '<div><span class="pick-l">加購包（可複選）</span><div class="chips-wrap" id="p_ao">'+addonChips(sel)+'</div></div>'
-      + (COMMON.length ? '<p class="sub">會自動加入 '+COMMON.length+' 樣「我的常用物品」。</p>' : '')
+      + '<label><span class="req">清單名稱</span><input id="p_name" required></label>'
+      + (COMMON.length ? '<label class="check-l"><input type="checkbox" id="p_common" checked> 帶入我的常用物品（'+COMMON.length+' 樣）</label>' : '')
       + '<div class="err" id="p_err" hidden></div>'
       + '<div class="actions"><button type="submit" class="btn primary">建立</button><button type="button" class="btn" data-close>取消</button></div></form>', "建立行李清單");
-    $("p_type").addEventListener("click", function(e){ var b = e.target.closest("[data-ty]"); if(!b) return; type = b.dataset.ty;
-      Array.prototype.forEach.call(this.children, function(x){ x.setAttribute("aria-pressed", String(x===b)); }); });
-    $("p_ao").addEventListener("click", function(e){ var b = e.target.closest("[data-ao]"); if(!b) return;
-      var i = sel.indexOf(b.dataset.ao); if(i<0) sel.push(b.dataset.ao); else sel.splice(i,1); b.setAttribute("aria-pressed", String(i<0)); });
     $("packForm").addEventListener("submit", function(e){
       e.preventDefault();
-      var name = $("p_name").value.trim(), days = toInt($("p_days").value);
-      if(!name){ var er = $("p_err"); er.textContent = "請幫清單取個名字，例如「札幌 11 月」。"; er.hidden = false; return; }
-      if(!days) days = 1;
-      var l = buildPack(name, type, Math.min(days,60), sel);
-      PACKS.lists.push(l); savePacks(); packOpen = l.id; closeSheet(); renderPack(); window.scrollTo({top:0});
+      var name = $("p_name").value.trim();
+      if(!name){ var er = $("p_err"); er.textContent = "請幫清單取個名字。"; er.hidden = false; return; }
+      var l = newPack(name, !!($("p_common") && $("p_common").checked));
+      PACKS.lists.push(l); savePacks(); packOpen = l.id; packLastCat = ""; closeSheet(); renderPack(); window.scrollTo({top:0});
     });
   }
   function editPackItem(l, id){
     var it = null; l.items.forEach(function(i){ if(i.id===id) it = i; }); if(!it) return;
-    var remembered = isCommon(it.n);
+    var remembered = isCommon(it.n), cats = packCats(l);
     openSheet('<h2>編輯物品</h2><form class="form" id="piForm" novalidate>'
       + '<label>名稱<input id="pi_n" value="'+esc(it.n)+'"></label>'
-      + '<div class="two"><label>數量<input id="pi_q" type="number" min="1" inputmode="numeric" value="'+(it.q||1)+'"></label>'
-      + '<label>分類<select id="pi_c">'+CAT_ORDER.map(function(c){ return '<option'+(c===it.c?" selected":"")+'>'+c+'</option>'; }).join("")+'</select></label></div>'
-      + '<label class="check-l"><input type="checkbox" id="pi_mem"'+(remembered?" checked":"")+'> 記住，之後建立新清單自動帶入</label>'
+      + '<div class="two"><div class="fld"><span class="fld-l" id="pi_ql">數量</span><div class="stepper" role="group" aria-labelledby="pi_ql"><button type="button" class="st-b" id="pi_minus" aria-label="減少">−</button><input id="pi_q" inputmode="numeric" value="'+(it.q||1)+'" aria-labelledby="pi_ql"><button type="button" class="st-b" id="pi_plus" aria-label="增加">＋</button></div></div>'
+      + '<label class="fld">分類<select id="pi_c">'+catOptions(cats, it.c||"")+'</select></label></div>'
+      + '<input id="pi_newc" placeholder="新分類名稱" aria-label="新分類名稱" hidden>'
+      + '<label class="check-l"><input type="checkbox" id="pi_mem"'+(remembered?" checked":"")+'> 記住，之後建立新清單可以帶入</label>'
       + '<div class="actions"><button type="submit" class="btn primary">儲存</button><button type="button" class="btn" data-close>取消</button><button type="button" class="btn danger" id="pi_del">從清單移除</button></div></form>', "編輯物品");
+    (function(){ function st(d){ var q = Math.max(1, (toInt($("pi_q").value)||1) + d); $("pi_q").value = q; $("pi_minus").disabled = q <= 1; }
+      $("pi_minus").addEventListener("click", function(){ st(-1); }); $("pi_plus").addEventListener("click", function(){ st(1); }); st(0); })();
+    var pick = wireCatSelect("pi_c", "pi_newc", cats);
     $("piForm").addEventListener("submit", function(e){
       e.preventDefault();
       var old = it.n;
-      it.n = $("pi_n").value.trim() || it.n; it.q = Math.max(1, toInt($("pi_q").value) || 1); it.c = $("pi_c").value;
+      it.n = $("pi_n").value.trim() || it.n; it.q = Math.max(1, toInt($("pi_q").value) || 1); it.c = pick();
       COMMON = COMMON.filter(function(c){ return c.n !== old && c.n !== it.n; });
       if($("pi_mem").checked) COMMON.push({ n: it.n, c: it.c, q: it.q });
       saveCommon(); savePacks(); closeSheet(); renderPack();
@@ -1196,20 +1454,14 @@ footer.foot .edit-row{margin-bottom:6px}
   }
   $("packMore").addEventListener("click", function(){
     var l = findPack(packOpen); if(!l) return;
-    var sel = [];
     openSheet('<h2>'+esc(l.name)+'</h2><form class="form" id="pmForm" novalidate>'
-      + '<div class="two"><label>名稱<input id="pm_name" value="'+esc(l.name)+'"></label><label>天數<input id="pm_days" type="number" min="1" inputmode="numeric" value="'+l.days+'"></label></div>'
-      + '<div><span class="pick-l">再加入加購包</span><div class="chips-wrap" id="pm_ao">'+addonChips(sel)+'</div><p class="sub">只會補上清單裡還沒有的物品。</p></div>'
-      + '<div class="actions"><button type="submit" class="btn primary">套用</button><button type="button" class="btn" data-close>取消</button></div></form>'
-      + '<div class="menu" style="margin-top:14px"><button type="button" class="btn" id="pm_uncheck">全部改回未打包</button><button type="button" class="btn danger" id="pm_del">刪除這份清單</button><div id="pm_zone"></div></div>', "清單設定");
-    $("pm_ao").addEventListener("click", function(e){ var b = e.target.closest("[data-ao]"); if(!b) return;
-      var i = sel.indexOf(b.dataset.ao); if(i<0) sel.push(b.dataset.ao); else sel.splice(i,1); b.setAttribute("aria-pressed", String(i<0)); });
+      + '<label>清單名稱<input id="pm_name" value="'+esc(l.name)+'"></label>'
+      + '<div class="actions"><button type="submit" class="btn primary">儲存</button><button type="button" class="btn" data-close>取消</button></div></form>'
+      + '<div class="menu" style="margin-top:14px"><button type="button" class="btn" id="pm_cats">管理分類</button><button type="button" class="btn" id="pm_uncheck">全部改回未打包</button><button type="button" class="btn danger" id="pm_del">刪除這份清單</button><div id="pm_zone"></div></div>', "清單設定");
     $("pmForm").addEventListener("submit", function(e){
-      e.preventDefault();
-      l.name = $("pm_name").value.trim() || l.name; l.days = Math.min(60, toInt($("pm_days").value) || l.days);
-      sel.forEach(function(a){ var A = ADDON[a]; if(!A) return; pushItems(l, A.add, l.days); if((l.addons||[]).indexOf(a)<0) (l.addons = l.addons||[]).push(a); });
-      savePacks(); closeSheet(); renderPack();
+      e.preventDefault(); l.name = $("pm_name").value.trim() || l.name; savePacks(); closeSheet(); renderPack();
     });
+    $("pm_cats").addEventListener("click", function(){ packCatSheet(l); });
     $("pm_uncheck").addEventListener("click", function(){ l.items.forEach(function(i){ i.done = false; }); savePacks(); closeSheet(); renderPack(); });
     $("pm_del").addEventListener("click", function(){
       $("pm_zone").innerHTML = '<div class="confirm">確定刪除「'+esc(l.name)+'」？<button type="button" class="btn danger" id="pm_yes">刪除</button></div>';
@@ -1218,7 +1470,8 @@ footer.foot .edit-row{margin-bottom:6px}
   });
   $("packShare").addEventListener("click", function(){
     var l = findPack(packOpen); if(!l) return;
-    var payload = { t:"p", n: l.name, ty: l.type, d: l.days, a: l.addons||[], i: l.items.map(function(i){ return [i.c, i.n, i.q||1]; }) };
+    if(!l.items.length){ openSheet('<h2>分享行李清單</h2><p>清單還是空的，先加幾樣東西再分享。</p><div class="actions"><button class="btn" data-close>好</button></div>', "分享"); return; }
+    var payload = { t:"p", n: l.name, c: packCats(l), i: l.items.map(function(i){ return [i.c||"", i.n, i.q||1]; }) };
     shareSheet("行李清單", "行李清單「"+l.name+"」（"+l.items.length+" 樣）", payload);
   });
 
@@ -1255,22 +1508,342 @@ footer.foot .edit-row{margin-bottom:6px}
       $("imp_ok").addEventListener("click", function(){
         var have = {}; BUY.items.forEach(function(i){ have[i.n+"|"+i.shop] = 1; });
         data.i.forEach(function(r){ var k = String(r[0])+"|"+String(r[4]||""); if(have[k]) return;
-          addBuy(String(r[0]), String(r[4]||""), { qty: Math.max(1,toInt(r[1])||1), who: String(r[2]||""), price: toInt(r[3]), note: String(r[5]||"") }); });
+          addBuy(String(r[0]), String(r[4]||""), { qty: Math.max(1,toInt(r[1])||1), who: String(r[2]||""), price: parseAmt(r[3]), note: String(r[5]||""), cat: String(r[6]||"") }); });
+        var bc = buyCats(); (Array.isArray(data.c) ? data.c : []).forEach(function(c){ c = String(c); if(c && bc.indexOf(c) < 0) bc.push(c); }); saveBuy();
         closeSheet(); setView("buy");
       });
     } else if(data.t === "p"){
       openSheet('<h2>匯入行李清單</h2><p>朋友分享了「'+esc(String(data.n||"行李清單"))+'」，共 '+data.i.length+' 樣。</p><p class="sub">會建立成一份新的行李清單。</p><div class="actions"><button class="btn primary" id="imp_ok">建立清單</button><button class="btn" data-close>不用了</button></div>', "匯入");
       $("imp_ok").addEventListener("click", function(){
-        var l = { id: uid(), name: String(data.n||"行李清單"), type: data.ty==="domestic"?"domestic":"abroad", days: Math.max(1,toInt(data.d)||1),
-                  addons: (data.a||[]).filter(function(a){ return ADDON[a]; }), items: [], created: Date.now() };
-        data.i.forEach(function(r){ l.items.push({ id: uid(), c: CAT_ORDER.indexOf(r[0])>=0 ? r[0] : "其他", n: String(r[1]), q: Math.max(1,toInt(r[2])||1), done: false }); });
+        var l = { id: uid(), name: String(data.n||"行李清單"), cats: (Array.isArray(data.c) ? data.c : []).map(String).filter(Boolean), items: [], created: Date.now() };
+        data.i.forEach(function(r){ l.items.push({ id: uid(), c: String(r[0]||""), n: String(r[1]), q: Math.max(1,toInt(r[2])||1), done: false }); });
+        packCats(l);
         PACKS.lists.push(l); savePacks(); packOpen = l.id; closeSheet(); setView("pack");
       });
     }
   }
   function inBuy(key){ return BUY.items.some(function(i){ return i.shop === key && !i.done; }); }
 
-  syncModes(); renderAll(); updateDots(); setView(view); checkImport(); fxFetch();
+  // ===================== Trips =====================
+  var TRIP_KEY = "sp-trips-v1", HOME_KEY = "sp-home-v1", THEME_KEY = "sp-theme-v1", FOLD_KEY = "sp-fold-v1";
+  var COUNTRIES = [["JP","日本","JPY"],["KR","韓國","KRW"],["TH","泰國","THB"],["VN","越南","VND"],["SG","新加坡","SGD"],["HK","香港","HKD"],["CN","中國","CNY"],["US","美國","USD"],["EU","歐洲（歐元區）","EUR"],["GB","英國","GBP"],["AU","澳洲","AUD"],["TW","台灣（國內）","TWD"]];
+  var COUNTRY = {}; COUNTRIES.forEach(function(c){ COUNTRY[c[0]] = { name: c[1], cur: c[2] }; });
+  var CITY_PRESETS = [["札幌","JP"],["東京","JP"],["大阪","JP"],["福岡","JP"],["首爾","KR"],["曼谷","TH"]];
+  var CITY_EN = {"札幌":"SAPPORO","東京":"TOKYO","大阪":"OSAKA","福岡":"FUKUOKA","京都":"KYOTO","沖繩":"OKINAWA","名古屋":"NAGOYA","函館":"HAKODATE","首爾":"SEOUL","釜山":"BUSAN","曼谷":"BANGKOK","清邁":"CHIANG MAI","新加坡":"SINGAPORE","香港":"HONG KONG","河內":"HANOI","峴港":"DA NANG","胡志明市":"HO CHI MINH"};
+  var TODO_DEFAULT = {
+    JP: ["登記 Visit Japan Web","買網卡／eSIM","確認護照效期","換日幣現金"],
+    TW: ["確認住宿","查好交通方式"],
+    _:  ["確認護照效期","買網卡／eSIM","換外幣","投保旅平險"]
+  };
+  var TIPS = {
+    JP: [
+      { t:"11/1 起免稅改為出境退稅", b:"結帳時先付含稅價，出境時給海關確認後才退稅（購買後 90 天內出境）。免稅品出境時要全部帶在身上，同一張收據少一件，整張都不能退稅。建議先在 Visit Japan Web 登記。", link:"https://www.mlit.go.jp/kankocho/tax-free/content/001978459.pdf", label:"日本觀光廳說明" },
+      { t:"插座跟台灣一樣", b:"日本是兩孔扁腳插座，和台灣相同，一般不用轉接頭。電壓是 100V，手機、相機充電器可以直接用。" }
+    ]
+  };
+  var GUIDES = { sapporo: { name:"札幌站", sub:"4 商場" } };
+  function guideFor(city){ return /札幌|sapporo/i.test(city||"") ? "sapporo" : ""; }
+  function newTodos(country){ return (TODO_DEFAULT[country] || TODO_DEFAULT._).map(function(n){ return { id: uid(), n: n, done: false }; }); }
+
+  var TR = load(TRIP_KEY, null);
+  if(!TR || !Array.isArray(TR.list) || !TR.list.length){
+    var latest = PACKS.lists.slice().sort(function(a,b){ return b.created-a.created; });
+    var sp = latest.filter(function(l){ return /札幌/.test(l.name); })[0] || latest[0];
+    var t0 = { id:"t-sapporo", city:"札幌", en:"SAPPORO", country:"JP", cur:"JPY", dmode:"none", start:"", end:"", month:"",
+               buyKey:"sp-buy-v1", todos:newTodos("JP"), guide:"sapporo", packId: sp ? sp.id : "", created: Date.now() };
+    TR = { current: t0.id, list: [t0] };
+    save(TRIP_KEY, TR);
+  }
+  function saveTrips(){ save(TRIP_KEY, TR); }
+  function curTrip(){ for(var i=0;i<TR.list.length;i++) if(TR.list[i].id === TR.current) return TR.list[i]; TR.current = TR.list[0].id; return TR.list[0]; }
+  function applyTrip(){
+    var t = curTrip();
+    CUR_CODE = t.cur || (COUNTRY[t.country] ? COUNTRY[t.country].cur : "JPY");
+    BUY_KEY = t.buyKey || ("sp-buy-" + t.id);
+    BUY = load(BUY_KEY, {items:[]}); if(!BUY || !BUY.items) BUY = {items:[]};
+    buyWho = "all"; buyCat = "all";
+    updateDots();
+  }
+  function refreshCurrent(){ if(view==="home") renderHome(); else if(view==="buy") renderBuy(); else if(view==="set") renderSet(); else if(view==="pack") renderPack(); }
+
+  // ---- dates
+  function dnum(s){ var p = String(s).split("-"); return Date.UTC(+p[0], +p[1]-1, +(p[2]||1)) / 864e5; }
+  function md(s){ var p = s.split("-"); return (+p[1]) + "/" + (+p[2]); }
+  function tripDays(t){ return (t.dmode==="full" && t.start && t.end) ? Math.max(1, dnum(t.end)-dnum(t.start)+1) : 0; }
+  function tripStatus(t){
+    var now = dnum(today());
+    if(t.dmode === "full" && t.start){
+      var s = dnum(t.start), e = t.end ? dnum(t.end) : s;
+      if(now < s) return { k:"before", days: s-now };
+      if(now <= e) return { k:"during", day: now-s+1, total: e-s+1 };
+      return { k:"after" };
+    }
+    if(t.dmode === "month" && t.month) return { k:"month" };
+    return { k:"none" };
+  }
+  function dateText(t){
+    if(t.dmode === "full" && t.start) return md(t.start) + (t.end && t.end!==t.start ? " – " + md(t.end) : "") + "・" + tripDays(t) + " 天";
+    if(t.dmode === "month" && t.month){ var p = t.month.split("-"); return p[0] + " 年 " + (+p[1]) + " 月"; }
+    return "日期未定";
+  }
+
+  // ---- home config
+  var TILE_DEF = { pack:"行李清單", buy:"購買清單", fx:"匯率", shop:"店鋪指南", fav:"想逛的店" };
+  var HOME = load(HOME_KEY, null);
+  if(!HOME || !Array.isArray(HOME.order)) HOME = { order:["pack","buy","fx","shop","fav"], hidden:["fav"], open:{ todo:true, tips:false, trips:false } };
+  Object.keys(TILE_DEF).forEach(function(k){ if(HOME.order.indexOf(k) < 0) HOME.order.push(k); });
+  if(!HOME.open) HOME.open = { todo:true, tips:false, trips:false };
+  function saveHome(){ save(HOME_KEY, HOME); }
+
+  var TILE_ICON = {
+    pack:'<rect x="5" y="7.5" width="14" height="11.5" rx="2.6"/><path d="M9.5 7.5V5.6c0-.6.4-1 1-1h3c.6 0 1 .4 1 1v1.9"/><path d="M5 12.5h14"/>',
+    buy:'<path d="M6 8.5h12l-.8 10.2a1.8 1.8 0 0 1-1.8 1.6H8.6a1.8 1.8 0 0 1-1.8-1.6z"/><path d="M9.3 11V7.4a2.7 2.7 0 0 1 5.4 0V11"/>',
+    fx:'<path d="M5 9h12.5l-3-3"/><path d="M19 15H6.5l3 3"/>',
+    shop:'<path d="M5 10 6.3 5h11.4L19 10"/><path d="M5 10h14a2.3 2.3 0 0 1-4.6 0 2.4 2.4 0 0 1-4.8 0A2.3 2.3 0 0 1 5 10"/><path d="M6.2 12.6V19h11.6v-6.4"/><path d="M10.3 19v-3.6h3.4V19"/>',
+    fav:'<path d="M12 4.5l2.3 4.7 5.2.8-3.8 3.6.9 5.1L12 16.3l-4.6 2.4.9-5.1-3.8-3.6 5.2-.8z"/>',
+    tax:'<path d="M7 4h10v16l-2.5-1.6L12 20l-2.5-1.6L7 20z"/><path d="M9.8 9h4.4M9.8 12.5h4.4"/>',
+    plug:'<path d="M9 4v4M15 4v4M7 8h10v3a5 5 0 0 1-10 0z"/><path d="M12 16v4"/>',
+    pin:'<path d="M12 20s6-5.4 6-10a6 6 0 0 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="10" r="2"/>'
+  };
+  function appIcon(k, cls){ return '<span class="ai '+(cls||("ai-"+k))+'"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+TILE_ICON[k]+'</svg></span>'; }
+  var LOGO = '<svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg>';
+  var SKY = '<svg class="sky" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 52 L24 40 L38 46 L62 24 L80 38 L100 30 L122 48 L146 36 L170 12 L192 34 L218 26 L240 42 L266 20 L292 38 L320 30 V70 H0Z" fill="#2A4A6A"/><path d="M0 62 L40 52 L84 58 L132 48 L172 56 L222 50 L272 58 L320 52 V70 H0Z" fill="#335A80"/><circle cx="44" cy="14" r="1.6" fill="#fff" opacity=".7"/><circle cx="128" cy="8" r="1.2" fill="#fff" opacity=".6"/><circle cx="214" cy="12" r="1.5" fill="#fff" opacity=".7"/><circle cx="296" cy="6" r="1.2" fill="#fff" opacity=".6"/></svg>';
+
+  function tripPack(t){ var l = t.packId ? findPack(t.packId) : null; return l; }
+  function tileHTML(k, t){
+    var title = TILE_DEF[k], sub = "";
+    if(k === "pack"){ var l = tripPack(t); if(l){ var p = packProgress(l); sub = p.d===p.t ? "全部打包好了" : "已打包 "+p.d+" / "+p.t; } else sub = "還沒建立"; }
+    if(k === "buy"){ var left = BUY.items.filter(function(i){ return !i.done; }), sum = 0; left.forEach(function(i){ if(i.price) sum += i.price*(i.qty||1); });
+      sub = BUY.items.length ? (left.length ? "還有 "+left.length+" 樣"+(sum?"・"+money(sum):"") : "全部買齊了") : "還沒有項目"; }
+    if(k === "fx"){
+      if(CUR_CODE === "TWD"){ title = "匯率"; sub = "國內旅遊不用換匯"; }
+      else if(fxOk()){ title = money(CUR().sample); sub = "≈ " + twd(CUR().sample) + "・" + (fxRec().src==="manual"?"手動匯率":"今日匯率"); }
+      else { sub = "點這裡設定" + CUR().name + "匯率"; }
+    }
+    if(k === "shop"){ var g = GUIDES[t.guide]; sub = g ? g.name+" "+g.sub+"・"+Object.keys(DATA).reduce(function(a,m){ return a + DATA[m].shops.length; },0)+" 間" : "目前只有札幌站"; }
+    if(k === "fav"){ sub = Object.keys(favs).length + " 間"; }
+    return '<button class="tile" data-tile="'+k+'">'+appIcon(k)+'<span><span class="tt">'+esc(title)+'</span><span class="ts">'+sub+'</span></span></button>';
+  }
+  function hsec(key, title, summary, body, extra){
+    var open = !!HOME.open[key];
+    return '<section class="hsec"><div class="hsec-h"><button class="hsec-t" data-sec="'+key+'" aria-expanded="'+open+'"><b>'+title+'</b><span class="hsec-s">'+summary+'</span>'
+      + '<svg class="hsec-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>'+(extra||'')+'</div>'
+      + (open ? '<div class="hsec-b">'+body+'</div>' : '') + '</section>';
+  }
+  function renderHome(){
+    var t = curTrip(), st = tripStatus(t), cn = COUNTRY[t.country] ? COUNTRY[t.country].name : "";
+    var d = new Date(), wk = "日一二三四五六".charAt(d.getDay());
+    var kick = st.k==="during" ? "旅行中・第 "+st.day+" 天／共 "+st.total+" 天" : st.k==="after" ? "已結束的旅程・"+cn : "NEXT TRIP・"+cn;
+    var count = st.k==="before" ? '<div class="cd"><b>'+st.days+'</b><span>天後出發</span></div>'
+      : st.k==="month" ? '<div class="cd"><span class="cd-l">'+esc(dateText(t))+' 出發</span></div>'
+      : st.k==="none" ? '<div class="cd"><span class="cd-l">還沒決定日期</span></div>' : '';
+    var h = '<div class="home-top"><div><div class="home-date">'+(d.getMonth()+1)+' 月 '+d.getDate()+' 日 星期'+wk+'</div><div class="home-brand">'+LOGO+'<span>Nekobasu</span></div></div><button class="link-btn" id="homeEdit">編輯</button></div>'
+      + '<section class="hero">'+SKY+'<div class="hero-in"><button class="hero-pill" id="tripEdit">'+(t.dmode==="none"?"填日期":"編輯")+'</button>'
+      + '<div class="kick">'+esc(kick)+'</div><div class="city">'+esc(t.en || CITY_EN[t.city] || t.city)+'</div><div class="cz">'+esc(t.city)+'・'+esc(dateText(t))+'</div>'
+      + (st.k==="during" && GUIDES[t.guide] ? '<button class="hero-search" id="heroSearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>搜尋'+esc(GUIDES[t.guide].name)+'店家</button>' : count)
+      + '</div></section>';
+    var tiles = HOME.order.filter(function(k){ return HOME.hidden.indexOf(k) < 0; });
+    if(tiles.length) h += '<div class="tiles">'+tiles.map(function(k){ return tileHTML(k, t); }).join("")+'</div>';
+    // todos
+    var td = t.todos || [], tdDone = td.filter(function(x){ return x.done; }).length;
+    var tdSum = td.length && tdDone === td.length ? "全部完成 ✓" : tdDone+" / "+td.length+" 完成";
+    var tdBody = '<ul class="glist">' + td.map(function(x){
+      return '<li class="grow'+(x.done?" done":"")+'"><button class="ck ck-r" role="checkbox" aria-checked="'+(!!x.done)+'" data-todo="'+x.id+'" aria-label="'+esc(x.n)+'">'+ICON_CHECK+'</button><span class="g-t">'+esc(x.n)+'</span><button class="g-x" data-tdel="'+x.id+'" aria-label="刪除 '+esc(x.n)+'">×</button></li>';
+    }).join("") + '<li class="grow"><form id="todoAdd" class="g-add" autocomplete="off"><input id="todoInput" placeholder="＋ 新增待辦" aria-label="新增待辦"></form></li></ul>';
+    h += hsec("todo", "出發前待辦", tdSum, tdBody);
+    // tips
+    var tips = TIPS[t.country] || [];
+    if(tips.length){
+      h += hsec("tips", "當地提醒", tips.length+" 則", '<ul class="glist">'+tips.map(function(x, i){
+        return '<li class="grow tip">'+appIcon(i===0?"tax":"plug", i===0?"ai-tax":"ai-gray")+'<span class="g-t"><b>'+esc(x.t)+'</b><span>'+esc(x.b)+(x.link?' <a href="'+x.link+'" target="_blank" rel="noopener">'+esc(x.label)+'</a>':'')+'</span></span></li>';
+      }).join("")+'</ul>');
+    }
+    // trips
+    var tl = TR.list.slice().sort(function(a,b){ return (a.id===TR.current?-1:0)-(b.id===TR.current?-1:0) || (b.created||0)-(a.created||0); });
+    h += hsec("trips", "我的旅程", TR.list.length+" 趟", '<ul class="glist">'+tl.map(function(x){
+      var on = x.id === TR.current;
+      return '<li class="grow"><button class="g-btn" data-trip="'+x.id+'">'+appIcon("pin", on?"ai-tax":"ai-gray")+'<span class="g-t"><b>'+esc(x.city)+'</b><span>'+esc(dateText(x))+(on?"・目前旅程":"")+'</span></span>'+(on?'<span class="g-on">●</span>':ICON_NEXT)+'</button></li>';
+    }).join("")+'<li class="grow"><button class="g-btn g-new" id="tripNew">＋ 新增旅程</button></li></ul>');
+    $("homeMain").innerHTML = h;
+    var f = $("todoAdd");
+    if(f) f.addEventListener("submit", function(e){ e.preventDefault(); var v = $("todoInput").value.trim(); if(!v) return;
+      t.todos = t.todos || []; t.todos.push({ id: uid(), n: v, done: false }); saveTrips(); renderHome(); var i = $("todoInput"); if(i) i.focus(); });
+  }
+  $("homeMain").addEventListener("click", function(e){
+    var t = curTrip(), b;
+    if((b = e.target.closest("[data-sec]"))){ var k = b.dataset.sec; HOME.open[k] = !HOME.open[k]; saveHome(); renderHome(); return; }
+    if((b = e.target.closest("[data-todo]"))){
+      (t.todos||[]).forEach(function(x){ if(x.id===b.dataset.todo) x.done = !x.done; });
+      if(t.todos.length && t.todos.every(function(x){ return x.done; })) HOME.open.todo = false;
+      saveTrips(); saveHome(); renderHome(); return; }
+    if((b = e.target.closest("[data-tdel]"))){ t.todos = (t.todos||[]).filter(function(x){ return x.id !== b.dataset.tdel; }); saveTrips(); renderHome(); return; }
+    if((b = e.target.closest("[data-tile]"))){
+      var k2 = b.dataset.tile;
+      if(k2 === "pack"){ var l = tripPack(t); packOpen = l ? l.id : null; setView("pack"); }
+      else if(k2 === "buy" || k2 === "fav") setView("buy");
+      else if(k2 === "fx") fxSheet();
+      else if(k2 === "shop") setView("shop");
+      return; }
+    if((b = e.target.closest("[data-trip]"))){ if(b.dataset.trip !== TR.current){ TR.current = b.dataset.trip; saveTrips(); applyTrip(); fxFetch(); renderAll(); renderHome(); window.scrollTo({top:0}); } return; }
+    if(e.target.closest("#tripNew")){ tripSheet(null); return; }
+    if(e.target.closest("#tripEdit")){ tripSheet(t); return; }
+    if(e.target.closest("#homeEdit")){ homeEditSheet(); return; }
+    if(e.target.closest("#heroSearch")){ setView("shop"); setTimeout(function(){ $("q").focus(); }, 50); }
+  });
+
+  // ---- trip create / edit
+  function tripSheet(t){
+    var isNew = !t;
+    var d = t ? JSON.parse(JSON.stringify(t)) : { city:"", en:"", country:"JP", dmode:"none", start:"", end:"", month:"" };
+    openSheet('<h2>'+(isNew?"新增旅程":"編輯旅程")+'</h2><form class="form" id="tripForm" novalidate>'
+      + '<label><span class="req">城市</span><input id="tp_city" value="'+esc(d.city)+'" placeholder="例：札幌"></label>'
+      + '<div class="chips-wrap" id="tp_presets">'+CITY_PRESETS.map(function(c){ return '<button type="button" class="chip" data-pc="'+c[0]+'" data-pco="'+c[1]+'">'+c[0]+'</button>'; }).join("")+'</div>'
+      + '<div class="two"><label>國家<select id="tp_country">'+COUNTRIES.map(function(c){ return '<option value="'+c[0]+'"'+(c[0]===d.country?" selected":"")+'>'+c[1]+'</option>'; }).join("")+'</select></label>'
+      + '<label>主視覺英文<input id="tp_en" value="'+esc(d.en||"")+'" placeholder="可不填"></label></div>'
+      + '<div><span class="pick-l">日期</span><span class="seg seg-full" id="tp_mode" role="group">'
+      + [["full","確切日期"],["month","只填月份"],["none","未定"]].map(function(o){ return '<button type="button" data-dm="'+o[0]+'" aria-pressed="'+(d.dmode===o[0])+'">'+o[1]+'</button>'; }).join("")+'</span></div>'
+      + '<div class="two" id="tp_full"><label>出發<input type="date" id="tp_start" value="'+esc(d.start||"")+'"></label><label>回程<input type="date" id="tp_end" value="'+esc(d.end||"")+'"></label></div>'
+      + '<label id="tp_monthL">月份<input type="month" id="tp_month" value="'+esc(d.month||"")+'"></label>'
+      + (isNew ? '<label class="check-l"><input type="checkbox" id="tp_pack" checked> 同時建立行李清單</label>' : '')
+      + '<div class="err" id="tp_err" hidden></div>'
+      + '<div class="actions"><button type="submit" class="btn primary">'+(isNew?"建立":"儲存")+'</button><button type="button" class="btn" data-close>取消</button>'
+      + (!isNew && TR.list.length > 1 ? '<button type="button" class="btn danger" id="tp_del">刪除旅程</button>' : '')+'</div><div id="tp_zone"></div></form>', isNew?"新增旅程":"編輯旅程");
+    function sync(){
+      $("tp_full").hidden = d.dmode !== "full"; $("tp_monthL").hidden = d.dmode !== "month";
+      Array.prototype.forEach.call($("tp_mode").children, function(x){ x.setAttribute("aria-pressed", String(x.dataset.dm === d.dmode)); });
+    }
+    sync();
+    $("tp_mode").addEventListener("click", function(e){ var b = e.target.closest("[data-dm]"); if(!b) return; d.dmode = b.dataset.dm; sync(); });
+    $("tp_presets").addEventListener("click", function(e){ var b = e.target.closest("[data-pc]"); if(!b) return; $("tp_city").value = b.dataset.pc; $("tp_country").value = b.dataset.pco; $("tp_en").value = CITY_EN[b.dataset.pc] || ""; });
+    $("tripForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var city = $("tp_city").value.trim(), err = $("tp_err");
+      if(!city){ err.textContent = "請填城市，例如「札幌」。"; err.hidden = false; return; }
+      var start = $("tp_start").value, end = $("tp_end").value, month = $("tp_month").value;
+      if(d.dmode === "full" && !start){ err.textContent = "請選出發日期，或改成「只填月份」、「未定」。"; err.hidden = false; return; }
+      if(d.dmode === "full" && end && end < start){ err.textContent = "回程日期不能早於出發日期。"; err.hidden = false; return; }
+      if(d.dmode === "month" && !month){ err.textContent = "請選月份，或改成「未定」。"; err.hidden = false; return; }
+      var country = $("tp_country").value;
+      var rec = isNew ? { id: "t" + uid(), created: Date.now(), todos: newTodos(country) } : t;
+      rec.city = city; rec.en = $("tp_en").value.trim().toUpperCase(); rec.country = country; rec.cur = COUNTRY[country].cur;
+      rec.dmode = d.dmode; rec.start = d.dmode==="full" ? start : ""; rec.end = d.dmode==="full" ? (end || start) : ""; rec.month = d.dmode==="month" ? month : "";
+      if(!rec.guide) rec.guide = guideFor(city);
+      if(isNew){
+        rec.buyKey = "sp-buy-" + rec.id;
+        if($("tp_pack").checked){
+          var mo = rec.dmode==="full" ? +rec.start.split("-")[1] : rec.dmode==="month" ? +rec.month.split("-")[1] : 0;
+          var l = newPack(city + (mo ? " " + mo + " 月" : ""), true);
+          PACKS.lists.push(l); savePacks(); rec.packId = l.id;
+        }
+        TR.list.push(rec); TR.current = rec.id;
+      }
+      saveTrips(); closeSheet(); applyTrip(); fxFetch(); renderAll(); renderHome(); window.scrollTo({top:0});
+    });
+    var del = $("tp_del");
+    if(del) del.addEventListener("click", function(){
+      $("tp_zone").innerHTML = '<div class="confirm">刪除「'+esc(t.city)+'」旅程和它的購買清單？行李清單會保留。<button type="button" class="btn danger" id="tp_yes">刪除</button></div>';
+      $("tp_yes").addEventListener("click", function(){
+        TR.list = TR.list.filter(function(x){ return x.id !== t.id; });
+        if(t.buyKey && t.buyKey !== "sp-buy-v1") storeDel(t.buyKey);
+        TR.current = TR.list[0].id; saveTrips(); closeSheet(); applyTrip(); renderAll(); renderHome();
+      });
+    });
+  }
+
+  // ---- home edit
+  function homeEditSheet(){
+    function body(){
+      return HOME.order.map(function(k, i){
+        var on = HOME.hidden.indexOf(k) < 0;
+        return '<li class="grow">'+appIcon(k)+'<span class="g-t">'+TILE_DEF[k]+'</span>'
+          + '<button class="mv" data-up="'+k+'" aria-label="'+TILE_DEF[k]+' 往上"'+(i===0?" disabled":"")+'>↑</button>'
+          + '<button class="mv" data-dn="'+k+'" aria-label="'+TILE_DEF[k]+' 往下"'+(i===HOME.order.length-1?" disabled":"")+'>↓</button>'
+          + '<button class="sw" role="switch" aria-checked="'+on+'" data-sw="'+k+'" aria-label="在首頁顯示 '+TILE_DEF[k]+'"><i></i></button></li>';
+      }).join("");
+    }
+    openSheet('<h2>首頁小工具</h2><p class="sub" style="margin:0 0 10px">開關決定要不要顯示在首頁，箭頭調整順序。</p><ul class="glist glist-card" id="he_list">'+body()+'</ul>'
+      + '<div class="actions"><button type="button" class="btn primary" data-close>完成</button><button type="button" class="btn" id="he_reset">恢復預設</button></div>', "首頁小工具");
+    $("he_list").addEventListener("click", function(e){
+      var b = e.target.closest("button"); if(!b) return;
+      var o = HOME.order, k, i;
+      if(b.dataset.sw){ k = b.dataset.sw; i = HOME.hidden.indexOf(k); if(i<0) HOME.hidden.push(k); else HOME.hidden.splice(i,1); }
+      if(b.dataset.up){ i = o.indexOf(b.dataset.up); if(i>0){ o.splice(i,1); o.splice(i-1,0,b.dataset.up); } }
+      if(b.dataset.dn){ i = o.indexOf(b.dataset.dn); if(i<o.length-1){ o.splice(i,1); o.splice(i+1,0,b.dataset.dn); } }
+      saveHome(); this.innerHTML = body(); renderHome();
+    });
+    $("he_reset").addEventListener("click", function(){ HOME.order = ["pack","buy","fx","shop","fav"]; HOME.hidden = ["fav"]; saveHome(); $("he_list").innerHTML = body(); renderHome(); });
+  }
+
+  // ===================== Settings =====================
+  var THEME = store(true, THEME_KEY) || "auto";
+  function applyTheme(){ var r = document.documentElement; if(THEME === "auto"){ if(r.dataset.nbTheme){ r.removeAttribute("data-theme"); delete r.dataset.nbTheme; } } else { r.setAttribute("data-theme", THEME); r.dataset.nbTheme = "1"; } }
+  applyTheme();
+  function renderSet(){
+    var t = curTrip();
+    Array.prototype.forEach.call($("themeSeg").children, function(x){ x.setAttribute("aria-pressed", String(x.dataset.th === THEME)); });
+    $("setTiles").textContent = HOME.order.filter(function(k){ return HOME.hidden.indexOf(k) < 0; }).length + " 個";
+    $("setFxName").textContent = "匯率・" + (CUR_CODE === "TWD" ? "台幣" : CUR().name);
+    $("setFx").textContent = CUR_CODE === "TWD" ? "不需要" : fxOk() ? "1 ≈ " + fxRateText() + "・" + (fxRec().src === "manual" ? "手動" : "自動") : "未設定";
+    $("setCommon").textContent = COMMON.length + " 樣";
+    $("setData").textContent = MALLS.map(function(m){ return (DATA[m.id].meta.updated||"").slice(5).replace("-","/"); }).filter(Boolean).sort().slice(-1)[0] + " 更新";
+  }
+  $("themeSeg").addEventListener("click", function(e){ var b = e.target.closest("[data-th]"); if(!b) return; THEME = b.dataset.th; store(false, THEME_KEY, THEME); applyTheme(); renderSet(); });
+  $("setMain").addEventListener("click", function(e){
+    var b = e.target.closest("[data-act]"); if(!b) return;
+    var a = b.dataset.act;
+    if(a === "tiles") homeEditSheet();
+    if(a === "fx") fxSheet();
+    if(a === "common"){ packOpen = null; setView("pack"); setTimeout(function(){ var el = document.querySelector("#commonSec"); if(el) el.scrollIntoView(); }, 60); }
+    if(a === "backup") doBackup();
+    if(a === "restore") $("restoreFile").click();
+    if(a === "editshop"){ setView("shop"); if(!state.edit) $("editToggle").click(); }
+    if(a === "help") helpSheet();
+    if(a === "sources") sourcesSheet();
+  });
+  function doBackup(){
+    var data = {};
+    try{ for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k && k.indexOf("sp-")===0) data[k] = localStorage.getItem(k); } }catch(e){}
+    var json = JSON.stringify({ app:"nekobasu", v:1, at: new Date().toISOString(), data: data }, null, 1);
+    var name = "nekobasu-backup-" + today().replace(/-/g,"") + ".json";
+    dlP.then(function(dl){
+      if(dl) return dl.save({ filename: name, data: json });
+      var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([json], {type:"application/json"})); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+    }).then(function(){ openSheet('<h2>已備份</h2><p>檔案「'+esc(name)+'」已下載。換手機時，到「設定 → 從備份還原」選這個檔案就能還原。</p><div class="actions"><button class="btn primary" data-close>好</button></div>', "備份"); })
+      .catch(function(err){ openSheet('<h2>無法下載</h2><p>'+(err && err.code==="declined" ? "已取消備份。" : "這個瀏覽器無法下載檔案，請改用手機上的 App 或電腦操作。")+'</p><div class="actions"><button class="btn" data-close>好</button></div>', "備份"); });
+  }
+  $("restoreFile").addEventListener("change", function(){
+    var f = this.files && this.files[0]; this.value = ""; if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      var o = null; try{ o = JSON.parse(rd.result); }catch(e){}
+      if(!o || o.app !== "nekobasu" || !o.data){ openSheet('<h2>無法還原</h2><p>這不是 Nekobasu 的備份檔，請選擇「nekobasu-backup-日期.json」。</p><div class="actions"><button class="btn" data-close>好</button></div>', "還原"); return; }
+      openSheet('<h2>從備份還原</h2><p>會用 '+esc(String(o.at||"").slice(0,10))+' 的備份取代這台裝置上目前的旅程和清單。</p><div class="actions"><button class="btn danger" id="rs_ok">取代並還原</button><button class="btn" data-close>取消</button></div>', "還原");
+      $("rs_ok").addEventListener("click", function(){
+        try{ Object.keys(o.data).forEach(function(k){ if(k.indexOf("sp-")===0) localStorage.setItem(k, o.data[k]); }); }catch(e){}
+        location.reload();
+      });
+    };
+    rd.readAsText(f);
+  });
+  function helpSheet(){
+    openSheet('<h2>使用說明</h2><div class="help">'
+      + '<p><b>首頁</b>顯示目前旅程的倒數和重點。點主視覺的「編輯」可以改城市和日期；「我的旅程」可以切換或新增旅程。</p>'
+      + '<p><b>店鋪</b>搜尋札幌站四個商場的店家，點樓層標題可以收起那一層，點店名可以加入購物清單。</p>'
+      + '<p><b>購物</b>每趟旅程各有一份。輸入東西會自動找店，可以切換「逛街順序」（依商場樓層）或「依分類」（分類自己建）；填單價會換算台幣。</p>'
+      + '<p><b>行李</b>可以建立多份，從空白開始自己加分類和物品。勾「記住」的東西會變成「我的常用物品」，建立新清單時可以一次帶入。</p>'
+      + '<p><b>分享</b>購物和行李清單右上的「分享」會產生連結，傳給旅伴點開就能匯入。</p>'
+      + '<p><b>資料存在這台裝置</b>，換手機前請先到設定「備份所有資料」。</p></div>'
+      + '<div class="actions"><button class="btn primary" data-close>好</button></div>', "使用說明");
+  }
+  function sourcesSheet(){
+    openSheet('<h2>資料來源</h2><div class="help">'
+      + MALLS.map(function(m){ return '<p><b>'+esc(m.name)+'</b>'+esc(DATA[m.id].meta.source||"")+'，'+esc(DATA[m.id].meta.updated||"")+' 整理。<a href="'+m.map+'" target="_blank" rel="noopener">官方網站</a></p>'; }).join("")
+      + '<p><b>免稅制度</b>日本觀光廳。</p><p><b>匯率</b>ExchangeRate-API，備援 currency-api。</p></div>'
+      + '<div class="actions"><button class="btn primary" data-close>好</button></div>', "資料來源");
+  }
+
+  syncModes(); applyTrip(); renderAll(); setView(view); checkImport(); fxFetch();
 
   // Published copies of each mall's data file win over the embedded snapshot when newer.
   if(location.protocol.indexOf("http")===0){

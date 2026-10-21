@@ -1,13 +1,13 @@
 {
-  "name": "札幌站店鋪查詢",
-  "short_name": "札幌站逛街",
-  "description": "札幌站周邊商場店鋪樓層查詢",
+  "name": "Nekobasu",
+  "short_name": "Nekobasu",
+  "description": "旅行小幫手：行程、購物清單、行李清單、匯率與店鋪指南",
   "lang": "zh-Hant",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#eef2f8",
-  "theme_color": "#ffffff",
+  "background_color": "#F2F2F7",
+  "theme_color": "#F2F2F7",
   "icons": [
     {
       "src": "icon-192.png",
