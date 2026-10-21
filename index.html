@@ -1543,7 +1543,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   };
   var GUIDES = { sapporo: { name:"札幌站", sub:"4 商場" } };
   function guideFor(city){ return /札幌|sapporo/i.test(city||"") ? "sapporo" : ""; }
-  function newTodos(country){ return (TODO_DEFAULT[country] || TODO_DEFAULT._).map(function(n){ return { id: uid(), n: n, done: false }; }); }
+  function newTodos(){ return []; }
 
   var TR = load(TRIP_KEY, null);
   if(!TR || !Array.isArray(TR.list) || !TR.list.length){
@@ -1554,6 +1554,12 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     TR = { current: t0.id, list: [t0] };
     save(TRIP_KEY, TR);
   }
+  // earlier test builds pre-filled suggested to-dos; drop them if they were never touched
+  TR.list.forEach(function(x){
+    var def = TODO_DEFAULT[x.country] || TODO_DEFAULT._, td = x.todos || [];
+    if(td.length === def.length && td.every(function(d, i){ return !d.done && d.n === def[i]; })) x.todos = [];
+  });
+  save(TRIP_KEY, TR);
   function saveTrips(){ save(TRIP_KEY, TR); }
   function curTrip(){ for(var i=0;i<TR.list.length;i++) if(TR.list[i].id === TR.current) return TR.list[i]; TR.current = TR.list[0].id; return TR.list[0]; }
   function applyTrip(){
@@ -1646,7 +1652,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if(tiles.length) h += '<div class="tiles">'+tiles.map(function(k){ return tileHTML(k, t); }).join("")+'</div>';
     // todos
     var td = t.todos || [], tdDone = td.filter(function(x){ return x.done; }).length;
-    var tdSum = td.length && tdDone === td.length ? "全部完成 ✓" : tdDone+" / "+td.length+" 完成";
+    var tdSum = !td.length ? "還沒有待辦" : tdDone === td.length ? "全部完成 ✓" : tdDone+" / "+td.length+" 完成";
     var tdBody = '<ul class="glist">' + td.map(function(x){
       return '<li class="grow'+(x.done?" done":"")+'"><button class="ck ck-r" role="checkbox" aria-checked="'+(!!x.done)+'" data-todo="'+x.id+'" aria-label="'+esc(x.n)+'">'+ICON_CHECK+'</button><span class="g-t">'+esc(x.n)+'</span><button class="g-x" data-tdel="'+x.id+'" aria-label="刪除 '+esc(x.n)+'">×</button></li>';
     }).join("") + '<li class="grow"><form id="todoAdd" class="g-add" autocomplete="off"><input id="todoInput" placeholder="＋ 新增待辦" aria-label="新增待辦"></form></li></ul>';
