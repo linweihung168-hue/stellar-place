@@ -28,7 +28,7 @@ img{max-width:100%}
   --bg:#eef2f8; --surface:#ffffff; --ink:#14213a; --muted:#5a6882; --line:#d8e0ec;
   --accent:#2f6fd6; --accent-ink:#ffffff; --accent-soft:#e3ecfb;
   --stellar-c:#1d3f86; --stellar-e:#0e7c7f; --apia-w:#6b3fa0; --apia-c:#9a5b00; --tokyu:#b3261e; --daimaru:#2e6b34;
-  --star:#d79a00; --warn-bg:#fff4dc; --warn-ink:#7a5200; --danger:#c0362c; --wing-ink:#ffffff;
+  --star:#d79a00; --warn-bg:#fff4dc; --warn-ink:#7a5200; --danger:#c0362c; --wing-ink:#ffffff; --ok:#2e7d4f; --nav-h:58px;
   --f-display:"Barlow Condensed","Zen Kaku Gothic New",system-ui,sans-serif;
   --f-ja:"Zen Kaku Gothic New","Noto Sans TC",system-ui,sans-serif;
   --f-body:"Noto Sans TC","Zen Kaku Gothic New",system-ui,sans-serif;
@@ -38,12 +38,12 @@ img{max-width:100%}
   --bg:#0c1322; --surface:#141e33; --ink:#e5ecf8; --muted:#94a3bd; --line:#253350;
   --accent:#6da5ff; --accent-ink:#0c1322; --accent-soft:#1b2a48;
   --stellar-c:#8eaeff; --stellar-e:#45c4c6; --apia-w:#c4a2f0; --apia-c:#f0b85a; --tokyu:#ff8a80; --daimaru:#8fd394;
-  --star:#f2b928; --warn-bg:#3a2e12; --warn-ink:#f3d58f; --danger:#ff7b70; --wing-ink:#0c1322; color-scheme:dark}}
+  --star:#f2b928; --warn-bg:#3a2e12; --warn-ink:#f3d58f; --danger:#ff7b70; --wing-ink:#0c1322; --ok:#5fcf8f; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0c1322; --surface:#141e33; --ink:#e5ecf8; --muted:#94a3bd; --line:#253350;
   --accent:#6da5ff; --accent-ink:#0c1322; --accent-soft:#1b2a48;
   --stellar-c:#8eaeff; --stellar-e:#45c4c6; --apia-w:#c4a2f0; --apia-c:#f0b85a; --tokyu:#ff8a80; --daimaru:#8fd394;
-  --star:#f2b928; --warn-bg:#3a2e12; --warn-ink:#f3d58f; --danger:#ff7b70; --wing-ink:#0c1322; color-scheme:dark}
+  --star:#f2b928; --warn-bg:#3a2e12; --warn-ink:#f3d58f; --danger:#ff7b70; --wing-ink:#0c1322; --ok:#5fcf8f; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
@@ -85,10 +85,22 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backgroun
 .filters .fav-toggle{margin-left:auto}
 
 .notice{display:flex;gap:8px;align-items:flex-start;background:var(--warn-bg);color:var(--warn-ink);border-radius:var(--r);padding:10px 12px;font-size:13px;margin-top:14px}
+.deal{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.deal summary{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer;list-style:none}
+.deal summary::-webkit-details-marker{display:none}
+.deal summary::after{content:"";margin-left:auto;flex:none;width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translateY(-2px)}
+.deal[open] summary::after{transform:rotate(-135deg) translateY(-2px)}
+.deal-ic{flex:none;width:22px;height:22px;border-radius:6px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-family:var(--f-ja);font-weight:700;font-size:12.5px}
+.deal-t{font-weight:700;font-size:14px;flex:none}
+.deal-s{font-size:12.5px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.deal-b{padding:0 12px 12px;display:grid;gap:10px;font-size:13px;line-height:1.6}
+.deal-i b{display:block;font-size:13.5px}
+.deal-i a{color:var(--accent);white-space:nowrap}
+.deal-f{margin:0;font-size:12px;color:var(--muted)}
 .meta-line{display:flex;justify-content:space-between;gap:4px 8px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;margin:14px 2px 4px}
 .meta-line .count{font-variant-numeric:tabular-nums}
 
-main{padding-bottom:120px}
+main{padding-bottom:calc(var(--nav-h) + 110px)}
 .floor{margin-top:18px}
 .floor-h{display:flex;align-items:baseline;gap:10px;padding:0 2px 6px;border-bottom:2px solid var(--ink)}
 .floor-h .fl{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1;letter-spacing:.01em}
@@ -125,7 +137,7 @@ footer.foot{font-size:12.5px;color:var(--muted);padding:4px 2px 20px;display:fle
 footer.foot a{color:var(--accent)}
 footer.foot .edit-row{margin-bottom:6px}
 
-.bar{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--surface);border-top:1px solid var(--line);padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));padding-top:10px;box-shadow:0 -6px 20px rgba(10,20,40,.08)}
+.bar{position:fixed;left:0;right:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px));z-index:25;background:var(--surface);border-top:1px solid var(--line);padding-block:10px;box-shadow:0 -6px 20px rgba(10,20,40,.08)}
 .bar .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .bar .msg{flex:1;min-width:160px;font-size:13px}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;font-size:14px;font-weight:500}
@@ -151,6 +163,82 @@ footer.foot .edit-row{margin-bottom:6px}
 .form .req::after{content:" *";color:var(--danger)}
 .err{color:var(--danger);font-size:13px}
 .confirm{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:10px;font-size:13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+/* ---------- bottom tab bar ---------- */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:26;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.tabbar button{flex:1;max-width:200px;height:var(--nav-h);border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11.5px;font-weight:500;color:var(--muted)}
+.tabbar svg{width:23px;height:23px}
+.tabbar button[aria-current="page"]{color:var(--accent)}
+.tabbar .ico{position:relative;display:inline-flex}
+.tabbar .dot{position:absolute;top:-5px;left:15px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--danger);color:var(--surface);font-family:var(--f-display);font-size:12px;line-height:17px;text-align:center}
+/* ---------- list views ---------- */
+.vh{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.vh .wrap{display:flex;align-items:center;gap:8px;padding-block:12px}
+.vh h1{margin:0;flex:1;min-width:0;font-family:var(--f-ja);font-weight:700;font-size:19px;line-height:1.2;overflow-wrap:anywhere}
+.icon-btn{flex:none;width:36px;height:36px;border:1px solid var(--line);background:var(--surface);border-radius:50%;display:grid;place-items:center;padding:0;color:var(--ink)}
+.icon-btn svg{width:18px;height:18px}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px;display:grid;gap:9px}
+.sum-top{display:flex;align-items:baseline;gap:8px}
+.sum .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:.9;font-variant-numeric:tabular-nums}
+.sum-l{font-weight:500}
+.sum-r{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sum-money{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.sum-money b{color:var(--ink);font-family:var(--f-display);font-size:16px;font-variant-numeric:tabular-nums}
+.prog{display:block;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--ok);border-radius:4px}
+@media (prefers-reduced-motion:no-preference){.prog i{transition:width .3s ease}}
+.twd{margin-left:4px;font-size:.92em;color:var(--muted);white-space:nowrap}
+.sum-money span em{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:1px;font-variant-numeric:tabular-nums}
+.ta-r{text-align:right}
+.fx-line{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:9px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.twd-live{font-size:12px;color:var(--muted);min-height:16px}
+.chips.who{margin-top:12px}
+.adder{display:flex;gap:8px;margin-top:14px}
+.adder input,.adder select{min-width:0;border:1.5px solid var(--line);background:var(--surface);border-radius:var(--r);padding:10px 12px;font-size:16px}
+.adder input{flex:1}
+.adder input:focus{border-color:var(--accent);outline:none}
+.adder-pack{margin-top:22px;flex-wrap:wrap}
+.adder-pack input{flex:1 1 100%}
+.adder-pack select{flex:1}
+.sugs{list-style:none;margin:6px 0 0;padding:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.sugs li+li{border-top:1px solid var(--line)}
+.sugs .sug-h{padding:8px 12px;font-size:12.5px;color:var(--muted)}
+.sugs button{display:flex;gap:10px;align-items:center;width:100%;border:0;background:none;padding:9px 12px;text-align:left}
+.sug-act{flex:none;font-size:12.5px;color:var(--accent);font-weight:500}
+.route-note{margin:14px 2px 0;font-size:12.5px;color:var(--muted)}
+.fl-sm{font-family:var(--f-ja) !important;font-size:18px !important}
+.ck{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;padding:0;color:transparent}
+.ck svg{width:17px;height:17px}
+.ck[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.row.done .ja{text-decoration:line-through;color:var(--muted)}
+.row.done .wing{opacity:.45}
+.wing.none{background:var(--line);color:var(--muted);font-family:var(--f-body);font-size:14px}
+.chev{flex:none;width:18px;height:18px;color:var(--muted);margin-left:auto}
+.ja-sm{font-size:15px;font-weight:500}
+.qty{font-family:var(--f-display);color:var(--muted);font-weight:600}
+.done-sec{margin-top:22px}
+.done-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:none;padding:12px 2px;font-weight:500;color:var(--muted)}
+.done-toggle span{font-size:13px;color:var(--accent)}
+.empty-card{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px 20px;text-align:center;color:var(--muted);font-size:14px;line-height:1.7}
+.empty-card b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+.empty-ico{display:grid;place-items:center;width:76px;height:76px;margin:0 auto 14px;border-radius:22px;background:var(--accent-soft);color:var(--accent)}
+.empty-ico svg{width:38px;height:38px}
+.hint-p{margin:8px 2px 0;font-size:13px;color:var(--muted)}
+.trip{display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 16px;margin-top:12px}
+.trip-main{flex:1;min-width:0;display:grid;gap:5px}
+.link-btn{border:0;background:none;padding:0;color:var(--accent);font-size:13px;font-weight:500}
+.chips-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chips-wrap .chip[aria-pressed="true"]::before{content:"✓ "}
+.pick{display:grid;gap:6px}
+.pick-l{font-size:13px;color:var(--muted)}
+.pick-cur{display:flex;align-items:center;gap:10px;min-height:36px}
+.pick input{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:9px 10px;font-size:16px;color:var(--ink)}
+.check-l{display:flex !important;grid-template-columns:none;align-items:center;gap:8px;color:var(--ink) !important;font-size:14px !important}
+.check-l input{width:20px;height:20px}
+.menu{display:grid;gap:8px}
+.share-text{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px;font-size:13px;color:var(--ink);resize:none;overflow-wrap:anywhere}
+.imp{margin:6px 0 10px;padding-left:20px;font-size:14px}
+.form .seg{display:flex}
+.form .seg button{flex:1;padding:9px 8px;font-size:14px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(16px);opacity:.6}}}
 @media (max-width:379px){.brand h1{font-size:17px}.brand .mark{width:24px;height:24px}#modes button{padding:6px 8px}}
 </style>
@@ -158,6 +246,7 @@ footer.foot .edit-row{margin-bottom:6px}
 <body>
 
 <div id="app">
+<div id="view-shop">
   <header class="top">
     <div class="wrap">
       <div class="brand">
@@ -173,19 +262,20 @@ footer.foot .edit-row{margin-bottom:6px}
       <div class="malls" id="malls" role="group" aria-label="商場"></div>
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="搜尋店名或類型，例：六花亭、拉麵、Aesop" autocomplete="off" enterkeyhint="search" aria-label="搜尋">
+        <input id="q" type="search" placeholder="搜尋店名或類型" autocomplete="off" enterkeyhint="search" aria-label="搜尋">
         <button class="clear" id="qClear" aria-label="清除搜尋" hidden>×</button>
       </div>
       <div class="chips" id="cats" role="group" aria-label="分類"></div>
       <div class="filters">
         <div class="seg" id="areas" role="group" aria-label="館別" hidden></div>
         <select id="floorSel" aria-label="樓層"></select>
-        <button class="pill-btn fav-toggle" id="favToggle" aria-pressed="false">★ 收藏</button>
+        <button class="pill-btn fav-toggle" id="favToggle" aria-pressed="false">★ 想逛</button>
       </div>
     </div>
   </header>
   <main class="wrap">
     <div id="notices"></div>
+    <div id="deals"></div>
     <div class="meta-line"><span class="count" id="count"></span><span id="hours"></span></div>
     <div id="results"></div>
     <div class="legend" id="legend"></div>
@@ -195,6 +285,29 @@ footer.foot .edit-row{margin-bottom:6px}
       <span>店名與樓層依各商場官網整理，介紹參考官方店鋪頁。如有出入請以官網為準，也可按「編輯資料」自行修正。</span>
     </footer>
   </main>
+</div>
+<div id="view-buy" hidden>
+  <header class="vh"><div class="wrap"><h1>購買清單</h1>
+    <button class="pill-btn" id="buyShare">分享</button>
+    <button class="icon-btn" id="buyMore" aria-label="更多選項"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </div></header>
+  <main class="wrap" id="buyMain"></main>
+</div>
+<div id="view-pack" hidden>
+  <header class="vh"><div class="wrap">
+    <button class="icon-btn" id="packBack" aria-label="回到清單列表" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <h1 id="packTitle">行李清單</h1>
+    <button class="pill-btn" id="packNew">＋ 新清單</button>
+    <button class="pill-btn" id="packShare" hidden>分享</button>
+    <button class="icon-btn" id="packMore" aria-label="清單設定" hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+  </div></header>
+  <main class="wrap" id="packMain"></main>
+</div>
+<nav class="tabbar" id="tabbar" aria-label="主選單">
+  <button data-view="shop" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 9.5L6 4.5h12l1.5 5"/><path d="M4.5 9.5h15v.5a2.6 2.6 0 0 1-5 1 2.6 2.6 0 0 1-5 0 2.6 2.6 0 0 1-5-1z"/><path d="M5.5 12.5v7h13v-7"/><path d="M10 19.5v-4h4v4"/></svg>店鋪查詢</button>
+  <button data-view="buy"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 7.5h12.4l-.9 11.4a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8z"/><path d="M9 10.5V6.8a3 3 0 0 1 6 0v3.7"/></svg><span class="dot" id="buyDot" hidden></span></span>購買清單</button>
+  <button data-view="pack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="12.5" rx="2.6"/><path d="M9.5 7V4.8a.8.8 0 0 1 .8-.8h3.4a.8.8 0 0 1 .8.8V7"/><path d="M9 11v5M15 11v5"/><path d="M8.5 19.5v1M15.5 19.5v1"/></svg>行李清單</button>
+</nav>
   <div class="bar" id="bar" hidden>
     <div class="wrap">
       <div class="msg" id="barMsg"></div>
@@ -242,12 +355,14 @@ footer.foot .edit-row{margin-bottom:6px}
       shopLink:function(s){ return /^\d{6}/.test(s.id) ? "https://shopblog.dmdepart.jp/sapporo/list/?scd="+s.id.slice(0,6) : "https://www.daimaru.co.jp/sapporo/floor/"+s.f.toLowerCase()+".html"; },
       shopLinkLabel:"官方頁面",
       hints:{"B1F":"ほっぺタウン 美食街・伴手禮","1F":"化妝品","2F":"精品・飾品","3F":"女裝・包款","4F":"女裝・童裝","5F":"名錶・設計師品牌","6F":"男裝","7F":"生活用品・和服","8F":"餐廳街・寶可夢中心"},
-      tip:"札幌站南口西側直通，B1F–6F 每層都與 Stellar Place 相連。", badge:"大" }
+      tip:"札幌站南口西側直通，B1F–6F 每層都與 Stellar Place 相連。", badge:"大",
+      deal:{ text:"免稅櫃台與外幣兌換在 8F。", link:"https://www.daimaru.co.jp/sapporo/c/", label:"官方中文頁" } }
   ];
   var MALL = {}; MALLS.forEach(function(m){ MALL[m.id] = m; });
   var ALL_FLOORS = ["B1F","1F","2F","3F","4F","5F","6F","7F","8F","9F","10F"];
   var CATS = [["all","全部"],["fashion","服飾"],["beauty","美妝"],["living","生活雜貨"],["dining","餐廳咖啡"],["souvenir","伴手禮・食品"],["other","其他"]];
   var CAT_NAME = {}; CATS.forEach(function(c){ CAT_NAME[c[0]] = c[1]; });
+  var dealOpen = false;
   var FAV_KEY = "sp-favs-v2", MODE_KEY = "sp-mode-v1", MALL_KEY = "sp-mall-v1";
   function localKey(m){ return "sp-local-"+m+"-v1"; }
 
@@ -363,7 +478,7 @@ footer.foot .edit-row{margin-bottom:6px}
       + (n.alt ? '<span class="alt">'+esc(n.alt)+'</span>' : '')
       + '<span class="sub">'+intro+'</span></span></button>'
       + (state.edit ? '<button class="edit-btn" data-edit="'+esc(favKey(s))+'">修改</button>'
-                    : '<button class="star" data-fav="'+esc(favKey(s))+'" aria-pressed="'+(!!favs[favKey(s)])+'" aria-label="收藏 '+esc(n.main)+'">★</button>')
+                    : '<button class="star" data-fav="'+esc(favKey(s))+'" aria-pressed="'+(!!favs[favKey(s)])+'" aria-label="想逛 '+esc(n.main)+'">★</button>')
       + '</li>';
   }
   function render(){
@@ -374,7 +489,7 @@ footer.foot .edit-row{margin-bottom:6px}
     var total = allShops().length;
     $("count").textContent = "顯示 " + list.length + " / " + total + " 間";
     if(!list.length){
-      var why = state.fav && !Object.keys(favs).length ? "還沒有收藏的店。點店名旁的 ★ 加入收藏。" :
+      var why = state.fav && !Object.keys(favs).length ? "還沒有想逛的店。點店名旁的 ★ 加入。" :
         state.q ? "找不到「"+state.q+"」。試試片假名、英文，或改選「全部商場」、「全部」分類。" : "這個條件下沒有店鋪。";
       $("results").innerHTML = '<div class="empty"><b>沒有符合的店鋪</b>'+esc(why)+'</div>';
       return;
@@ -399,6 +514,10 @@ footer.foot .edit-row{margin-bottom:6px}
       return '<div class="notice" data-notice="'+m.id+'"><span aria-hidden="true">⚠</span><div>'+(ms.length>1?'<b>'+esc(m.name)+'</b>：':'')+esc(DATA[m.id].meta.notice)+'</div></div>';
     }).join("");
     $("hours").textContent = ms.length===1 ? (DATA[ms[0].id].meta.hours||"") : "";
+    $("deals").innerHTML = '<details class="deal"'+(dealOpen?' open':'')+'><summary><span class="deal-ic" aria-hidden="true">稅</span><span class="deal-t">免稅提醒</span><span class="deal-s">11/1 起改為出境退稅</span></summary>'
+      + '<div class="deal-b"><div class="deal-i"><b>11/1 起日本免稅新制</b>結帳先付含稅價，出境時給海關確認後退稅（購買後 90 天內出境）。免稅品出境時要全部帶在身上，同一張收據少一件，整張都不能退稅。建議先在 Visit Japan Web 登記。<a href="https://www.mlit.go.jp/kankocho/tax-free/content/001978459.pdf" target="_blank" rel="noopener">觀光廳說明</a></div>'
+      + ms.filter(function(m){ return m.deal; }).map(function(m){ return '<div class="deal-i"><b>'+esc(m.name)+'</b>'+esc(m.deal.text)+' <a href="'+m.deal.link+'" target="_blank" rel="noopener">'+esc(m.deal.label)+'</a></div>'; }).join("")
+      + '<p class="deal-f">2026-10-21 依日本觀光廳與各商場官網整理，以現場公告為準。</p></div></details>';
     $("legend").innerHTML = ms.map(function(m){
       var keys = m.areas ? Object.keys(m.areas) : [""];
       return '<div class="item"><span>'+keys.map(function(k){ return badge({_m:m.id,b:k}); }).join(" ")+'</span><span><b>'+esc(m.name)+'</b>　'+esc(m.tip)
@@ -411,7 +530,7 @@ footer.foot .edit-row{margin-bottom:6px}
   }
   function renderBar(){
     var anyDirty = Object.keys(dirty).length>0, anyLocal = Object.keys(localMode).length>0;
-    $("bar").hidden = !(state.edit || anyDirty || anyLocal);
+    $("bar").hidden = view!=="shop" || !(state.edit || anyDirty || anyLocal);
     $("addBtn").hidden = !state.edit;
     $("doneBtn").hidden = !state.edit;
     var msg;
@@ -450,7 +569,8 @@ footer.foot .edit-row{margin-bottom:6px}
       + (s.note?'<dt>備註</dt><dd>'+esc(s.note)+'</dd>':'')
       + '</dl><div class="actions">'
       + (link?'<a class="btn" href="'+link+'" target="_blank" rel="noopener">'+(m.shopLinkLabel||"官方店鋪頁")+'</a>':'')
-      + '<button class="btn" data-fav="'+esc(key)+'" aria-pressed="'+(!!favs[key])+'">'+(favs[key]?"★ 已收藏":"☆ 收藏")+'</button>'
+      + '<button class="btn" data-fav="'+esc(key)+'" aria-pressed="'+(!!favs[key])+'">'+(favs[key]?"★ 想逛":"☆ 想逛")+'</button>'
+      + (inBuy(key) ? '<button class="btn" data-addbuy="'+esc(key)+'" disabled>✓ 已在購買清單</button>' : '<button class="btn primary" data-addbuy="'+esc(key)+'">＋ 購買清單</button>')
       + '<button class="btn" data-edit="'+esc(key)+'">修改資料</button>'
       + '<button class="btn" data-close>關閉</button></div>', s.ja);
   }
@@ -587,20 +707,570 @@ footer.foot .edit-row{margin-bottom:6px}
     renderBar(); render(); if(state.edit) window.scrollTo({top:0});
   });
   $("doneBtn").addEventListener("click", function(){ $("editToggle").click(); });
+  $("deals").addEventListener("toggle", function(e){ if(e.target.classList.contains("deal")) dealOpen = e.target.open; }, true);
   $("notices").addEventListener("click", function(e){ var n=e.target.closest("[data-notice]"); if(n && state.edit) showNoticeEdit(n.dataset.notice); });
   $("hours").addEventListener("click", function(){ if(state.edit && state.mall!=="all") showNoticeEdit(state.mall); });
   $("addBtn").addEventListener("click", function(){ showEdit(null); });
-  function toggleFav(k){ if(favs[k]) delete favs[k]; else favs[k]=1; store(false, FAV_KEY, JSON.stringify(Object.keys(favs))); }
+  function toggleFav(k){ if(favs[k]) delete favs[k]; else favs[k]=1; store(false, FAV_KEY, JSON.stringify(Object.keys(favs))); afterFav(); }
   document.addEventListener("click", function(e){
     var t;
-    if((t=e.target.closest("[data-fav]"))){ toggleFav(t.dataset.fav); if(!$("sheetBg").hidden) showDetail(t.dataset.fav); render(); return; }
+    if((t=e.target.closest("[data-fav]"))){ toggleFav(t.dataset.fav); if(!$("sheetBg").hidden) showDetail(t.dataset.fav); if(view==="shop") render(); return; }
+    if((t=e.target.closest("[data-addbuy]"))){ var sa=findShop(t.dataset.addbuy); if(sa && !inBuy(t.dataset.addbuy)){ addBuy(sa.zh || names(sa).main, t.dataset.addbuy); } t.textContent="✓ 已加入購買清單"; t.disabled=true; t.classList.remove("primary"); return; }
     if((t=e.target.closest("[data-edit]"))){ showEdit(t.dataset.edit); return; }
     if((t=e.target.closest("[data-open]"))){ showDetail(t.dataset.open); return; }
     if(e.target.closest("[data-close]") || e.target===$("sheetBg")){ closeSheet(); }
   });
   document.addEventListener("keydown", function(e){ if(e.key==="Escape" && !$("sheetBg").hidden) closeSheet(); });
 
-  syncModes(); renderAll();
+  // ===================== Lists: shopping & packing (stored on this device) =====================
+  var BUY_KEY = "sp-buy-v1", PACK_KEY = "sp-pack-v1", COMMON_KEY = "sp-common-v1", VIEW_KEY = "sp-view-v1";
+  var SHARE_BASE = "https://linweihung168-hue.github.io/stellar-place/";
+  function load(key, def){ try{ var v = JSON.parse(store(true,key)||"null"); return v==null ? def : v; }catch(e){ return def; } }
+  function save(key, v){ store(false, key, JSON.stringify(v)); }
+  var BUY = load(BUY_KEY, {items:[]}); if(!BUY || !BUY.items) BUY = {items:[]};
+  var PACKS = load(PACK_KEY, {lists:[]}); if(!PACKS || !PACKS.lists) PACKS = {lists:[]};
+  var COMMON = load(COMMON_KEY, []); if(!Array.isArray(COMMON)) COMMON = [];
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+  function saveBuy(){ save(BUY_KEY, BUY); updateDots(); }
+  function savePacks(){ save(PACK_KEY, PACKS); }
+  function saveCommon(){ save(COMMON_KEY, COMMON); }
+  var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var ICON_NEXT = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  function toInt(v){ var n = parseInt(String(v||"").replace(/[^\d]/g,""),10); return isNaN(n) ? 0 : n; }
+  function money(n){ return "¥" + Math.round(n).toLocaleString("ja-JP"); }
+
+
+  // ===================== Exchange rate (JPY -> TWD) =====================
+  var FX_KEY = "sp-fx-v1";
+  var FX = load(FX_KEY, null);   // {rate, src:"auto"|"manual", at:"YYYY-MM-DD", from}
+  function fxOk(){ return FX && FX.rate > 0; }
+  function twd(yen){ return "NT$" + Math.round(yen * FX.rate).toLocaleString("zh-TW"); }
+  function moneyBoth(yen){ return money(yen) + (fxOk() ? '<span class="twd">≈ '+twd(yen)+'</span>' : ''); }
+  function today(){ var d = new Date(), p = function(n){ return (n<10?"0":"")+n; }; return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
+  function fxFetch(){
+    if(BUILD !== "pwa" || (FX && FX.src === "manual")) return;
+    if(FX && FX.at === today()) return;
+    function done(rate, from){ if(!(rate > 0)) throw 0; FX = { rate: rate, src: "auto", at: today(), from: from }; save(FX_KEY, FX); if(view === "buy") renderBuy(); }
+    fetch("https://open.er-api.com/v6/latest/JPY").then(function(r){ return r.json(); })
+      .then(function(d){ done(d && d.rates && d.rates.TWD, "ExchangeRate-API"); })
+      .catch(function(){
+        return fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/jpy.json").then(function(r){ return r.json(); })
+          .then(function(d){ done(d && d.jpy && d.jpy.twd, "currency-api"); });
+      }).catch(function(){});
+  }
+  function fxLine(){
+    if(!fxOk()) return '<div class="fx-line"><span>想看台幣？</span><button class="link-btn" id="fxEdit">設定匯率</button></div>';
+    var d = FX.at ? FX.at.slice(5).replace("-","/") : "";
+    return '<div class="fx-line"><span>1 日圓 ≈ '+(Math.round(FX.rate*10000)/10000)+' 台幣・'+(FX.src==="manual"?"手動設定":d+" 自動更新")+'</span><button class="link-btn" id="fxEdit">修改</button></div>';
+  }
+  function fxSheet(){
+    var canAuto = BUILD === "pwa";
+    openSheet('<h2>匯率</h2><form class="form" id="fxForm" novalidate>'
+      + '<label>1 日圓 = 多少台幣<input id="fx_r" inputmode="decimal" value="'+(fxOk()?FX.rate:"")+'" placeholder="例：0.205"></label>'
+      + '<p class="sub" style="margin:0">填你們實際換匯或刷卡的匯率最準。'+(canAuto?'也可以改回每天自動抓牌價。':'這個版本無法自動抓匯率，請手動輸入。')+'</p>'
+      + '<div class="err" id="fx_err" hidden></div>'
+      + '<div class="actions"><button type="submit" class="btn primary">儲存</button>'
+      + (canAuto?'<button type="button" class="btn" id="fx_auto">改回自動</button>':'')
+      + '<button type="button" class="btn" data-close>取消</button></div>'
+      + (canAuto?'<p class="sub" style="margin:10px 0 0">自動匯率來源：<a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">Rates By Exchange Rate API</a></p>':'')
+      + '</form>', "匯率");
+    $("fxForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var v = parseFloat(String($("fx_r").value).replace(/[^\d.]/g,""));
+      if(!(v > 0 && v < 10)){ var er = $("fx_err"); er.textContent = "請填像 0.205 這樣的數字（1 日圓換多少台幣）。"; er.hidden = false; return; }
+      FX = { rate: v, src: "manual", at: today() }; save(FX_KEY, FX); closeSheet(); renderBuy();
+    });
+    var a = $("fx_auto"); if(a) a.addEventListener("click", function(){ FX = null; store(false, FX_KEY, "null"); closeSheet(); renderBuy(); fxFetch(); });
+  }
+
+  // ---------- views ----------
+  var view = store(true, VIEW_KEY) || "shop";
+  if(["shop","buy","pack"].indexOf(view) < 0) view = "shop";
+  function setView(v){
+    view = v; store(false, VIEW_KEY, v);
+    ["shop","buy","pack"].forEach(function(k){ $("view-"+k).hidden = (k !== v); });
+    Array.prototype.forEach.call(document.querySelectorAll("#tabbar [data-view]"), function(b){
+      if(b.dataset.view === v) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
+    });
+    renderBar();
+    if(v === "buy") renderBuy();
+    if(v === "pack") renderPack();
+    if(v === "shop") render();
+    window.scrollTo({top:0});
+  }
+  $("tabbar").addEventListener("click", function(e){ var b = e.target.closest("[data-view]"); if(b) setView(b.dataset.view); });
+  function updateDots(){
+    var left = BUY.items.filter(function(i){ return !i.done; }).length, d = $("buyDot");
+    d.hidden = !left; d.textContent = left > 99 ? "99+" : String(left);
+  }
+  function afterFav(){ if(view === "buy") renderBuy(); }
+
+  // ---------- shop search used by both lists ----------
+  function searchShops(q, limit){
+    var nq = norm(q); if(!nq) return [];
+    var out = [];
+    MALLS.forEach(function(m){ (DATA[m.id].shops||[]).forEach(function(s){ s._m = m.id; if(haystack(s).indexOf(nq) >= 0) out.push(s); }); });
+    function byName(s){ return norm([s.ja,s.en,s.zh].join(" ")).indexOf(nq) >= 0 ? 0 : 1; }
+    out.sort(function(a,b){ return byName(a)-byName(b) || mallRank(a._m)-mallRank(b._m) || floorRank(a.f)-floorRank(b.f); });
+    return out.slice(0, limit || 5);
+  }
+  function sugHTML(list, q){
+    return list.map(function(s){
+      var n = names(s);
+      return '<li><button type="button" data-sk="'+esc(favKey(s))+'">'+badge(s)
+        + '<span class="names"><span class="ja">'+esc(n.main)+'</span><span class="sub">'+esc(MALL[s._m].name+" "+s.f)+(s.d?"・"+esc(s.d):"")+'</span></span>'
+        + '<span class="sug-act">選這間</span></button></li>';
+    }).join("");
+  }
+  function shopPlace(s){ return MALL[s._m].name + " " + s.f; }
+
+  // ===================== Shopping list =====================
+  var buyShowDone = false, buyWho = "all", buyDraft = "";
+  function whos(){ var w = {}; BUY.items.forEach(function(i){ if(i.who) w[i.who] = 1; }); return Object.keys(w); }
+  function findBuy(id){ for(var i=0;i<BUY.items.length;i++) if(BUY.items[i].id===id) return BUY.items[i]; return null; }
+  function addBuy(name, shopKey, extra){
+    var it = { id: uid(), n: name, qty: 1, who: "", price: 0, shop: shopKey || "", done: false, note: "" };
+    if(extra) Object.keys(extra).forEach(function(k){ it[k] = extra[k]; });
+    BUY.items.push(it); saveBuy(); return it;
+  }
+  function buyRow(it){
+    var s = it.shop ? findShop(it.shop) : null;
+    var bits = [];
+    if(s && names(s).main !== it.n) bits.push(esc(names(s).main));
+    if(it.qty > 1) bits.push("×"+it.qty);
+    if(it.who) bits.push("幫"+esc(it.who)+"買");
+    if(it.price) bits.push(moneyBoth(it.price*(it.qty||1)));
+    if(it.note) bits.push(esc(it.note));
+    return '<li class="row'+(it.done?" done":"")+'">'
+      + '<button class="ck" role="checkbox" aria-checked="'+(!!it.done)+'" data-bck="'+it.id+'" aria-label="'+(it.done?"取消已買":"標記已買")+'：'+esc(it.n)+'">'+ICON_CHECK+'</button>'
+      + '<button class="main" data-bedit="'+it.id+'">'+(s ? badge(s) : '<span class="wing none" aria-hidden="true">？</span>')
+      + '<span class="names"><span class="ja">'+esc(it.n)+'</span>'+(bits.length?'<span class="sub">'+bits.join("・")+'</span>':'')+'</span>'+ICON_NEXT+'</button></li>';
+  }
+  function renderBuy(){
+    var all = BUY.items, wl = whos();
+    if(buyWho !== "all" && wl.indexOf(buyWho) < 0) buyWho = "all";
+    var items = all.filter(function(i){ return buyWho === "all" || i.who === buyWho; });
+    var todo = items.filter(function(i){ return !i.done; }), done = items.filter(function(i){ return i.done; });
+    var budget = 0, spent = 0;
+    items.forEach(function(i){ if(i.price){ var t = i.price*(i.qty||1); budget += t; if(i.done) spent += t; } });
+    var h = "";
+    if(all.length){
+      var pct = items.length ? Math.round(done.length/items.length*100) : 0;
+      h += '<section class="sum" aria-label="進度">'
+        + '<div class="sum-top"><span class="big">'+todo.length+'</span><span class="sum-l">'+(todo.length?"樣還沒買":"全部買齊了")+'</span><span class="sum-r">已買 '+done.length+' / '+items.length+'</span></div>'
+        + '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div>'
+        + (budget ? '<div class="sum-money"><span>預算 <b>'+money(budget)+'</b>'+(fxOk()?'<em>≈ '+twd(budget)+'</em>':'')+'</span><span class="ta-r">已花 <b>'+money(spent)+'</b>'+(fxOk()?'<em>≈ '+twd(spent)+'</em>':'')+'</span></div>' + fxLine() : '')
+        + '</section>';
+      if(wl.length){
+        h += '<div class="chips who" role="group" aria-label="幫誰買">'
+          + [["all","全部"]].concat(wl.map(function(w){ return [w, w]; })).map(function(o){
+              return '<button class="chip" data-who="'+esc(o[0])+'" aria-pressed="'+(buyWho===o[0])+'">'+esc(o[1])+'</button>'; }).join("")
+          + '</div>';
+      }
+    }
+    h += '<form class="adder" id="buyAdd" autocomplete="off"><input id="buyInput" placeholder="新增要買的東西" enterkeyhint="done" aria-label="新增要買的東西" value="'+esc(buyDraft)+'"><button class="btn primary" type="submit">新增</button></form>'
+      + '<ul class="sugs" id="buySugs" hidden></ul>';
+    if(!all.length){
+      h += '<div class="empty-card"><span class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 7.5h12.4l-.9 11.4a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8z"/><path d="M9 10.5V6.8a3 3 0 0 1 6 0v3.7"/></svg></span><b>還沒有要買的東西</b>輸入商品或店名，會自動找出在哪間店、哪一樓。</div>';
+    } else {
+      // group open items by mall + floor = walking route
+      var groups = {}, order = [];
+      todo.forEach(function(it){
+        var s = it.shop ? findShop(it.shop) : null;
+        var k = s ? (mallRank(s._m)*100 + floorRank(s.f)) + "|" + s._m + "|" + s.f : "999|none|";
+        if(!groups[k]){ groups[k] = []; order.push(k); }
+        groups[k].push(it);
+      });
+      order.sort(function(a,b){ return parseInt(a,10) - parseInt(b,10); });
+      if(todo.length) h += '<p class="route-note">依商場、樓層排成逛街順序</p>';
+      order.forEach(function(k){
+        var p = k.split("|"), m = MALL[p[1]];
+        h += '<section class="floor"><div class="floor-h">'
+          + (m ? '<span class="fl">'+esc(p[2])+'</span><span class="hint"><b>'+esc(m.name)+'</b>'+(m.hints&&m.hints[p[2]]?"・"+esc(m.hints[p[2]]):"")+'</span>'
+               : '<span class="fl fl-sm">還沒指定店家</span>')
+          + '<span class="cnt">'+groups[k].length+' 樣</span></div><ul class="list">'+groups[k].map(buyRow).join("")+'</ul></section>';
+      });
+      if(done.length){
+        h += '<section class="floor done-sec"><button class="done-toggle" id="buyDoneToggle" aria-expanded="'+buyShowDone+'">已買到 '+done.length+' 樣<span>'+(buyShowDone?"收起":"展開")+'</span></button>'
+          + (buyShowDone ? '<ul class="list">'+done.map(buyRow).join("")+'</ul>' : '') + '</section>';
+      }
+    }
+    // wish-list shops (formerly favourites)
+    var favList = Object.keys(favs).map(findShop).filter(Boolean)
+      .sort(function(a,b){ return mallRank(a._m)-mallRank(b._m) || floorRank(a.f)-floorRank(b.f); });
+    h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">想逛的店</span><span class="cnt">'+favList.length+' 間</span></div>';
+    if(favList.length){
+      h += '<ul class="list">' + favList.map(function(s){
+        var n = names(s);
+        return '<li class="row"><button class="main" data-open="'+esc(favKey(s))+'">'+badge(s)+'<span class="names"><span class="ja">'+esc(n.main)+'</span><span class="sub">'+esc(shopPlace(s))+(s.d?"・"+esc(s.d):"")+'</span></span></button>'
+          + '<button class="star" data-fav="'+esc(favKey(s))+'" aria-pressed="true" aria-label="取消想逛 '+esc(n.main)+'">★</button></li>';
+      }).join("") + '</ul>';
+    } else {
+      h += '<p class="hint-p">在「店鋪查詢」按店名旁的 ★，那間店會出現在這裡。</p>';
+    }
+    h += '</section>';
+    $("buyMain").innerHTML = h;
+    updateDots();
+    wireBuyInput();
+  }
+  function wireBuyInput(){
+    var inp = $("buyInput"), ul = $("buySugs");
+    function show(){
+      var q = inp.value.trim(); buyDraft = inp.value;
+      var list = searchShops(q, 4);
+      if(!list.length){ ul.hidden = true; ul.innerHTML = ""; return; }
+      ul.innerHTML = '<li class="sug-h">「'+esc(q)+'」可以在這裡買：</li>' + sugHTML(list, q);
+      ul.hidden = false;
+    }
+    inp.addEventListener("input", show);
+    if(inp.value) show();
+    $("buyAdd").addEventListener("submit", function(e){
+      e.preventDefault(); var q = inp.value.trim(); if(!q) return;
+      buyDraft = ""; addBuy(q, ""); renderBuy(); $("buyInput").focus();
+    });
+    ul.addEventListener("click", function(e){
+      var b = e.target.closest("[data-sk]"); if(!b) return;
+      var q = inp.value.trim(), s = findShop(b.dataset.sk);
+      buyDraft = ""; addBuy(q || s.zh || names(s).main, b.dataset.sk); renderBuy(); $("buyInput").focus();
+    });
+  }
+  $("buyMain").addEventListener("click", function(e){
+    var t;
+    if((t = e.target.closest("[data-bck]"))){ var it = findBuy(t.dataset.bck); if(it){ it.done = !it.done; saveBuy(); renderBuy(); } return; }
+    if((t = e.target.closest("[data-bedit]"))){ editBuy(t.dataset.bedit); return; }
+    if((t = e.target.closest("[data-who]"))){ buyWho = t.dataset.who; renderBuy(); return; }
+    if(e.target.closest("#buyDoneToggle")){ buyShowDone = !buyShowDone; renderBuy(); return; }
+    if(e.target.closest("#fxEdit")){ fxSheet(); }
+  });
+
+  function editBuy(id){
+    var it = findBuy(id); if(!it) return;
+    var tmp = it.shop;
+    openSheet('<h2>編輯</h2><form class="form" id="itemForm" novalidate>'
+      + '<label>品名<input id="i_n" value="'+esc(it.n)+'"></label>'
+      + '<div class="two"><label>數量<input id="i_q" type="number" min="1" inputmode="numeric" value="'+(it.qty||1)+'"></label>'
+      + '<label>單價（日圓）<input id="i_p" inputmode="numeric" value="'+(it.price||"")+'" placeholder="可不填"><span class="twd-live" id="i_twd"></span></label></div>'
+      + '<label>幫誰買<input id="i_w" value="'+esc(it.who||"")+'" placeholder="例：媽媽、同事" list="whoList"></label>'
+      + '<datalist id="whoList">'+whos().map(function(w){ return '<option value="'+esc(w)+'">'; }).join("")+'</datalist>'
+      + '<div class="pick"><span class="pick-l">在哪裡買</span><div class="pick-cur" id="i_cur"></div>'
+      + '<input id="i_s" placeholder="搜尋店名，例：ロイズ、ISHIYA" autocomplete="off" aria-label="搜尋店家"><ul class="sugs" id="i_sugs" hidden></ul></div>'
+      + '<label>備註<input id="i_note" value="'+esc(it.note||"")+'" placeholder="例：口味、尺寸、顏色"></label>'
+      + '<div class="actions"><button type="submit" class="btn primary">儲存</button><button type="button" class="btn" data-close>取消</button>'
+      + '<button type="button" class="btn danger" id="i_del">刪除</button></div><div id="i_delzone"></div></form>', "編輯項目");
+    function drawCur(){
+      var s = tmp ? findShop(tmp) : null;
+      $("i_cur").innerHTML = s
+        ? badge(s)+'<span class="names"><span class="ja">'+esc(names(s).main)+'</span><span class="sub">'+esc(shopPlace(s))+'</span></span><button type="button" class="pill-btn" id="i_unlink">不指定</button>'
+        : '<span class="sub">還沒指定，可在下方搜尋店名</span>';
+      var u = $("i_unlink"); if(u) u.addEventListener("click", function(){ tmp = ""; drawCur(); });
+    }
+    drawCur();
+    function liveTwd(){ var y = toInt($("i_p").value), q = Math.max(1, toInt($("i_q").value)||1); $("i_twd").textContent = (fxOk() && y) ? "≈ " + twd(y) + (q>1 ? "，" + q + " 個共 " + twd(y*q) : "") : ""; }
+    $("i_p").addEventListener("input", liveTwd); $("i_q").addEventListener("input", liveTwd); liveTwd();
+    $("i_s").addEventListener("input", function(){
+      var list = searchShops(this.value.trim(), 4), ul = $("i_sugs");
+      ul.innerHTML = sugHTML(list); ul.hidden = !list.length;
+    });
+    $("i_sugs").addEventListener("click", function(e){
+      var b = e.target.closest("[data-sk]"); if(!b) return;
+      tmp = b.dataset.sk; $("i_s").value = ""; this.hidden = true; drawCur();
+    });
+    $("itemForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      it.n = $("i_n").value.trim() || it.n;
+      it.qty = Math.max(1, toInt($("i_q").value) || 1);
+      it.price = toInt($("i_p").value);
+      it.who = $("i_w").value.trim();
+      it.note = $("i_note").value.trim();
+      it.shop = tmp || "";
+      saveBuy(); closeSheet(); renderBuy();
+    });
+    $("i_del").addEventListener("click", function(){
+      $("i_delzone").innerHTML = '<div class="confirm">確定刪除「'+esc(it.n)+'」？<button type="button" class="btn danger" id="i_yes">刪除</button><button type="button" class="btn" id="i_no">保留</button></div>';
+      $("i_yes").addEventListener("click", function(){ BUY.items = BUY.items.filter(function(x){ return x.id !== it.id; }); saveBuy(); closeSheet(); renderBuy(); });
+      $("i_no").addEventListener("click", function(){ $("i_delzone").innerHTML = ""; });
+    });
+  }
+  $("buyMore").addEventListener("click", function(){
+    var nDone = BUY.items.filter(function(i){ return i.done; }).length;
+    openSheet('<h2>購買清單</h2><div class="menu">'
+      + '<button type="button" class="btn" id="m_clearDone"'+(nDone?'':' disabled')+'>清除已買到的 '+nDone+' 樣</button>'
+      + '<button type="button" class="btn danger" id="m_clearAll"'+(BUY.items.length?'':' disabled')+'>清空整份清單</button>'
+      + '<div id="m_zone"></div><button type="button" class="btn" data-close>關閉</button></div>', "購買清單選項");
+    $("m_clearDone").addEventListener("click", function(){ BUY.items = BUY.items.filter(function(i){ return !i.done; }); saveBuy(); closeSheet(); renderBuy(); });
+    $("m_clearAll").addEventListener("click", function(){
+      $("m_zone").innerHTML = '<div class="confirm">確定清空 '+BUY.items.length+' 樣？<button type="button" class="btn danger" id="m_yes">清空</button></div>';
+      $("m_yes").addEventListener("click", function(){ BUY.items = []; saveBuy(); closeSheet(); renderBuy(); });
+    });
+  });
+  $("buyShare").addEventListener("click", function(){
+    if(!BUY.items.length){ openSheet('<h2>分享購買清單</h2><p>清單還是空的，先加幾樣東西再分享。</p><div class="actions"><button class="btn" data-close>好</button></div>', "分享"); return; }
+    var payload = { t:"b", i: BUY.items.map(function(i){ return [i.n, i.qty||1, i.who||"", i.price||0, i.shop||"", i.note||""]; }) };
+    shareSheet("購買清單", "我的札幌購買清單（"+BUY.items.length+" 樣）", payload);
+  });
+
+  // ===================== Packing lists =====================
+  var CAT_ORDER = ["證件與錢","3C 電子","衣物","盥洗保養","藥品","雜物","禦寒","溫泉","小孩","工作","其他"];
+  // q: number, "day" = one per day (max 7), "half" = one per two days
+  var BASE = {
+    abroad: [
+      ["證件與錢",["護照","護照照片頁（存手機）","外幣現金","信用卡","提款卡（開通海外提款）","機票／電子登機證","住宿訂房資料","旅平險資料"]],
+      ["3C 電子",["手機","充電器與充電線","行動電源（只能放隨身行李）","網卡／eSIM","轉接頭（依目的地）","耳機"]],
+      ["衣物",[["上衣","day"],["褲子","half"],["內衣褲","day"],["襪子","day"],"睡衣","好走的鞋","外套"]],
+      ["盥洗保養",["牙刷牙膏","洗面乳","保養品","防曬","化妝品","眼鏡／隱形眼鏡"]],
+      ["藥品",["個人常用藥","感冒藥","腸胃藥","止痛藥","OK 繃"]],
+      ["雜物",["摺疊傘","購物袋","面紙／濕紙巾","水壺","筆（填入境資料）","夾鏈袋（裝液體）"]]
+    ],
+    domestic: [
+      ["證件與錢",["身分證","健保卡","現金","信用卡／悠遊卡","住宿訂房資料"]],
+      ["3C 電子",["手機","充電器與充電線","行動電源","耳機"]],
+      ["衣物",[["上衣","day"],["褲子","half"],["內衣褲","day"],["襪子","day"],"睡衣","好走的鞋","外套"]],
+      ["盥洗保養",["牙刷牙膏","洗面乳","保養品","防曬","化妝品","眼鏡／隱形眼鏡"]],
+      ["藥品",["個人常用藥","感冒藥","腸胃藥","OK 繃"]],
+      ["雜物",["摺疊傘","購物袋","面紙／濕紙巾","水壺"]]
+    ]
+  };
+  var ADDONS = [
+    { id:"japan", name:"日本", drop:["轉接頭（依目的地）"],
+      add:[["證件與錢",["Visit Japan Web 入境 QR Code","零錢包（日本硬幣多）"]],["3C 電子",["交通 IC 卡（Suica 等，可綁手機）"]],["雜物",["小垃圾袋（街上垃圾桶少）"]]],
+      tip:"日本插座跟台灣一樣，一般不用轉接頭" },
+    { id:"winter", name:"北海道冬季",
+      add:[["禦寒",["羽絨外套",["發熱衣",3],"毛帽","手套（可滑手機）","圍巾","防水鞋或雪靴","防滑鞋套／冰爪","暖暖包"]],["盥洗保養",["護唇膏","保濕乳液","護手霜"]]] },
+    { id:"onsen", name:"溫泉", add:[["溫泉",["小毛巾","換洗衣物袋","髮圈","卸妝用品"]]] },
+    { id:"kids", name:"親子", add:[["小孩",["小孩證件","兒童常備藥","多一套換洗衣物","零食","玩具或平板","濕紙巾","推車或背巾"]]] },
+    { id:"work", name:"商務", add:[["工作",["筆電與充電器","名片","正式服裝","會議資料"]]] }
+  ];
+  var ADDON = {}; ADDONS.forEach(function(a){ ADDON[a.id] = a; });
+  var packOpen = null, packHideDone = false;
+  function findPack(id){ for(var i=0;i<PACKS.lists.length;i++) if(PACKS.lists[i].id===id) return PACKS.lists[i]; return null; }
+  function qtyFor(rule, days){
+    if(rule === "day") return Math.min(Math.max(days,1), 7);
+    if(rule === "half") return Math.max(1, Math.ceil(Math.min(days,7)/2));
+    return typeof rule === "number" ? rule : 1;
+  }
+  function pushItems(list, groups, days){
+    var have = {}; list.items.forEach(function(i){ have[i.n] = 1; });
+    var added = 0;
+    groups.forEach(function(g){ g[1].forEach(function(x){
+      var n = Array.isArray(x) ? x[0] : x, q = Array.isArray(x) ? qtyFor(x[1], days) : 1;
+      if(have[n]) return; have[n] = 1; added++;
+      list.items.push({ id: uid(), c: g[0], n: n, q: q, done: false });
+    }); });
+    return added;
+  }
+  function buildPack(name, type, days, addons){
+    var list = { id: uid(), name: name, type: type, days: days, addons: addons.slice(), items: [], created: Date.now() };
+    pushItems(list, BASE[type], days);
+    addons.forEach(function(a){ var A = ADDON[a]; if(!A) return;
+      if(A.drop) list.items = list.items.filter(function(i){ return A.drop.indexOf(i.n) < 0; });
+      pushItems(list, A.add, days); });
+    var have = {}; list.items.forEach(function(i){ have[i.n] = 1; });
+    COMMON.forEach(function(c){ if(!have[c.n]){ list.items.push({ id: uid(), c: c.c || "其他", n: c.n, q: c.q || 1, done: false, mine: true }); have[c.n] = 1; } });
+    return list;
+  }
+  function packProgress(l){ var d = l.items.filter(function(i){ return i.done; }).length; return { d: d, t: l.items.length, pct: l.items.length ? Math.round(d/l.items.length*100) : 0 }; }
+  function isCommon(n){ return COMMON.some(function(c){ return c.n === n; }); }
+
+  function renderPack(){
+    var l = packOpen ? findPack(packOpen) : null;
+    if(packOpen && !l) packOpen = null;
+    $("packTitle").textContent = l ? l.name : "行李清單";
+    $("packBack").hidden = !l; $("packShare").hidden = !l; $("packMore").hidden = !l; $("packNew").hidden = !!l;
+    $("packMain").innerHTML = l ? packDetailHTML(l) : packIndexHTML();
+    if(l) wirePackAdd(l);
+  }
+  function packIndexHTML(){
+    var h = "";
+    if(!PACKS.lists.length){
+      h += '<div class="empty-card"><span class="empty-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="7" width="14" height="12.5" rx="2.6"/><path d="M9.5 7V4.8a.8.8 0 0 1 .8-.8h3.4a.8.8 0 0 1 .8.8V7"/><path d="M9 11v5M15 11v5"/><path d="M8.5 19.5v1M15.5 19.5v1"/></svg></span><b>還沒有行李清單</b>選國外或國內、天數和加購包，自動列出要帶的東西。<div class="actions" style="justify-content:center"><button class="btn primary" data-pnew>＋ 建立第一份清單</button></div></div>';
+    } else {
+      h += PACKS.lists.slice().sort(function(a,b){ return b.created - a.created; }).map(function(l){
+        var p = packProgress(l);
+        var tags = [l.type==="abroad"?"國外":"國內", l.days+" 天"].concat((l.addons||[]).map(function(a){ return ADDON[a] ? ADDON[a].name : ""; }).filter(Boolean));
+        return '<button class="trip" data-popen="'+l.id+'"><span class="trip-main"><span class="ja">'+esc(l.name)+'</span><span class="sub">'+esc(tags.join("・"))+'</span>'
+          + '<span class="prog"><i style="width:'+p.pct+'%"></i></span><span class="sub">'+(p.d===p.t?"全部打包好了":"已打包 "+p.d+" / "+p.t)+'</span></span>'+ICON_NEXT+'</button>';
+      }).join("");
+    }
+    h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">我的常用物品</span><span class="cnt">'+COMMON.length+' 樣</span></div>'
+      + '<p class="hint-p">在清單裡編輯物品時勾選「記住」，之後建立新清單會自動帶入。</p>';
+    if(COMMON.length){
+      h += '<ul class="list">' + COMMON.map(function(c, i){
+        return '<li class="row"><span class="names"><span class="ja">'+esc(c.n)+'</span><span class="sub">'+esc(c.c||"其他")+(c.q>1?"・×"+c.q:"")+'</span></span><button class="edit-btn" data-cdel="'+i+'" aria-label="不再記住 '+esc(c.n)+'">移除</button></li>';
+      }).join("") + '</ul>';
+    }
+    return h + '</section>';
+  }
+  function packRow(it){
+    return '<li class="row'+(it.done?" done":"")+'">'
+      + '<button class="ck" role="checkbox" aria-checked="'+(!!it.done)+'" data-pck="'+it.id+'" aria-label="'+(it.done?"取消已打包":"標記已打包")+'：'+esc(it.n)+'">'+ICON_CHECK+'</button>'
+      + '<button class="main" data-pedit="'+it.id+'"><span class="names"><span class="ja ja-sm">'+esc(it.n)+(it.q>1?' <span class="qty">×'+it.q+'</span>':'')+'</span>'
+      + (isCommon(it.n) ? '<span class="sub">★ 常用物品</span>' : '')+'</span></button></li>';
+  }
+  function packDetailHTML(l){
+    var p = packProgress(l), left = p.t - p.d;
+    var tags = [l.type==="abroad"?"國外":"國內", l.days+" 天"].concat((l.addons||[]).map(function(a){ return ADDON[a] ? ADDON[a].name : ""; }).filter(Boolean));
+    var tips = (l.addons||[]).map(function(a){ return ADDON[a] && ADDON[a].tip; }).filter(Boolean);
+    var h = '<section class="sum" aria-label="進度"><div class="sum-top"><span class="big">'+left+'</span><span class="sum-l">'+(left?"樣還沒打包":"全部打包好了")+'</span><span class="sum-r">'+p.d+' / '+p.t+'</span></div>'
+      + '<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+p.pct+'"><i style="width:'+p.pct+'%"></i></div>'
+      + '<div class="sum-money"><span>'+esc(tags.join("・"))+'</span><button class="link-btn" id="packHide" aria-pressed="'+packHideDone+'">'+(packHideDone?"顯示已打包":"隱藏已打包")+'</button></div></section>';
+    if(tips.length) h += '<p class="route-note">💡 '+tips.map(esc).join("；")+'</p>';
+    var cats = {};
+    l.items.forEach(function(i){ (cats[i.c] = cats[i.c] || []).push(i); });
+    var order = Object.keys(cats).sort(function(a,b){ var ia = CAT_ORDER.indexOf(a), ib = CAT_ORDER.indexOf(b); return (ia<0?99:ia) - (ib<0?99:ib); });
+    order.forEach(function(c){
+      var arr = cats[c], d = arr.filter(function(i){ return i.done; }).length;
+      var shown = packHideDone ? arr.filter(function(i){ return !i.done; }) : arr.filter(function(i){ return !i.done; }).concat(arr.filter(function(i){ return i.done; }));
+      if(!shown.length && packHideDone) return;
+      h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">'+esc(c)+'</span><span class="cnt">'+d+' / '+arr.length+'</span></div><ul class="list">'+shown.map(packRow).join("")+'</ul></section>';
+    });
+    h += '<form class="adder adder-pack" id="packAdd" autocomplete="off"><input id="packInput" placeholder="新增物品" aria-label="新增物品">'
+      + '<select id="packCat" aria-label="分類">'+CAT_ORDER.map(function(c){ return '<option'+(c==="其他"?" selected":"")+'>'+c+'</option>'; }).join("")+'</select>'
+      + '<button class="btn primary" type="submit">新增</button></form>';
+    return h;
+  }
+  function wirePackAdd(l){
+    $("packAdd").addEventListener("submit", function(e){
+      e.preventDefault(); var n = $("packInput").value.trim(); if(!n) return;
+      var c = $("packCat").value;
+      l.items.push({ id: uid(), c: c, n: n, q: 1, done: false }); savePacks(); renderPack();
+      $("packCat").value = c; $("packInput").focus();
+    });
+  }
+  $("packMain").addEventListener("click", function(e){
+    var t, l = packOpen ? findPack(packOpen) : null;
+    if((t = e.target.closest("[data-popen]"))){ packOpen = t.dataset.popen; renderPack(); window.scrollTo({top:0}); return; }
+    if(e.target.closest("[data-pnew]")){ newPackSheet(); return; }
+    if((t = e.target.closest("[data-cdel]"))){ COMMON.splice(+t.dataset.cdel, 1); saveCommon(); renderPack(); return; }
+    if(!l) return;
+    if((t = e.target.closest("[data-pck]"))){ l.items.forEach(function(i){ if(i.id===t.dataset.pck) i.done = !i.done; }); savePacks(); renderPack(); return; }
+    if((t = e.target.closest("[data-pedit]"))){ editPackItem(l, t.dataset.pedit); return; }
+    if(e.target.closest("#packHide")){ packHideDone = !packHideDone; renderPack(); }
+  });
+  $("packBack").addEventListener("click", function(){ packOpen = null; renderPack(); window.scrollTo({top:0}); });
+  $("packNew").addEventListener("click", newPackSheet);
+
+  function addonChips(sel){
+    return ADDONS.map(function(a){ return '<button type="button" class="chip" data-ao="'+a.id+'" aria-pressed="'+(sel.indexOf(a.id)>=0)+'">'+esc(a.name)+'</button>'; }).join("");
+  }
+  function newPackSheet(){
+    var type = "abroad", sel = ["japan"];
+    openSheet('<h2>建立行李清單</h2><form class="form" id="packForm" novalidate>'
+      + '<label><span class="req">清單名稱</span><input id="p_name" placeholder="例：札幌 11 月" required></label>'
+      + '<div class="two"><label>旅遊類型<span class="seg" id="p_type" role="group"><button type="button" data-ty="abroad" aria-pressed="true">國外</button><button type="button" data-ty="domestic" aria-pressed="false">國內</button></span></label>'
+      + '<label>天數<input id="p_days" type="number" min="1" max="60" inputmode="numeric" value="5"></label></div>'
+      + '<div><span class="pick-l">加購包（可複選）</span><div class="chips-wrap" id="p_ao">'+addonChips(sel)+'</div></div>'
+      + (COMMON.length ? '<p class="sub">會自動加入 '+COMMON.length+' 樣「我的常用物品」。</p>' : '')
+      + '<div class="err" id="p_err" hidden></div>'
+      + '<div class="actions"><button type="submit" class="btn primary">建立</button><button type="button" class="btn" data-close>取消</button></div></form>', "建立行李清單");
+    $("p_type").addEventListener("click", function(e){ var b = e.target.closest("[data-ty]"); if(!b) return; type = b.dataset.ty;
+      Array.prototype.forEach.call(this.children, function(x){ x.setAttribute("aria-pressed", String(x===b)); }); });
+    $("p_ao").addEventListener("click", function(e){ var b = e.target.closest("[data-ao]"); if(!b) return;
+      var i = sel.indexOf(b.dataset.ao); if(i<0) sel.push(b.dataset.ao); else sel.splice(i,1); b.setAttribute("aria-pressed", String(i<0)); });
+    $("packForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var name = $("p_name").value.trim(), days = toInt($("p_days").value);
+      if(!name){ var er = $("p_err"); er.textContent = "請幫清單取個名字，例如「札幌 11 月」。"; er.hidden = false; return; }
+      if(!days) days = 1;
+      var l = buildPack(name, type, Math.min(days,60), sel);
+      PACKS.lists.push(l); savePacks(); packOpen = l.id; closeSheet(); renderPack(); window.scrollTo({top:0});
+    });
+  }
+  function editPackItem(l, id){
+    var it = null; l.items.forEach(function(i){ if(i.id===id) it = i; }); if(!it) return;
+    var remembered = isCommon(it.n);
+    openSheet('<h2>編輯物品</h2><form class="form" id="piForm" novalidate>'
+      + '<label>名稱<input id="pi_n" value="'+esc(it.n)+'"></label>'
+      + '<div class="two"><label>數量<input id="pi_q" type="number" min="1" inputmode="numeric" value="'+(it.q||1)+'"></label>'
+      + '<label>分類<select id="pi_c">'+CAT_ORDER.map(function(c){ return '<option'+(c===it.c?" selected":"")+'>'+c+'</option>'; }).join("")+'</select></label></div>'
+      + '<label class="check-l"><input type="checkbox" id="pi_mem"'+(remembered?" checked":"")+'> 記住，之後建立新清單自動帶入</label>'
+      + '<div class="actions"><button type="submit" class="btn primary">儲存</button><button type="button" class="btn" data-close>取消</button><button type="button" class="btn danger" id="pi_del">從清單移除</button></div></form>', "編輯物品");
+    $("piForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var old = it.n;
+      it.n = $("pi_n").value.trim() || it.n; it.q = Math.max(1, toInt($("pi_q").value) || 1); it.c = $("pi_c").value;
+      COMMON = COMMON.filter(function(c){ return c.n !== old && c.n !== it.n; });
+      if($("pi_mem").checked) COMMON.push({ n: it.n, c: it.c, q: it.q });
+      saveCommon(); savePacks(); closeSheet(); renderPack();
+    });
+    $("pi_del").addEventListener("click", function(){ l.items = l.items.filter(function(i){ return i.id !== it.id; }); savePacks(); closeSheet(); renderPack(); });
+  }
+  $("packMore").addEventListener("click", function(){
+    var l = findPack(packOpen); if(!l) return;
+    var sel = [];
+    openSheet('<h2>'+esc(l.name)+'</h2><form class="form" id="pmForm" novalidate>'
+      + '<div class="two"><label>名稱<input id="pm_name" value="'+esc(l.name)+'"></label><label>天數<input id="pm_days" type="number" min="1" inputmode="numeric" value="'+l.days+'"></label></div>'
+      + '<div><span class="pick-l">再加入加購包</span><div class="chips-wrap" id="pm_ao">'+addonChips(sel)+'</div><p class="sub">只會補上清單裡還沒有的物品。</p></div>'
+      + '<div class="actions"><button type="submit" class="btn primary">套用</button><button type="button" class="btn" data-close>取消</button></div></form>'
+      + '<div class="menu" style="margin-top:14px"><button type="button" class="btn" id="pm_uncheck">全部改回未打包</button><button type="button" class="btn danger" id="pm_del">刪除這份清單</button><div id="pm_zone"></div></div>', "清單設定");
+    $("pm_ao").addEventListener("click", function(e){ var b = e.target.closest("[data-ao]"); if(!b) return;
+      var i = sel.indexOf(b.dataset.ao); if(i<0) sel.push(b.dataset.ao); else sel.splice(i,1); b.setAttribute("aria-pressed", String(i<0)); });
+    $("pmForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      l.name = $("pm_name").value.trim() || l.name; l.days = Math.min(60, toInt($("pm_days").value) || l.days);
+      sel.forEach(function(a){ var A = ADDON[a]; if(!A) return; pushItems(l, A.add, l.days); if((l.addons||[]).indexOf(a)<0) (l.addons = l.addons||[]).push(a); });
+      savePacks(); closeSheet(); renderPack();
+    });
+    $("pm_uncheck").addEventListener("click", function(){ l.items.forEach(function(i){ i.done = false; }); savePacks(); closeSheet(); renderPack(); });
+    $("pm_del").addEventListener("click", function(){
+      $("pm_zone").innerHTML = '<div class="confirm">確定刪除「'+esc(l.name)+'」？<button type="button" class="btn danger" id="pm_yes">刪除</button></div>';
+      $("pm_yes").addEventListener("click", function(){ PACKS.lists = PACKS.lists.filter(function(x){ return x.id !== l.id; }); packOpen = null; savePacks(); closeSheet(); renderPack(); });
+    });
+  });
+  $("packShare").addEventListener("click", function(){
+    var l = findPack(packOpen); if(!l) return;
+    var payload = { t:"p", n: l.name, ty: l.type, d: l.days, a: l.addons||[], i: l.items.map(function(i){ return [i.c, i.n, i.q||1]; }) };
+    shareSheet("行李清單", "行李清單「"+l.name+"」（"+l.items.length+" 樣）", payload);
+  });
+
+  // ===================== Sharing via link =====================
+  function b64e(str){ var bytes = new TextEncoder().encode(str), bin = ""; for(var i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]); return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+  function b64d(s){ s = s.replace(/-/g,"+").replace(/_/g,"/"); while(s.length % 4) s += "="; var bin = atob(s), bytes = new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
+  function shareSheet(kind, title, payload){
+    var link = SHARE_BASE + "#s" + b64e(JSON.stringify(payload));
+    var text = title + "\n點開連結就能匯入：\n" + link;
+    var canShare = BUILD === "pwa" && navigator.share;
+    openSheet('<h2>分享'+esc(kind)+'</h2><p class="sub" style="margin:0 0 10px">把連結傳給旅伴（例如貼到 LINE），對方點開就能匯入到自己的手機。之後各自修改不會互相影響。</p>'
+      + '<textarea id="sh_text" class="share-text" rows="4" readonly>'+esc(text)+'</textarea>'
+      + '<div class="actions">'+(canShare?'<button type="button" class="btn primary" id="sh_send">傳送…</button>':'')
+      + '<button type="button" class="btn'+(canShare?'':' primary')+'" id="sh_copy">複製</button><button type="button" class="btn" data-close>關閉</button></div><p class="sub" id="sh_msg" role="status"></p>', "分享");
+    $("sh_copy").addEventListener("click", function(){
+      var ta = $("sh_text");
+      function fallback(){ ta.focus(); ta.select(); $("sh_msg").textContent = "已選取文字，請長按或按 Ctrl+C 複製。"; }
+      try{ navigator.clipboard.writeText(text).then(function(){ $("sh_msg").textContent = "已複製，可以貼到 LINE 了。"; }, fallback); }catch(e){ fallback(); }
+    });
+    if(canShare) $("sh_send").addEventListener("click", function(){ navigator.share({ title: title, text: title + "\n點開連結就能匯入：", url: link }).catch(function(){}); });
+  }
+  function checkImport(){
+    var h = location.hash || "";
+    if(h.indexOf("#s") !== 0 || h.length < 4) return;
+    var data = null;
+    try{ data = JSON.parse(b64d(h.slice(2))); }catch(e){ data = null; }
+    try{ history.replaceState(null, "", location.pathname + location.search); }catch(e){}
+    if(!data || !Array.isArray(data.i)){
+      openSheet('<h2>無法匯入</h2><p>這個分享連結不完整，請請對方重新傳一次。</p><div class="actions"><button class="btn" data-close>好</button></div>', "匯入"); return;
+    }
+    if(data.t === "b"){
+      openSheet('<h2>匯入購買清單</h2><p>朋友分享了 '+data.i.length+' 樣要買的東西：</p><ul class="imp">'+data.i.slice(0,8).map(function(r){ return '<li>'+esc(String(r[0]))+'</li>'; }).join("")+(data.i.length>8?'<li>……共 '+data.i.length+' 樣</li>':'')+'</ul>'
+        + '<p class="sub">會加到你的購買清單裡，已經有的同名項目會略過。</p><div class="actions"><button class="btn primary" id="imp_ok">加入我的清單</button><button class="btn" data-close>不用了</button></div>', "匯入");
+      $("imp_ok").addEventListener("click", function(){
+        var have = {}; BUY.items.forEach(function(i){ have[i.n+"|"+i.shop] = 1; });
+        data.i.forEach(function(r){ var k = String(r[0])+"|"+String(r[4]||""); if(have[k]) return;
+          addBuy(String(r[0]), String(r[4]||""), { qty: Math.max(1,toInt(r[1])||1), who: String(r[2]||""), price: toInt(r[3]), note: String(r[5]||"") }); });
+        closeSheet(); setView("buy");
+      });
+    } else if(data.t === "p"){
+      openSheet('<h2>匯入行李清單</h2><p>朋友分享了「'+esc(String(data.n||"行李清單"))+'」，共 '+data.i.length+' 樣。</p><p class="sub">會建立成一份新的行李清單。</p><div class="actions"><button class="btn primary" id="imp_ok">建立清單</button><button class="btn" data-close>不用了</button></div>', "匯入");
+      $("imp_ok").addEventListener("click", function(){
+        var l = { id: uid(), name: String(data.n||"行李清單"), type: data.ty==="domestic"?"domestic":"abroad", days: Math.max(1,toInt(data.d)||1),
+                  addons: (data.a||[]).filter(function(a){ return ADDON[a]; }), items: [], created: Date.now() };
+        data.i.forEach(function(r){ l.items.push({ id: uid(), c: CAT_ORDER.indexOf(r[0])>=0 ? r[0] : "其他", n: String(r[1]), q: Math.max(1,toInt(r[2])||1), done: false }); });
+        PACKS.lists.push(l); savePacks(); packOpen = l.id; closeSheet(); setView("pack");
+      });
+    }
+  }
+  function inBuy(key){ return BUY.items.some(function(i){ return i.shop === key && !i.done; }); }
+
+  syncModes(); renderAll(); updateDots(); setView(view); checkImport(); fxFetch();
 
   // Published copies of each mall's data file win over the embedded snapshot when newer.
   if(location.protocol.indexOf("http")===0){
