@@ -484,9 +484,9 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     <div id="results"></div>
     <div class="legend" id="legend"></div>
     <footer class="foot">
-      <div class="edit-row"><button class="pill-btn" id="editToggle" aria-pressed="false">編輯資料</button></div>
+      <div class="edit-row" hidden><button class="pill-btn" id="editToggle" aria-pressed="false">編輯資料</button></div>
       <div id="srcLines"></div>
-      <span>店名與樓層依各商場官網整理，介紹參考官方店鋪頁。如有出入請以官網為準，也可按「編輯資料」自行修正。</span>
+      <span>店名與樓層依各商場官網整理，介紹參考官方店鋪頁。如有出入請以官網為準，也可到「設定 → 店鋪資料」自行修正。</span>
     </footer>
   </main>
 </div>
@@ -519,14 +519,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
           <button data-m="both" aria-pressed="false">並列</button>
         </div></li>
       <li class="grow"><span class="g-t">外觀</span><span class="seg seg-sm" id="themeSeg" role="group" aria-label="外觀"><button data-th="auto">跟隨系統</button><button data-th="light">淺色</button><button data-th="dark">深色</button></span></li>
-      <li class="grow"><button class="g-btn" data-act="tiles"><span class="g-t">首頁小工具</span><span class="g-v" id="setTiles"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
     </ul>
-    <div class="gh">旅程</div>
-    <ul class="glist glist-card">
-      <li class="grow"><button class="g-btn" data-act="fx"><span class="g-t" id="setFxName">匯率</span><span class="g-v" id="setFx"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><button class="g-btn" data-act="common"><span class="g-t">我的常用物品</span><span class="g-v" id="setCommon"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-    </ul>
-    <p class="gf">匯率依目前旅程的貨幣換算成台幣。</p>
     <div class="gh">資料</div>
     <ul class="glist glist-card">
       <li class="grow"><button class="g-btn" data-act="backup"><span class="g-t">備份所有資料</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
@@ -541,7 +534,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 20:43）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 20:47）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -771,13 +764,11 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       return '<div class="notice" data-notice="'+m.id+'"><span aria-hidden="true">⚠</span><div>'+(ms.length>1?'<b>'+esc(m.name)+'</b>：':'')+esc(DATA[m.id].meta.notice)+'</div></div>';
     }).join("");
     $("hours").textContent = ms.length===1 ? (DATA[ms[0].id].meta.hours||"") : "";
-    $("deals").innerHTML = '<details class="deal"'+(dealOpen?' open':'')+'><summary><span class="deal-ic" aria-hidden="true">稅</span><span class="deal-t">免稅提醒</span><span class="deal-s">11/1 起改為出境退稅</span></summary>'
-      + '<div class="deal-b"><div class="deal-i"><b>11/1 起日本免稅新制</b>結帳先付含稅價，出境時給海關確認後退稅（購買後 90 天內出境）。免稅品出境時要全部帶在身上，同一張收據少一件，整張都不能退稅。建議先在 Visit Japan Web 登記。<a href="https://www.mlit.go.jp/kankocho/tax-free/content/001978459.pdf" target="_blank" rel="noopener">觀光廳說明</a></div>'
-      + ms.filter(function(m){ return m.deal; }).map(function(m){ return '<div class="deal-i"><b>'+esc(m.name)+'</b>'+esc(m.deal.text)+' <a href="'+m.deal.link+'" target="_blank" rel="noopener">'+esc(m.deal.label)+'</a></div>'; }).join("")
-      + '<p class="deal-f">2026-10-21 依日本觀光廳與各商場官網整理，以現場公告為準。</p></div></details>';
+    $("deals").innerHTML = "";
     $("legend").innerHTML = ms.map(function(m){
       var keys = m.areas ? Object.keys(m.areas) : [""];
       return '<div class="item"><span>'+keys.map(function(k){ return badge({_m:m.id,b:k}); }).join(" ")+'</span><span><b>'+esc(m.name)+'</b>　'+esc(m.tip)
+        + (m.deal ? ' '+esc(m.deal.text)+' <a href="'+m.deal.link+'" target="_blank" rel="noopener">'+esc(m.deal.label)+'</a>' : '')
         + (m.areas ? '<br>'+keys.map(function(k){ return esc(m.areaTips[k]); }).join("／") : '')+'</span></div>';
     }).join("");
     $("srcLines").innerHTML = ms.map(function(m){
@@ -1203,20 +1194,6 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
           + (buyShowDone ? '<ul class="list">'+done.map(buyRow).join("")+'</ul>' : '') + '</section>';
       }
     }
-    // wish-list shops (formerly favourites)
-    var favList = Object.keys(favs).map(findShop).filter(Boolean)
-      .sort(function(a,b){ return mallRank(a._m)-mallRank(b._m) || floorRank(a.f)-floorRank(b.f); });
-    h += '<section class="floor"><div class="floor-h"><span class="fl fl-sm">想逛的店</span><span class="cnt">'+favList.length+' 間</span></div>';
-    if(favList.length){
-      h += '<ul class="list">' + favList.map(function(s){
-        var n = names(s);
-        return '<li class="row"><button class="main" data-open="'+esc(favKey(s))+'">'+badge(s)+'<span class="names"><span class="ja">'+esc(n.main)+'</span><span class="sub">'+esc(shopPlace(s))+(s.d?"・"+esc(s.d):"")+'</span></span></button>'
-          + '<button class="star" data-fav="'+esc(favKey(s))+'" aria-pressed="true" aria-label="取消想逛 '+esc(n.main)+'">★</button></li>';
-      }).join("") + '</ul>';
-    } else {
-      h += '<p class="hint-p">在「店鋪」分頁按店名旁的 ★，那間店會出現在這裡。</p>';
-    }
-    h += '</section>';
     $("buyMain").innerHTML = h;
     updateDots();
     if($("buyInput")) wireBuyInput();
@@ -1540,11 +1517,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     openSheet('<h2>'+esc(l.name)+'</h2><form class="form" id="pmForm" novalidate>'
       + '<label>清單名稱<input id="pm_name" value="'+esc(l.name)+'"></label>'
       + '<div class="actions"><button type="submit" class="btn primary">儲存</button><button type="button" class="btn" data-close>取消</button></div></form>'
-      + '<div class="menu" style="margin-top:14px"><button type="button" class="btn" id="pm_cats">管理分類</button><button type="button" class="btn" id="pm_uncheck">全部改回未打包</button><button type="button" class="btn danger" id="pm_del">刪除這份清單</button><div id="pm_zone"></div></div>', "清單設定");
+      + '<div class="menu" style="margin-top:14px"><button type="button" class="btn" id="pm_uncheck">全部改回未打包</button><button type="button" class="btn danger" id="pm_del">刪除這份清單</button><div id="pm_zone"></div></div>', "清單設定");
     $("pmForm").addEventListener("submit", function(e){
       e.preventDefault(); l.name = $("pm_name").value.trim() || l.name; savePacks(); closeSheet(); renderPack();
     });
-    $("pm_cats").addEventListener("click", function(){ packCatSheet(l); });
     $("pm_uncheck").addEventListener("click", function(){ l.items.forEach(function(i){ i.done = false; }); savePacks(); closeSheet(); renderPack(); });
     $("pm_del").addEventListener("click", function(){
       $("pm_zone").innerHTML = '<div class="confirm">確定刪除「'+esc(l.name)+'」？<button type="button" class="btn danger" id="pm_yes">刪除</button></div>';
@@ -1676,11 +1652,12 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   }
 
   // ---- home config
-  var TILE_DEF = { pack:"行李清單", buy:"購買清單", fx:"匯率", shop:"店鋪指南", fav:"想逛的店" };
+  var TILE_DEF = { pack:"行李清單", buy:"購買清單", fx:"匯率", shop:"店鋪指南" };
   var HOME = load(HOME_KEY, null);
-  if(!HOME || !Array.isArray(HOME.order)) HOME = { order:["pack","buy","fx","shop","fav"], hidden:["fav"], open:{ todo:false, tips:false, trips:false }, v2:1 };
+  if(!HOME || !Array.isArray(HOME.order)) HOME = { order:["pack","buy","fx","shop"], hidden:[], open:{ todo:false, tips:false, trips:false }, v2:1 };
   Object.keys(TILE_DEF).forEach(function(k){ if(HOME.order.indexOf(k) < 0) HOME.order.push(k); });
   if(!HOME.open) HOME.open = { todo:false, tips:false, trips:false };
+  HOME.order = HOME.order.filter(function(k){ return TILE_DEF[k]; }); HOME.hidden = HOME.hidden.filter(function(k){ return TILE_DEF[k]; });
   if(!HOME.v2){ HOME.v2 = 1; HOME.open.todo = false; }
   if(!Array.isArray(HOME.hideSec)) HOME.hideSec = [];
   if(!HOME.readTips) HOME.readTips = {};
@@ -1734,8 +1711,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       else if(fxOk()){ title = money(CUR().sample); sub = "≈ " + twd(CUR().sample) + "・" + (fxRec().src==="manual"?"手動匯率":"今日匯率"); }
       else { sub = "點這裡設定" + CUR().name + "匯率"; }
     }
-    if(k === "shop"){ var g = GUIDES[t.guide]; sub = g ? g.name+" "+g.sub+"・"+Object.keys(DATA).reduce(function(a,m){ return a + DATA[m].shops.length; },0)+" 間" : "目前只有札幌站"; }
-    if(k === "fav"){ sub = Object.keys(favs).length + " 間"; }
+    if(k === "shop"){ var g = GUIDES[t.guide], nShops = Object.keys(DATA).reduce(function(a,m){ return a + DATA[m].shops.length; },0), nFav = Object.keys(favs).length;
+      sub = !g ? "目前只有札幌站" : nFav ? "想逛 "+nFav+" 間・"+nShops+" 間店" : g.name+" "+g.sub+"・"+nShops+" 間"; }
     return '<button class="tile" data-tile="'+k+'">'+appIcon(k)+'<span><span class="tt">'+esc(title)+'</span><span class="ts">'+sub+'</span></span></button>';
   }
   function hsec(key, title, summary, body, extra){
@@ -1803,9 +1780,9 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if((b = e.target.closest("[data-tile]"))){
       var k2 = b.dataset.tile;
       if(k2 === "pack"){ var l = tripPack(t); packOpen = l ? l.id : null; setView("pack"); }
-      else if(k2 === "buy" || k2 === "fav") setView("buy");
+      else if(k2 === "buy") setView("buy");
       else if(k2 === "fx") fxSheet();
-      else if(k2 === "shop") setView("shop");
+      else if(k2 === "shop"){ var hasFav = Object.keys(favs).length > 0; state.fav = hasFav; $("favToggle").setAttribute("aria-pressed", String(hasFav)); setView("shop"); }
       return; }
     if((b = e.target.closest("[data-trip]"))){ if(b.dataset.trip !== TR.current){ TR.current = b.dataset.trip; saveTrips(); applyTrip(); fxFetch(); renderAll(); renderHome(); window.scrollTo({top:0}); } return; }
     if(e.target.closest("#tripNew")){ tripSheet(null); return; }
@@ -1926,7 +1903,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var SECS = [["todo","出發前待辦"],["tips","當地提醒"]];
     function secBody(){ return SECS.map(function(s){ var on = HOME.hideSec.indexOf(s[0]) < 0;
       return '<li class="grow"><span class="g-t">'+s[1]+'</span><button class="sw" role="switch" aria-checked="'+on+'" data-ssw="'+s[0]+'" aria-label="在首頁顯示 '+s[1]+'"><i></i></button></li>'; }).join(""); }
-    openSheet('<h2>首頁小工具</h2><p class="sub" style="margin:0 0 10px">開關決定要不要顯示在首頁，箭頭調整順序。</p><ul class="glist glist-card" id="he_list">'+body()+'</ul>'
+    openSheet('<h2>首頁設定</h2><p class="sub" style="margin:0 0 10px">開關決定要不要顯示，箭頭調整小工具順序。</p><ul class="glist glist-card" id="he_list">'+body()+'</ul>'
       + '<div class="gh" style="margin:16px 4px 7px">下方區塊</div><ul class="glist glist-card" id="he_secs">'+secBody()+'</ul>'
       + '<div class="actions"><button type="button" class="btn primary" data-close>完成</button><button type="button" class="btn" id="he_reset">恢復預設</button></div>', "首頁小工具");
     $("he_list").addEventListener("click", function(e){
@@ -1941,7 +1918,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       var b = e.target.closest("[data-ssw]"); if(!b) return; var k = b.dataset.ssw, i = HOME.hideSec.indexOf(k);
       if(i < 0) HOME.hideSec.push(k); else HOME.hideSec.splice(i, 1); saveHome(); this.innerHTML = secBody(); renderHome();
     });
-    $("he_reset").addEventListener("click", function(){ HOME.order = ["pack","buy","fx","shop","fav"]; HOME.hidden = ["fav"]; HOME.hideSec = []; saveHome(); $("he_list").innerHTML = body(); $("he_secs").innerHTML = secBody(); renderHome(); });
+    $("he_reset").addEventListener("click", function(){ HOME.order = ["pack","buy","fx","shop"]; HOME.hidden = []; HOME.hideSec = []; saveHome(); $("he_list").innerHTML = body(); $("he_secs").innerHTML = secBody(); renderHome(); });
   }
 
   // ===================== Settings =====================
@@ -1951,10 +1928,6 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function renderSet(){
     var t = curTrip();
     Array.prototype.forEach.call($("themeSeg").children, function(x){ x.setAttribute("aria-pressed", String(x.dataset.th === THEME)); });
-    $("setTiles").textContent = HOME.order.filter(function(k){ return HOME.hidden.indexOf(k) < 0; }).length + " 個";
-    $("setFxName").textContent = "匯率・" + (CUR_CODE === "TWD" ? "台幣" : CUR().name);
-    $("setFx").textContent = CUR_CODE === "TWD" ? "不需要" : fxOk() ? "1 ≈ " + fxRateText() + "・" + (fxRec().src === "manual" ? "手動" : "自動") : "未設定";
-    $("setCommon").textContent = COMMON.length + " 樣";
     phUsage().then(function(u){ var el = $("setPhotos"); if(el) el.textContent = u.n ? u.n + " 張・" + (u.bytes/1048576 < 0.1 ? "0.1" : (u.bytes/1048576).toFixed(1)) + " MB" : "沒有照片"; });
     $("setData").textContent = MALLS.map(function(m){ return (DATA[m.id].meta.updated||"").slice(5).replace("-","/"); }).filter(Boolean).sort().slice(-1)[0] + " 更新";
   }
