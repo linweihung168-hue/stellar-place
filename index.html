@@ -360,6 +360,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
 .help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
 .help a{color:var(--accent)}
+.tip-ok{display:inline-block;margin-top:8px;border:0;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:13.5px;padding:5px 12px}
+.tips-read{display:flex;align-items:center;gap:6px;margin:18px 4px 0;font-size:13.5px;color:var(--muted)}
+.tips-read .link-btn{font-size:13.5px;padding:2px}
+.tips-read-in{margin:8px 4px 0}
 .hero .deco{position:absolute;inset:0;width:100%;height:100%}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.12) 50%,rgba(0,0,0,.55) 100%);pointer-events:none}
@@ -537,7 +541,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 18:51）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 20:43）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -1616,8 +1620,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   };
   var TIPS = {
     JP: [
-      { t:"11/1 起免稅改為出境退稅", b:"結帳時先付含稅價，出境時給海關確認後才退稅（購買後 90 天內出境）。免稅品出境時要全部帶在身上，同一張收據少一件，整張都不能退稅。建議先在 Visit Japan Web 登記。", link:"https://www.mlit.go.jp/kankocho/tax-free/content/001978459.pdf", label:"日本觀光廳說明" },
-      { t:"插座跟台灣一樣", b:"日本是兩孔扁腳插座，和台灣相同，一般不用轉接頭。電壓是 100V，手機、相機充電器可以直接用。" }
+      { id:"jp-taxfree", t:"11/1 起免稅改為出境退稅", b:"結帳時先付含稅價，出境時給海關確認後才退稅（購買後 90 天內出境）。免稅品出境時要全部帶在身上，同一張收據少一件，整張都不能退稅。建議先在 Visit Japan Web 登記。", link:"https://www.mlit.go.jp/kankocho/tax-free/content/001978459.pdf", label:"日本觀光廳說明" }
     ]
   };
   var GUIDES = { sapporo: { name:"札幌站", sub:"4 商場" } };
@@ -1675,9 +1678,12 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   // ---- home config
   var TILE_DEF = { pack:"行李清單", buy:"購買清單", fx:"匯率", shop:"店鋪指南", fav:"想逛的店" };
   var HOME = load(HOME_KEY, null);
-  if(!HOME || !Array.isArray(HOME.order)) HOME = { order:["pack","buy","fx","shop","fav"], hidden:["fav"], open:{ todo:true, tips:false, trips:false } };
+  if(!HOME || !Array.isArray(HOME.order)) HOME = { order:["pack","buy","fx","shop","fav"], hidden:["fav"], open:{ todo:false, tips:false, trips:false }, v2:1 };
   Object.keys(TILE_DEF).forEach(function(k){ if(HOME.order.indexOf(k) < 0) HOME.order.push(k); });
-  if(!HOME.open) HOME.open = { todo:true, tips:false, trips:false };
+  if(!HOME.open) HOME.open = { todo:false, tips:false, trips:false };
+  if(!HOME.v2){ HOME.v2 = 1; HOME.open.todo = false; }
+  if(!Array.isArray(HOME.hideSec)) HOME.hideSec = [];
+  if(!HOME.readTips) HOME.readTips = {};
   function saveHome(){ save(HOME_KEY, HOME); }
 
   var TILE_ICON = {
@@ -1758,13 +1764,19 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var tdBody = '<ul class="glist">' + td.map(function(x){
       return '<li class="grow'+(x.done?" done":"")+'"><button class="ck ck-r" role="checkbox" aria-checked="'+(!!x.done)+'" data-todo="'+x.id+'" aria-label="'+esc(x.n)+'">'+ICON_CHECK+'</button><span class="g-t">'+esc(x.n)+'</span><button class="g-x" data-tdel="'+x.id+'" aria-label="刪除 '+esc(x.n)+'">×</button></li>';
     }).join("") + '<li class="grow"><form id="todoAdd" class="g-add" autocomplete="off"><input id="todoInput" placeholder="＋ 新增待辦" aria-label="新增待辦"></form></li></ul>';
-    h += hsec("todo", "出發前待辦", tdSum, tdBody);
-    // tips
+    if(HOME.hideSec.indexOf("todo") < 0) h += hsec("todo", "出發前待辦", tdSum, tdBody);
+    // tips (per country; each can be marked as read)
     var tips = TIPS[t.country] || [];
-    if(tips.length){
-      h += hsec("tips", "當地提醒", tips.length+" 則", '<ul class="glist">'+tips.map(function(x, i){
-        return '<li class="grow tip">'+appIcon(i===0?"tax":"plug", i===0?"ai-tax":"ai-gray")+'<span class="g-t"><b>'+esc(x.t)+'</b><span>'+esc(x.b)+(x.link?' <a href="'+x.link+'" target="_blank" rel="noopener">'+esc(x.label)+'</a>':'')+'</span></span></li>';
-      }).join("")+'</ul>');
+    if(tips.length && HOME.hideSec.indexOf("tips") < 0){
+      var unread = tips.filter(function(x){ return !HOME.readTips[x.id]; }), nRead = tips.length - unread.length;
+      if(!unread.length){
+        h += '<div class="tips-read">當地提醒已讀 '+nRead+' 則<button class="link-btn" id="tipsAgain">再看一次</button></div>';
+      } else {
+        h += hsec("tips", "當地提醒", unread.length+" 則"+(nRead?"・已讀 "+nRead:""), '<ul class="glist">'+unread.map(function(x){
+          return '<li class="grow tip">'+appIcon("tax", "ai-tax")+'<span class="g-t"><b>'+esc(x.t)+'</b><span>'+esc(x.b)+(x.link?' <a href="'+x.link+'" target="_blank" rel="noopener">'+esc(x.label)+'</a>':'')+'</span>'
+            + '<button class="tip-ok" data-tipread="'+x.id+'">知道了</button></span></li>';
+        }).join("")+'</ul>'+(nRead?'<div class="tips-read tips-read-in">已讀 '+nRead+' 則<button class="link-btn" id="tipsAgain">再看一次</button></div>':''));
+      }
     }
     // trips
     var tl = TR.list.slice().sort(function(a,b){ return (a.id===TR.current?-1:0)-(b.id===TR.current?-1:0) || (b.created||0)-(a.created||0); });
@@ -1780,6 +1792,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   }
   $("homeMain").addEventListener("click", function(e){
     var t = curTrip(), b;
+    if((b = e.target.closest("[data-tipread]"))){ HOME.readTips[b.dataset.tipread] = 1; saveHome(); renderHome(); return; }
+    if(e.target.closest("#tipsAgain")){ HOME.readTips = {}; HOME.open.tips = true; saveHome(); renderHome(); return; }
     if((b = e.target.closest("[data-sec]"))){ var k = b.dataset.sec; HOME.open[k] = !HOME.open[k]; saveHome(); renderHome(); return; }
     if((b = e.target.closest("[data-todo]"))){
       (t.todos||[]).forEach(function(x){ if(x.id===b.dataset.todo) x.done = !x.done; });
@@ -1909,7 +1923,11 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
           + '<button class="sw" role="switch" aria-checked="'+on+'" data-sw="'+k+'" aria-label="在首頁顯示 '+TILE_DEF[k]+'"><i></i></button></li>';
       }).join("");
     }
+    var SECS = [["todo","出發前待辦"],["tips","當地提醒"]];
+    function secBody(){ return SECS.map(function(s){ var on = HOME.hideSec.indexOf(s[0]) < 0;
+      return '<li class="grow"><span class="g-t">'+s[1]+'</span><button class="sw" role="switch" aria-checked="'+on+'" data-ssw="'+s[0]+'" aria-label="在首頁顯示 '+s[1]+'"><i></i></button></li>'; }).join(""); }
     openSheet('<h2>首頁小工具</h2><p class="sub" style="margin:0 0 10px">開關決定要不要顯示在首頁，箭頭調整順序。</p><ul class="glist glist-card" id="he_list">'+body()+'</ul>'
+      + '<div class="gh" style="margin:16px 4px 7px">下方區塊</div><ul class="glist glist-card" id="he_secs">'+secBody()+'</ul>'
       + '<div class="actions"><button type="button" class="btn primary" data-close>完成</button><button type="button" class="btn" id="he_reset">恢復預設</button></div>', "首頁小工具");
     $("he_list").addEventListener("click", function(e){
       var b = e.target.closest("button"); if(!b) return;
@@ -1919,7 +1937,11 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       if(b.dataset.dn){ i = o.indexOf(b.dataset.dn); if(i<o.length-1){ o.splice(i,1); o.splice(i+1,0,b.dataset.dn); } }
       saveHome(); this.innerHTML = body(); renderHome();
     });
-    $("he_reset").addEventListener("click", function(){ HOME.order = ["pack","buy","fx","shop","fav"]; HOME.hidden = ["fav"]; saveHome(); $("he_list").innerHTML = body(); renderHome(); });
+    $("he_secs").addEventListener("click", function(e){
+      var b = e.target.closest("[data-ssw]"); if(!b) return; var k = b.dataset.ssw, i = HOME.hideSec.indexOf(k);
+      if(i < 0) HOME.hideSec.push(k); else HOME.hideSec.splice(i, 1); saveHome(); this.innerHTML = secBody(); renderHome();
+    });
+    $("he_reset").addEventListener("click", function(){ HOME.order = ["pack","buy","fx","shop","fav"]; HOME.hidden = ["fav"]; HOME.hideSec = []; saveHome(); $("he_list").innerHTML = body(); $("he_secs").innerHTML = secBody(); renderHome(); });
   }
 
   // ===================== Settings =====================
