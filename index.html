@@ -360,6 +360,22 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
 .help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
 .help a{color:var(--accent)}
+.hero .deco{position:absolute;inset:0;width:100%;height:100%}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.12) 50%,rgba(0,0,0,.55) 100%);pointer-events:none}
+.hero-photo .hero-in{text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.bg-sw{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.bg-s{position:relative;width:56px;height:56px;border-radius:14px;border:0;padding:0;overflow:visible;cursor:pointer;margin-bottom:18px;flex:none}
+.bg-s img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block}
+.bg-s>span:last-of-type{position:absolute;left:-6px;right:-6px;top:60px;text-align:center;font-size:11.5px;color:var(--muted);white-space:nowrap}
+.bg-s[aria-pressed="true"]{outline:3px solid var(--accent);outline-offset:2px}
+.bg-up{display:flex!important;align-items:center;justify-content:center;border:1.5px dashed var(--accent);background:var(--accent-soft)}
+.bg-plus{font-size:26px;color:var(--accent);line-height:1}
+.bg-adj{display:grid;gap:8px;margin-top:2px}
+.bg-prev{position:relative;height:150px;border-radius:16px;overflow:hidden;background:#3a4656;touch-action:none;cursor:ns-resize;user-select:none;-webkit-user-select:none}
+.bg-prev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.bg-hint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(0,0,0,.45);color:#fff;font-size:12.5px;border-radius:999px;padding:4px 10px;white-space:nowrap}
+#tp_bgy{width:100%;accent-color:var(--accent)}
 .ph-ed{display:grid;gap:6px}
 .ph-row{display:flex;gap:8px;flex-wrap:wrap}
 .th{position:relative;width:78px;height:78px;border-radius:10px;overflow:hidden;background:var(--fill);flex:none;display:flex;align-items:center;justify-content:center;color:var(--muted)}
@@ -521,7 +537,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 16:59）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 18:51）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -1678,6 +1694,29 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   var LOGO = '<svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg>';
   var SKY = '<svg class="sky" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 52 L24 40 L38 46 L62 24 L80 38 L100 30 L122 48 L146 36 L170 12 L192 34 L218 26 L240 42 L266 20 L292 38 L320 30 V70 H0Z" fill="#2A4A6A"/><path d="M0 62 L40 52 L84 58 L132 48 L172 56 L222 50 L272 58 L320 52 V70 H0Z" fill="#335A80"/><circle cx="44" cy="14" r="1.6" fill="#fff" opacity=".7"/><circle cx="128" cy="8" r="1.2" fill="#fff" opacity=".6"/><circle cx="214" cy="12" r="1.5" fill="#fff" opacity=".7"/><circle cx="296" cy="6" r="1.2" fill="#fff" opacity=".6"/></svg>';
 
+
+  var HERO_BG = {
+    night: { name:"夜雪", css:"linear-gradient(160deg,#1F3A56 0%,#284C70 100%)", art: SKY },
+    sky: { name:"晴空", css:"linear-gradient(180deg,#3F95D6 0%,#7DBDEB 100%)",
+      art:'<svg class="deco" viewBox="0 0 320 180" preserveAspectRatio="xMaxYMin slice" aria-hidden="true"><g fill="#fff" opacity=".85"><ellipse cx="262" cy="96" rx="24" ry="8"/><ellipse cx="278" cy="90" rx="15" ry="8"/><ellipse cx="200" cy="120" rx="16" ry="5"/></g></svg>'
+        + '<svg class="sky" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50 L36 34 L62 42 L96 18 L124 34 L160 24 L196 42 L232 26 L268 38 L320 22 V70 H0Z" fill="#3A78AE"/><path d="M0 62 L54 52 L108 58 L178 48 L250 56 L320 50 V70 H0Z" fill="#2C6497"/></svg>' },
+    dusk: { name:"夕暮", css:"linear-gradient(180deg,#F39A5B 0%,#E8892B 45%,#B9566B 100%)",
+      art:'<svg class="deco" viewBox="0 0 320 180" preserveAspectRatio="xMaxYMax slice" aria-hidden="true"><circle cx="236" cy="150" r="26" fill="#FFD9A0" opacity=".85"/></svg>'
+        + '<svg class="sky" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 44 L32 32 L62 38 L92 20 L124 34 L156 24 L190 40 L228 26 L268 38 L320 22 V70 H0Z" fill="#8E3F5A"/><path d="M0 60 L54 52 L116 58 L178 50 L250 56 L320 50 V70 H0Z" fill="#6E2F4A"/></svg>' },
+    sakura: { name:"櫻花", css:"linear-gradient(160deg,#E2879F 0%,#F2B3C3 100%)",
+      art:'<svg class="deco" viewBox="0 0 320 180" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><g fill="#fff" opacity=".6"><circle cx="270" cy="40" r="5"/><circle cx="292" cy="72" r="3.5"/><circle cx="244" cy="94" r="4"/><circle cx="206" cy="54" r="3"/><circle cx="182" cy="112" r="3.5"/><circle cx="300" cy="124" r="4.5"/><circle cx="150" cy="80" r="2.5"/></g></svg>'
+        + '<svg class="sky" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 54 L80 44 L160 52 L240 42 L320 50 V70 H0Z" fill="#C9677F"/></svg>' },
+    forest: { name:"森林", css:"linear-gradient(180deg,#3E7D5A 0%,#2F6248 100%)",
+      art:'<svg class="deco" viewBox="0 0 320 180" preserveAspectRatio="xMaxYMax slice" aria-hidden="true"><g fill="#24503A"><path d="M170 180 L190 128 L210 180Z"/><path d="M200 180 L222 110 L244 180Z"/><path d="M236 180 L262 96 L288 180Z"/><path d="M276 180 L298 118 L320 180Z"/></g></svg>'
+        + '<svg class="sky" viewBox="0 0 320 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 60 L110 52 L220 60 L320 54 V70 H0Z" fill="#1E4430"/></svg>' }
+  };
+  var BG_ORDER = ["night","sky","dusk","sakura","forest"];
+  function heroBgHTML(t){
+    if(t.bg === "photo" && t.bgPh) return '<img class="hero-img" alt="" data-bgph="'+t.bgPh+'" style="object-position:50% '+(t.bgY==null?50:t.bgY)+'%"><div class="hero-shade"></div>';
+    return (HERO_BG[t.bg] || HERO_BG.night).art;
+  }
+  function heroStyle(t){ return t.bg === "photo" && t.bgPh ? "background:#3a4656" : "background:" + (HERO_BG[t.bg] || HERO_BG.night).css; }
+  function fillBgImgs(root){ Array.prototype.forEach.call((root||document).querySelectorAll("img[data-bgph]"), function(im){ phSrc(im.dataset.bgph).then(function(u){ if(u) im.src = u; }); }); }
   function tripPack(t){ var l = t.packId ? findPack(t.packId) : null; return l; }
   function tileHTML(k, t){
     var title = TILE_DEF[k], sub = "";
@@ -1707,7 +1746,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       : st.k==="month" ? '<div class="cd"><span class="cd-l">'+esc(dateText(t))+' 出發</span></div>'
       : st.k==="none" ? '<div class="cd"><span class="cd-l">還沒決定日期</span></div>' : '';
     var h = '<div class="home-top"><div><div class="home-date">'+(d.getMonth()+1)+' 月 '+d.getDate()+' 日 星期'+wk+'</div><div class="home-brand">'+LOGO+'<span>Nekobasu</span></div></div><button class="link-btn" id="homeEdit">編輯</button></div>'
-      + '<section class="hero">'+SKY+'<div class="hero-in"><button class="hero-pill" id="tripEdit">'+(t.dmode==="none"?"填日期":"編輯")+'</button>'
+      + '<section class="hero'+(t.bg==="photo"&&t.bgPh?" hero-photo":"")+'" style="'+heroStyle(t)+'">'+heroBgHTML(t)+'<div class="hero-in"><button class="hero-pill" id="tripEdit">'+(t.dmode==="none"?"填日期":"編輯")+'</button>'
       + '<div class="kick">'+esc(kick)+'</div><div class="city">'+esc(t.en || CITY_EN[t.city] || t.city)+'</div><div class="cz">'+esc(t.city)+'・'+esc(dateText(t))+'</div>'
       + (st.k==="during" && GUIDES[t.guide] ? '<button class="hero-search" id="heroSearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>搜尋'+esc(GUIDES[t.guide].name)+'店家</button>' : count)
       + '</div></section>';
@@ -1734,6 +1773,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       return '<li class="grow"><button class="g-btn" data-trip="'+x.id+'">'+appIcon("pin", on?"ai-tax":"ai-gray")+'<span class="g-t"><b>'+esc(x.city)+'</b><span>'+esc(dateText(x))+(on?"・目前旅程":"")+'</span></span>'+(on?'<span class="g-on">●</span>':ICON_NEXT)+'</button></li>';
     }).join("")+'<li class="grow"><button class="g-btn g-new" id="tripNew">＋ 新增旅程</button></li></ul>');
     $("homeMain").innerHTML = h;
+    fillBgImgs($("homeMain"));
     var f = $("todoAdd");
     if(f) f.addEventListener("submit", function(e){ e.preventDefault(); var v = $("todoInput").value.trim(); if(!v) return;
       t.todos = t.todos || []; t.todos.push({ id: uid(), n: v, done: false }); saveTrips(); renderHome(); var i = $("todoInput"); if(i) i.focus(); });
@@ -1773,10 +1813,47 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       + [["full","確切日期"],["month","只填月份"],["none","未定"]].map(function(o){ return '<button type="button" data-dm="'+o[0]+'" aria-pressed="'+(d.dmode===o[0])+'">'+o[1]+'</button>'; }).join("")+'</span></div>'
       + '<div class="two" id="tp_full"><label>出發<input type="date" id="tp_start" value="'+esc(d.start||"")+'"></label><label>回程<input type="date" id="tp_end" value="'+esc(d.end||"")+'"></label></div>'
       + '<label id="tp_monthL">月份<input type="month" id="tp_month" value="'+esc(d.month||"")+'"></label>'
+      + '<div><span class="pick-l">背景</span><div class="bg-sw" id="tp_bg" role="group" aria-label="背景"></div>'
+      + '<div class="bg-adj" id="tp_bgadj" hidden><div class="bg-prev" id="tp_bgprev"><img id="tp_bgimg" alt="背景預覽" draggable="false"><div class="hero-shade"></div><span class="bg-hint">上下拖曳調整位置</span></div>'
+      + '<input type="range" id="tp_bgy" min="0" max="100" step="1" aria-label="照片顯示位置（0 是最上面，100 是最下面）"></div>'
+      + '<div class="err" id="tp_bgerr" hidden></div></div>'
       + (isNew ? '<label class="check-l"><input type="checkbox" id="tp_pack" checked> 同時建立行李清單</label>' : '')
       + '<div class="err" id="tp_err" hidden></div>'
       + '<div class="actions"><button type="submit" class="btn primary">'+(isNew?"建立":"儲存")+'</button><button type="button" class="btn" data-close>取消</button>'
       + (!isNew && TR.list.length > 1 ? '<button type="button" class="btn danger" id="tp_del">刪除旅程</button>' : '')+'</div><div id="tp_zone"></div></form>', isNew?"新增旅程":"編輯旅程");
+    if(!d.bg) d.bg = "night"; if(d.bgY == null) d.bgY = 50;
+    function drawBg(){
+      $("tp_bg").innerHTML = BG_ORDER.map(function(k){ return '<button type="button" class="bg-s" data-bgk="'+k+'" aria-pressed="'+(d.bg===k)+'" aria-label="'+HERO_BG[k].name+'" style="background:'+HERO_BG[k].css+'"><span>'+HERO_BG[k].name+'</span></button>'; }).join("")
+        + (d.bgPh ? '<button type="button" class="bg-s bg-s-ph" data-bgk="photo" aria-pressed="'+(d.bg==="photo")+'" aria-label="自己的照片"><img alt="" data-bgph="'+d.bgPh+'"><span>照片</span></button>' : '')
+        + '<label class="bg-s bg-up" aria-label="'+(d.bgPh?"換一張照片":"用自己的照片")+'"><span class="bg-plus" aria-hidden="true">＋</span><span>'+(d.bgPh?"換照片":"照片")+'</span><input type="file" id="tp_bgfile" accept="image/*" hidden></label>';
+      fillBgImgs($("tp_bg"));
+      var on = d.bg === "photo" && d.bgPh;
+      $("tp_bgadj").hidden = !on;
+      if(on){ phSrc(d.bgPh).then(function(u){ $("tp_bgimg").src = u; }); $("tp_bgimg").style.objectPosition = "50% " + d.bgY + "%"; $("tp_bgy").value = d.bgY; }
+      $("tp_bgfile").addEventListener("change", function(){
+        var f = this.files && this.files[0]; this.value = ""; if(!f) return;
+        var er = $("tp_bgerr"); er.hidden = true;
+        phShrink(f, 1600).then(function(b){ var id = "bg" + uid(); phFresh[id] = 1; return phPut(id, b).then(function(){ d.bgPh = id; d.bg = "photo"; d.bgY = 50; a2hsPending = true; drawBg(); }); })
+          .catch(function(){ er.textContent = "這張照片無法讀取，請換一張試試。"; er.hidden = false; });
+      });
+    }
+    drawBg();
+    $("tp_bg").addEventListener("click", function(e){ var b = e.target.closest("[data-bgk]"); if(!b) return; d.bg = b.dataset.bgk; drawBg(); });
+    function setY(y){ d.bgY = Math.max(0, Math.min(100, Math.round(y))); $("tp_bgimg").style.objectPosition = "50% " + d.bgY + "%"; $("tp_bgy").value = d.bgY; }
+    $("tp_bgy").addEventListener("input", function(){ setY(+this.value); });
+    (function(){
+      var box = $("tp_bgprev"), img = $("tp_bgimg"), drag = null, hr = document.querySelector("#homeMain .hero");
+      if(hr && hr.offsetWidth) box.style.aspectRatio = hr.offsetWidth + " / " + hr.offsetHeight, box.style.height = "auto";
+      box.addEventListener("pointerdown", function(e){ drag = { y: e.clientY, v: d.bgY }; try{ box.setPointerCapture(e.pointerId); }catch(x){} e.preventDefault(); });
+      box.addEventListener("pointermove", function(e){
+        if(!drag) return;
+        var bw = box.clientWidth, bh = box.clientHeight, nw = img.naturalWidth || 1, nh = img.naturalHeight || 1;
+        var over = Math.max(1, bw * nh / nw - bh);
+        setY(drag.v - (e.clientY - drag.y) / over * 100);
+      });
+      function end(){ drag = null; }
+      box.addEventListener("pointerup", end); box.addEventListener("pointercancel", end);
+    })();
     function sync(){
       $("tp_full").hidden = d.dmode !== "full"; $("tp_monthL").hidden = d.dmode !== "month";
       Array.prototype.forEach.call($("tp_mode").children, function(x){ x.setAttribute("aria-pressed", String(x.dataset.dm === d.dmode)); });
@@ -1795,6 +1872,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       var country = $("tp_country").value;
       var rec = isNew ? { id: "t" + uid(), created: Date.now(), todos: newTodos(country) } : t;
       rec.city = city; rec.en = $("tp_en").value.trim().toUpperCase(); rec.country = country; rec.cur = COUNTRY[country].cur;
+      rec.bg = d.bg || "night"; rec.bgPh = d.bgPh || ""; rec.bgY = d.bgY == null ? 50 : d.bgY;
+      if(rec.bg === "photo" && !rec.bgPh) rec.bg = "night";
       rec.dmode = d.dmode; rec.start = d.dmode==="full" ? start : ""; rec.end = d.dmode==="full" ? (end || start) : ""; rec.month = d.dmode==="month" ? month : "";
       if(!rec.guide) rec.guide = guideFor(city);
       if(isNew){
@@ -1806,7 +1885,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
         }
         TR.list.push(rec); TR.current = rec.id;
       }
-      saveTrips(); closeSheet(); applyTrip(); fxFetch(); renderAll(); renderHome(); window.scrollTo({top:0});
+      saveTrips(); closeSheet(); applyTrip(); fxFetch(); renderAll(); renderHome(); window.scrollTo({top:0}); maybeA2HS();
     });
     var del = $("tp_del");
     if(del) del.addEventListener("click", function(){
@@ -1953,11 +2032,11 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     return phGet(id).then(function(b){ if(!b) return ""; phURL[id] = URL.createObjectURL(b); return phURL[id]; });
   }
   // shrink a picked file to a ~1280px JPEG
-  function phShrink(file){
+  function phShrink(file, max){
     return new Promise(function(res, rej){
       var url = URL.createObjectURL(file), img = new Image();
       img.onload = function(){
-        var w = img.naturalWidth, h = img.naturalHeight, m = 1280, k = Math.min(1, m / Math.max(w, h));
+        var w = img.naturalWidth, h = img.naturalHeight, m = max || 1280, k = Math.min(1, m / Math.max(w, h));
         var c = document.createElement("canvas"); c.width = Math.round(w*k); c.height = Math.round(h*k);
         c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
         URL.revokeObjectURL(url);
@@ -1971,6 +2050,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var ids = {};
     try{ for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k && k.indexOf("sp-buy-")===0){
       var o = load(k, null); if(o && o.items) o.items.forEach(function(it){ (it.ph||[]).forEach(function(p){ ids[p] = 1; }); }); } } }catch(e){}
+    try{ (TR && TR.list || []).forEach(function(x){ if(x.bgPh) ids[x.bgPh] = 1; }); }catch(e){}
     return ids;
   }
   function phCleanup(){
