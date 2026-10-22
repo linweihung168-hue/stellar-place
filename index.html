@@ -360,6 +360,27 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
 .help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
 .help a{color:var(--accent)}
+.ph-ed{display:grid;gap:6px}
+.ph-row{display:flex;gap:8px;flex-wrap:wrap}
+.th{position:relative;width:78px;height:78px;border-radius:10px;overflow:hidden;background:var(--fill);flex:none;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.th img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.th-x{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:12px;line-height:22px;padding:0}
+.ph-btns{display:flex;gap:8px}
+.ph-b{flex:1;height:42px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:15px;display:flex!important;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.ph-b svg{width:18px;height:18px}
+.ph-ic{flex:none;border:0;background:none;width:34px;height:34px;padding:7px;color:#8E8E93;border-radius:50%}
+.ph-ic svg{width:20px;height:20px;display:block}
+.chev-b{flex:none;border:0;background:none;padding:0 2px;color:inherit;display:flex;align-items:center}
+.pv{position:fixed;inset:0;z-index:60;background:#000;color:#fff;display:flex;flex-direction:column}
+.pv-x{position:absolute;z-index:2;top:calc(12px + env(safe-area-inset-top,0px));left:16px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:17px}
+.pv-track{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pv-track::-webkit-scrollbar{display:none}
+.pv-slide{flex:0 0 100%;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;padding:calc(60px + env(safe-area-inset-top,0px)) 0 8px}
+.pv-slide img{max-width:100%;max-height:100%;object-fit:contain}
+.pv-dots{display:flex;justify-content:center;gap:7px;padding:6px}.pv-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35)}.pv-dots i.on{background:#fff}
+.pv-cap{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 22px calc(22px + env(safe-area-inset-bottom,0px))}
+.pv-n{font-size:22px;font-weight:700;min-width:0;overflow-wrap:anywhere}.pv-q{font-size:40px;font-weight:800;color:#FFC98F;line-height:1;flex:none}
+.steps{margin:6px 0 10px;padding-left:22px;line-height:1.9}
 :root{--nav-h:74px}
 .tabbar{left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:520px;margin:0 auto;padding:5px;border-radius:32px;border:.5px solid rgba(255,255,255,.7);background:rgba(255,255,255,.8);-webkit-backdrop-filter:saturate(180%) blur(30px);backdrop-filter:saturate(180%) blur(30px);box-shadow:0 8px 30px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8)}
 .tabbar button{height:54px;border-radius:27px;font-size:10px;font-weight:600;gap:2px;color:#6C6C70;transition:background .15s}
@@ -490,15 +511,17 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     <ul class="glist glist-card">
       <li class="grow"><button class="g-btn" data-act="backup"><span class="g-t">備份所有資料</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="restore"><span class="g-t">從備份還原</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
+      <li class="grow"><span class="g-t">照片</span><span class="g-v" id="setPhotos">—</span></li>
       <li class="grow"><button class="g-btn" data-act="editshop"><span class="g-t">店鋪資料</span><span class="g-v" id="setData"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
     </ul>
-    <p class="gf">清單和旅程存在這台裝置。換手機前先備份，再到新手機還原。</p>
+    <p class="gf">清單、旅程和照片都存在這台裝置。換手機前先備份，再到新手機還原。</p>
     <input type="file" id="restoreFile" accept="application/json,.json" hidden>
     <div class="gh">關於</div>
     <ul class="glist glist-card">
+      <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 09:35）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/22 16:59）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -520,6 +543,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     </div>
   </div>
   <div class="toast" id="toast" role="status" hidden></div>
+  <div class="pv" id="phView" role="dialog" aria-modal="true" aria-label="照片" hidden></div>
   <div class="sheet-bg" id="sheetBg" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 </div>
 
@@ -1082,7 +1106,9 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     return '<li class="row swr'+(it.done?" done":"")+'">'+swActs("b", it.id)
       + '<button class="ck" role="checkbox" aria-checked="'+(!!it.done)+'" data-bck="'+it.id+'" aria-label="'+(it.done?"取消已買":"標記已買")+'：'+esc(it.n)+'">'+ICON_CHECK+'</button>'
       + '<button class="main" data-bedit="'+it.id+'">'+(s ? badge(s) : '')
-      + '<span class="names"><span class="ja">'+esc(it.n)+'</span>'+((bits.length || (it.cat && buyMode === "route"))?'<span class="sub">'+(it.cat && buyMode === "route" ? '<span class="tag">'+esc(it.cat)+'</span>' : '')+bits.join("・")+'</span>':'')+'</span>'+ICON_NEXT+'</button></li>';
+      + '<span class="names"><span class="ja">'+esc(it.n)+'</span>'+((bits.length || (it.cat && buyMode === "route"))?'<span class="sub">'+(it.cat && buyMode === "route" ? '<span class="tag">'+esc(it.cat)+'</span>' : '')+bits.join("・")+'</span>':'')+'</span></button>'
+      + (it.ph && it.ph.length ? '<button class="ph-ic" data-bphoto="'+it.id+'" aria-label="看「'+esc(it.n)+'」的照片（'+it.ph.length+' 張）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>' : '')
+      + '<button class="chev-b" data-bedit="'+it.id+'" tabindex="-1" aria-hidden="true">'+ICON_NEXT+'</button></li>';
   }
   function byPlace(a, b){
     var sa = a.shop ? findShop(a.shop) : null, sb = b.shop ? findShop(b.shop) : null;
@@ -1200,6 +1226,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   $("buyMain").addEventListener("click", function(e){
     var t;
     if((t = e.target.closest("[data-bck]"))){ var it = findBuy(t.dataset.bck); if(it){ it.done = !it.done; saveBuy(); renderBuy(); } return; }
+    if((t = e.target.closest("[data-bphoto]"))){ var pi = findBuy(t.dataset.bphoto); if(pi) phViewer(pi.ph, 0, pi.n, pi.qty || 1); return; }
     if((t = e.target.closest("[data-bedit]"))){ editBuy(t.dataset.bedit); return; }
     if((t = e.target.closest("[data-who]"))){ buyWho = t.dataset.who; renderBuy(); return; }
     if((t = e.target.closest("[data-bcat]"))){ buyCat = t.dataset.bcat; renderBuy(); return; }
@@ -1222,6 +1249,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       + '<div class="two"><div class="fld"><span class="fld-l" id="i_ql">數量</span><div class="stepper" role="group" aria-labelledby="i_ql"><button type="button" class="st-b" id="i_minus" aria-label="減少">−</button><input id="i_q" inputmode="numeric" value="'+(it.qty||1)+'" aria-labelledby="i_ql"><button type="button" class="st-b" id="i_plus" aria-label="增加">＋</button></div></div>'
       + '<label class="fld">單價（'+CUR().name+'）<input id="i_p" inputmode="decimal" value="'+(it.price||"")+'"></label></div>'
       + '<div class="subtot" id="i_twd" aria-live="polite"></div>'
+      + phEditorHTML()
       + '<label>分類<select id="i_c">'+catOptions(buyCats(), it.cat||"")+'</select></label><input id="i_newc" placeholder="新分類名稱" aria-label="新分類名稱" hidden>'
       + '<label>幫誰買<input id="i_w" value="'+esc(it.who||"")+'" list="whoList"></label>'
       + '<datalist id="whoList">'+whos().map(function(w){ return '<option value="'+esc(w)+'">'; }).join("")+'</datalist>'
@@ -1239,6 +1267,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       var u = $("i_unlink"); if(u) u.addEventListener("click", function(){ tmp = ""; drawCur(); });
     }
     drawCur();
+    var commitPh = phEditor(it);
     var pickCat = wireCatSelect("i_c", "i_newc", buyCats());
     function liveTwd(){ var y = parseAmt($("i_p").value), q = Math.max(1, toInt($("i_q").value)||1), el = $("i_twd");
       el.innerHTML = y ? '小計 <b>'+money(y*q)+'</b>'+(fxOk() ? '<span>（≈ '+twd(y*q)+'）</span>' : '') : ''; el.hidden = !y; }
@@ -1262,7 +1291,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       it.note = $("i_note").value.trim();
       it.shop = tmp || "";
       it.cat = pickCat();
-      saveBuy(); closeSheet(); renderBuy();
+      commitPh().forEach(function(p){ phDel(p).catch(function(){}); });
+      saveBuy(); closeSheet(); renderBuy(); maybeA2HS();
     });
     $("i_del").addEventListener("click", function(){
       $("i_delzone").innerHTML = '<div class="confirm">確定刪除「'+esc(it.n)+'」？<button type="button" class="btn danger" id="i_yes">刪除</button><button type="button" class="btn" id="i_no">保留</button></div>';
@@ -1286,6 +1316,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if(!BUY.items.length){ openSheet('<h2>分享購買清單</h2><p>清單還是空的，先加幾樣東西再分享。</p><div class="actions"><button class="btn" data-close>好</button></div>', "分享"); return; }
     var payload = { t:"b", c: buyCats(), i: BUY.items.map(function(i){ return [i.n, i.qty||1, i.who||"", i.price||0, i.shop||"", i.note||"", i.cat||""]; }) };
     shareSheet("購買清單", "我的札幌購買清單（"+BUY.items.length+" 樣）", payload);
+    if(BUY.items.some(function(i){ return i.ph && i.ph.length; })){ var sm = $("sh_msg"); if(sm) sm.textContent = "照片只存在你的手機，不會跟著連結分享。"; }
   });
 
   // ===================== Categories (shared by shopping & packing) =====================
@@ -1823,6 +1854,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     $("setFxName").textContent = "匯率・" + (CUR_CODE === "TWD" ? "台幣" : CUR().name);
     $("setFx").textContent = CUR_CODE === "TWD" ? "不需要" : fxOk() ? "1 ≈ " + fxRateText() + "・" + (fxRec().src === "manual" ? "手動" : "自動") : "未設定";
     $("setCommon").textContent = COMMON.length + " 樣";
+    phUsage().then(function(u){ var el = $("setPhotos"); if(el) el.textContent = u.n ? u.n + " 張・" + (u.bytes/1048576 < 0.1 ? "0.1" : (u.bytes/1048576).toFixed(1)) + " MB" : "沒有照片"; });
     $("setData").textContent = MALLS.map(function(m){ return (DATA[m.id].meta.updated||"").slice(5).replace("-","/"); }).filter(Boolean).sort().slice(-1)[0] + " 更新";
   }
   $("themeSeg").addEventListener("click", function(e){ var b = e.target.closest("[data-th]"); if(!b) return; THEME = b.dataset.th; store(false, THEME_KEY, THEME); applyTheme(); renderSet(); });
@@ -1836,14 +1868,20 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if(a === "restore") $("restoreFile").click();
     if(a === "editshop"){ setView("shop"); if(!state.edit) $("editToggle").click(); }
     if(a === "help") helpSheet();
+    if(a === "a2hs") a2hsSheet(true);
     if(a === "sources") sourcesSheet();
   });
   function doBackup(){
     var data = {};
     try{ for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k && k.indexOf("sp-")===0) data[k] = localStorage.getItem(k); } }catch(e){}
-    var json = JSON.stringify({ app:"nekobasu", v:1, at: new Date().toISOString(), data: data }, null, 1);
-    var name = "nekobasu-backup-" + today().replace(/-/g,"") + ".json";
-    dlP.then(function(dl){
+    var name = "nekobasu-backup-" + today().replace(/-/g,"") + ".json", json = "";
+    function toData(b){ return new Promise(function(res){ var r = new FileReader(); r.onload = function(){ res(r.result); }; r.onerror = function(){ res(""); }; r.readAsDataURL(b); }); }
+    var keep = phAllRefs();
+    phKeys().catch(function(){ return []; }).then(function(keys){
+      var photos = {};
+      return Promise.all((keys||[]).filter(function(k){ return keep[k]; }).map(function(k){ return phGet(k).then(function(b){ return b ? toData(b) : ""; }).then(function(d){ if(d) photos[k] = d; }); }))
+        .then(function(){ json = JSON.stringify({ app:"nekobasu", v:2, at: new Date().toISOString(), data: data, photos: photos }); });
+    }).then(function(){ return dlP; }).then(function(dl){
       if(dl) return dl.save({ filename: name, data: json });
       var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([json], {type:"application/json"})); a.download = name;
       document.body.appendChild(a); a.click(); a.remove();
@@ -1859,7 +1897,9 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       openSheet('<h2>從備份還原</h2><p>會用 '+esc(String(o.at||"").slice(0,10))+' 的備份取代這台裝置上目前的旅程和清單。</p><div class="actions"><button class="btn danger" id="rs_ok">取代並還原</button><button class="btn" data-close>取消</button></div>', "還原");
       $("rs_ok").addEventListener("click", function(){
         try{ Object.keys(o.data).forEach(function(k){ if(k.indexOf("sp-")===0) localStorage.setItem(k, o.data[k]); }); }catch(e){}
-        location.reload();
+        var ps = o.photos || {};
+        Promise.all(Object.keys(ps).map(function(k){ return fetch(ps[k]).then(function(r){ return r.blob(); }).then(function(b){ return phPut(k, b); }).catch(function(){}); }))
+          .then(function(){ location.reload(); });
       });
     };
     rd.readAsText(f);
@@ -1869,6 +1909,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       + '<p><b>首頁</b>顯示目前旅程的倒數和重點。點主視覺的「編輯」可以改城市和日期；「我的旅程」可以切換或新增旅程。</p>'
       + '<p><b>店鋪</b>搜尋札幌站四個商場的店家，點樓層標題可以收起那一層，點店名可以加入購物清單。</p>'
       + '<p><b>購物</b>每趟旅程各有一份。輸入東西會自動找店，可以切換「逛街順序」（依商場樓層）或「依分類」（分類自己建）；填單價會換算台幣。</p>'
+      + '<p><b>照片</b>購物清單的每一項可以拍照或從相簿選，最多 3 張。點清單上的相機圖示會全螢幕顯示，可以直接給店員看。照片只存在你的手機，請從主畫面打開 App，並定期備份。</p>'
       + '<p><b>行李</b>可以建立多份，從空白開始自己加分類和物品。勾「記住」的東西會變成「我的常用物品」，建立新清單時可以一次帶入。</p>'
       + '<p><b>分享</b>購物和行李清單右上的「分享」會產生連結，傳給旅伴點開就能匯入。</p>'
       + '<p><b>資料存在這台裝置</b>，換手機前請先到設定「備份所有資料」。</p></div>'
@@ -1880,6 +1921,144 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       + '<p><b>免稅制度</b>日本觀光廳。</p><p><b>匯率</b>ExchangeRate-API，備援 currency-api。</p></div>'
       + '<div class="actions"><button class="btn primary" data-close>好</button></div>', "資料來源");
   }
+
+  // ===================== Photos for shopping items (IndexedDB, this device only) =====================
+  var PH_MAX = 3, phDB = null, phURL = {}, phFresh = {};
+  function phOpen(){
+    if(phDB) return phDB;
+    phDB = new Promise(function(res, rej){
+      try{
+        var r = indexedDB.open("nekobasu", 1);
+        r.onupgradeneeded = function(){ r.result.createObjectStore("photos"); };
+        r.onsuccess = function(){ res(r.result); };
+        r.onerror = function(){ rej(r.error); };
+      }catch(e){ rej(e); }
+    });
+    phDB.catch(function(){ phDB = null; });
+    return phDB;
+  }
+  function phTx(mode, fn){
+    return phOpen().then(function(db){ return new Promise(function(res, rej){
+      var tx = db.transaction("photos", mode), st = tx.objectStore("photos"), out = fn(st);
+      tx.oncomplete = function(){ res(out && "result" in out ? out.result : undefined); };
+      tx.onerror = function(){ rej(tx.error); }; tx.onabort = function(){ rej(tx.error); };
+    }); });
+  }
+  function phPut(id, blob){ return phTx("readwrite", function(st){ st.put(blob, id); }); }
+  function phGet(id){ return phTx("readonly", function(st){ return st.get(id); }); }
+  function phDel(id){ if(phURL[id]){ URL.revokeObjectURL(phURL[id]); delete phURL[id]; } return phTx("readwrite", function(st){ st.delete(id); }); }
+  function phKeys(){ return phTx("readonly", function(st){ return st.getAllKeys(); }); }
+  function phSrc(id){
+    if(phURL[id]) return Promise.resolve(phURL[id]);
+    return phGet(id).then(function(b){ if(!b) return ""; phURL[id] = URL.createObjectURL(b); return phURL[id]; });
+  }
+  // shrink a picked file to a ~1280px JPEG
+  function phShrink(file){
+    return new Promise(function(res, rej){
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function(){
+        var w = img.naturalWidth, h = img.naturalHeight, m = 1280, k = Math.min(1, m / Math.max(w, h));
+        var c = document.createElement("canvas"); c.width = Math.round(w*k); c.height = Math.round(h*k);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function(b){ b ? res(b) : rej(new Error("toBlob")); }, "image/jpeg", 0.82);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error("decode")); };
+      img.src = url;
+    });
+  }
+  function phAllRefs(){
+    var ids = {};
+    try{ for(var i=0;i<localStorage.length;i++){ var k = localStorage.key(i); if(k && k.indexOf("sp-buy-")===0){
+      var o = load(k, null); if(o && o.items) o.items.forEach(function(it){ (it.ph||[]).forEach(function(p){ ids[p] = 1; }); }); } } }catch(e){}
+    return ids;
+  }
+  function phCleanup(){
+    var keep = phAllRefs();
+    phKeys().then(function(keys){ (keys||[]).forEach(function(k){ if(!keep[k] && !phFresh[k]) phDel(k); }); }).catch(function(){});
+  }
+  function phUsage(){
+    return phOpen().then(function(db){ return new Promise(function(res){
+      var n = 0, bytes = 0, req = db.transaction("photos").objectStore("photos").openCursor();
+      req.onsuccess = function(){ var c = req.result; if(c){ n++; bytes += (c.value && c.value.size) || 0; c.continue(); } else res({ n: n, bytes: bytes }); };
+      req.onerror = function(){ res({ n: 0, bytes: 0 }); };
+    }); }).catch(function(){ return { n: 0, bytes: 0 }; });
+  }
+  function isStandalone(){ try{ return navigator.standalone === true || matchMedia("(display-mode: standalone)").matches; }catch(e){ return false; } }
+  var A2HS_KEY = "sp-a2hs-v1", a2hsPending = false;
+  function a2hsSheet(force){
+    openSheet('<h2>建議先加到主畫面</h2><p>用 Safari 開網頁時，iPhone 可能會在很久沒開之後清掉照片和清單。加到主畫面後就不會。</p>'
+      + '<ol class="steps"><li>點 Safari 下方的「分享」</li><li>選「加入主畫面」</li><li>之後都從主畫面的 Nekobasu 打開</li></ol>'
+      + '<p class="sub">Android：Chrome 右上「⋮」→「加到主畫面」或「安裝應用程式」。</p>'
+      + '<div class="actions"><button type="button" class="btn primary" data-close>知道了</button>'+(force?'':'<button type="button" class="btn" id="a2_never">不再提醒</button>')+'</div>', "加到主畫面");
+    var n = $("a2_never"); if(n) n.addEventListener("click", function(){ store(false, A2HS_KEY, "never"); closeSheet(); });
+  }
+  function maybeA2HS(){
+    if(!a2hsPending) return; a2hsPending = false;
+    if(BUILD !== "pwa" || isStandalone() || store(true, A2HS_KEY)) return;
+    store(false, A2HS_KEY, "shown"); a2hsSheet(false);
+  }
+
+  // ---- photo editor inside the item sheet
+  function phEditor(it){
+    var cur = (it.ph || []).slice(), busy = 0;
+    function draw(){
+      var box = $("i_ph"); if(!box) return;
+      $("i_phl").textContent = "照片（" + cur.length + " / " + PH_MAX + "）";
+      box.innerHTML = cur.map(function(id, i){ return '<span class="th"><img alt="照片 '+(i+1)+'" data-phid="'+id+'"><button type="button" class="th-x" data-phx="'+i+'" aria-label="刪除照片 '+(i+1)+'">✕</button></span>'; }).join("")
+        + (busy ? '<span class="th th-busy" aria-label="處理中">…</span>' : '');
+      box.hidden = !cur.length && !busy;
+      $("i_phbtns").hidden = cur.length + busy >= PH_MAX;
+      Array.prototype.forEach.call(box.querySelectorAll("img[data-phid]"), function(im){ phSrc(im.dataset.phid).then(function(u){ if(u) im.src = u; }); });
+    }
+    function take(files){
+      files = Array.prototype.slice.call(files || [], 0, PH_MAX - cur.length - busy);
+      files.forEach(function(f){
+        busy++; draw();
+        phShrink(f).then(function(b){ var id = "ph" + uid(); phFresh[id] = 1; return phPut(id, b).then(function(){ cur.push(id); a2hsPending = true; }); })
+          .catch(function(){ var e = $("i_pherr"); if(e){ e.textContent = "這張照片無法讀取，請換一張試試。"; e.hidden = false; } })
+          .then(function(){ busy--; draw(); });
+      });
+    }
+    $("i_cam").addEventListener("change", function(){ take(this.files); this.value = ""; });
+    $("i_lib").addEventListener("change", function(){ take(this.files); this.value = ""; });
+    $("i_ph").addEventListener("click", function(e){
+      var x = e.target.closest("[data-phx]"); if(x){ var gone = cur.splice(+x.dataset.phx, 1)[0]; if((it.ph||[]).indexOf(gone) < 0) phDel(gone).catch(function(){}); draw(); return; }
+      var im = e.target.closest("img[data-phid]"); if(im) phViewer(cur, cur.indexOf(im.dataset.phid), it.n, toInt($("i_q").value) || 1, true);
+    });
+    draw();
+    return function(){ var removed = (it.ph||[]).filter(function(p){ return cur.indexOf(p) < 0; }); it.ph = cur.slice(); if(!it.ph.length) delete it.ph; return removed; };
+  }
+  function phEditorHTML(){
+    var cam = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+    var lib = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20 16l-5-5-8 8"/></svg>';
+    return '<div class="ph-ed"><span class="pick-l" id="i_phl">照片</span><div class="ph-row" id="i_ph"></div>'
+      + '<div class="ph-btns" id="i_phbtns"><label class="ph-b">'+cam+'拍照<input type="file" id="i_cam" accept="image/*" capture="environment" hidden></label>'
+      + '<label class="ph-b">'+lib+'相簿<input type="file" id="i_lib" accept="image/*" multiple hidden></label></div>'
+      + '<div class="err" id="i_pherr" hidden></div></div>';
+  }
+
+  // ---- full-screen viewer
+  function phViewer(ids, start, name, qty, fromSheet){
+    if(!ids || !ids.length) return;
+    var v = $("phView");
+    v.innerHTML = '<button type="button" class="pv-x" id="pvClose" aria-label="關閉">✕</button>'
+      + '<div class="pv-track" id="pvTrack">'+ids.map(function(id, i){ return '<div class="pv-slide"><img alt="'+esc(name)+' 照片 '+(i+1)+'" data-phid="'+id+'"></div>'; }).join("")+'</div>'
+      + (ids.length > 1 ? '<div class="pv-dots" id="pvDots">'+ids.map(function(_, i){ return '<i'+(i===start?' class="on"':'')+'></i>'; }).join("")+'</div>' : '')
+      + '<div class="pv-cap"><span class="pv-n">'+esc(name)+'</span>'+(qty > 1 ? '<span class="pv-q">× '+qty+'</span>' : '')+'</div>';
+    v.hidden = false; v.dataset.sheet = fromSheet ? "1" : "";
+    Array.prototype.forEach.call(v.querySelectorAll("img[data-phid]"), function(im){ phSrc(im.dataset.phid).then(function(u){ if(u) im.src = u; }); });
+    var tr = $("pvTrack");
+    requestAnimationFrame(function(){ tr.scrollLeft = start * tr.clientWidth; });
+    tr.addEventListener("scroll", function(){
+      var d = $("pvDots"); if(!d) return; var i = Math.round(tr.scrollLeft / tr.clientWidth);
+      Array.prototype.forEach.call(d.children, function(x, k){ x.className = k === i ? "on" : ""; });
+    });
+    $("pvClose").addEventListener("click", phViewerClose);
+    $("pvClose").focus();
+  }
+  function phViewerClose(){ var v = $("phView"); v.hidden = true; v.innerHTML = ""; }
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !$("phView").hidden){ e.stopPropagation(); phViewerClose(); } }, true);
 
   // ===================== Swipe actions, undo, edge-swipe back =====================
   var SW_W = 216, swOpen = null, tStart = null, swallowUntil = 0;
@@ -1911,7 +2090,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 
   document.addEventListener("touchstart", function(e){
     tStart = null;
-    if(e.touches.length !== 1 || !$("sheetBg").hidden) return;
+    if(e.touches.length !== 1 || !$("sheetBg").hidden || !$("phView").hidden) return;
     var t = e.touches[0], li = e.target.closest(".swr");
     var edge = t.clientX < 24 && canBack();
     if(swOpen && li !== swOpen && !e.target.closest(".sw-acts")){ swClose(); swallowClick(); return; }
@@ -2042,6 +2221,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     }
   });
 
+  setTimeout(phCleanup, 2000);
   syncModes(); applyTrip(); renderAll(); setView(view); checkImport(); fxFetch();
 
   // Published copies of each mall's data file win over the embedded snapshot when newer.
