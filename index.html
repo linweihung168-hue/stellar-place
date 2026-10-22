@@ -360,6 +360,12 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .about-logo b{color:var(--ink);font-size:16px;margin-top:6px}
 .help p{margin:0 0 10px;line-height:1.6}.help b{display:block}
 .help a{color:var(--accent)}
+.link-row .g-btn{text-decoration:none;color:var(--ink);min-height:44px}
+.link-sub{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.link-go{color:#C4C4C7;font-size:17px;flex:none}
+.glist .sw-acts{background:var(--surface);padding-right:8px}
+.ai-ch{color:#fff;font-size:14px;font-weight:800;font-family:-apple-system,system-ui,sans-serif}
+.lk-url{display:flex;align-items:center;gap:8px}.lk-url input{flex:1}
 .guide-seg{margin-top:2px}
 :root{--ot-bg:#F7F5F0;--ot-grid:#ECE6DA;--ot-canal:#CFE3F3;--ot-street:#DDD0B8;--ot-lab:#8C7F69;--ot-canal-t:#4E82B0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ot-bg:#1E1E20;--ot-grid:#2A2A2D;--ot-canal:#21405C;--ot-street:#4A4236;--ot-lab:#B8A98E;--ot-canal-t:#8DB9E2}}
@@ -597,7 +603,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/23 00:25）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/23 07:23）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -1807,6 +1813,16 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       return '<li class="grow'+(x.done?" done":"")+'"><button class="ck ck-r" role="checkbox" aria-checked="'+(!!x.done)+'" data-todo="'+x.id+'" aria-label="'+esc(x.n)+'">'+ICON_CHECK+'</button><span class="g-t">'+esc(x.n)+'</span><button class="g-x" data-tdel="'+x.id+'" aria-label="刪除 '+esc(x.n)+'">×</button></li>';
     }).join("") + '<li class="grow"><form id="todoAdd" class="g-add" autocomplete="off"><input id="todoInput" placeholder="＋ 新增待辦" aria-label="新增待辦"></form></li></ul>';
     if(HOME.hideSec.indexOf("todo") < 0) h += hsec("todo", "出發前待辦", tdSum, tdBody);
+    // links
+    if(HOME.hideSec.indexOf("links") < 0){
+      var lks = t.links || [];
+      h += hsec("links", "我的連結", lks.length ? lks.length + " 個" : "還沒有連結", '<ul class="glist">' + lks.map(function(x){
+        var k = linkKind(x.u);
+        return '<li class="grow swr link-row" data-sww="148">'+swActs("l", x.id, true)+'<a class="g-btn" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'
+          + '<span class="ai" style="background:'+k.c+'">'+(k.svg || '<b class="ai-ch">'+esc(k.ch || (x.n||"?").charAt(0))+'</b>')+'</span>'
+          + '<span class="g-t"><b>'+esc(x.n)+'</b><span class="link-sub">'+esc(x.note || linkHost(x.u))+'</span></span><span class="link-go" aria-hidden="true">↗</span></a></li>';
+      }).join("") + '<li class="grow"><button class="g-btn g-new" id="linkAdd">＋ 新增連結</button></li></ul>');
+    }
     // tips (per country; each can be marked as read)
     var tips = TIPS[t.country] || [];
     if(tips.length && HOME.hideSec.indexOf("tips") < 0){
@@ -1841,6 +1857,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       (t.todos||[]).forEach(function(x){ if(x.id===b.dataset.todo) x.done = !x.done; });
       if(t.todos.length && t.todos.every(function(x){ return x.done; })) HOME.open.todo = false;
       saveTrips(); saveHome(); renderHome(); return; }
+    if(e.target.closest("#linkAdd")){ linkSheet(null); return; }
     if((b = e.target.closest("[data-tdel]"))){ t.todos = (t.todos||[]).filter(function(x){ return x.id !== b.dataset.tdel; }); saveTrips(); renderHome(); return; }
     if((b = e.target.closest("[data-tile]"))){
       var k2 = b.dataset.tile;
@@ -1954,6 +1971,48 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     });
   }
 
+  // ---- my links (per trip)
+  function linkHost(u){ try{ return new URL(u).hostname.replace(/^www\./, ""); }catch(e){ return u; } }
+  var PIN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s6-5.4 6-10a6 6 0 0 0-12 0c0 4.6 6 10 6 10z"/><circle cx="12" cy="10" r="2"/></svg>';
+  function linkKind(u){
+    var h = linkHost(u), p = ""; try{ p = new URL(u).pathname; }catch(e){}
+    if(/(^|\.)maps\.google\.|maps\.app\.goo\.gl|goo\.gl$/.test(h) || (/google\./.test(h) && /^\/maps/.test(p))) return { name:"Google 地圖", c:"#D9534A", svg: PIN_SVG };
+    if(/instagram\.com$/.test(h)) return { name:"Instagram", c:"#C13584", ch:"IG" };
+    if(/youtube\.com$|youtu\.be$/.test(h)) return { name:"YouTube", c:"#E0302A", ch:"▶" };
+    if(/threads\.(net|com)$|facebook\.com$/.test(h)) return { name: /facebook/.test(h) ? "Facebook" : "Threads", c:"#3B5998", ch:"@" };
+    if(/booking\.com$|agoda\.|airbnb\.|jalan\.net$|travel\.rakuten|hotels\.com$|trip\.com$|klook\.com$|kkday\.com$|expedia\./.test(h)) return { name: [["booking","Booking.com"],["agoda","Agoda"],["airbnb","Airbnb"],["jalan","じゃらん"],["rakuten","樂天旅遊"],["hotels.com","Hotels.com"],["trip.com","Trip.com"],["klook","Klook"],["kkday","KKday"],["expedia","Expedia"]].filter(function(x){ return h.indexOf(x[0]) >= 0; })[0][1], c:"#2D6FB0", ch:"訂" };
+    if(/tabelog\.com$|retty\.me$|gnavi\.co\.jp$|hotpepper\.jp$|openrice\.com$/.test(h)) return { name: /tabelog/.test(h) ? "食べログ" : h, c:"#E8892B", ch:"食" };
+    if(/pixnet\.net$|medium\.com$|blogspot\.|wordpress\.|note\.com$|hatenablog|vocus\.cc$/.test(h)) return { name:"文章", c:"#5B57D1", ch:"文" };
+    if(/chatgpt\.com$|openai\.com$/.test(h)) return { name:"ChatGPT", c:"#10A37F", ch:"G" };
+    return { name: h, c:"#8E8E93" };
+  }
+  function normUrl(v){
+    v = String(v||"").trim(); if(!v) return "";
+    if(!/^[a-z][a-z0-9+.-]*:/i.test(v)) v = "https://" + v;
+    try{ var u = new URL(v); return /^https?:$/.test(u.protocol) ? u.href : ""; }catch(e){ return ""; }
+  }
+  function linkSheet(lk){
+    var isNew = !lk, canPaste = !!(navigator.clipboard && navigator.clipboard.readText);
+    openSheet('<h2>'+(isNew?"新增連結":"編輯連結")+'</h2><form class="form" id="lkForm" novalidate>'
+      + '<label>網址<span class="lk-url"><input id="lk_u" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" value="'+esc(lk?lk.u:"")+'">'+(canPaste?'<button type="button" class="link-btn" id="lk_paste">貼上</button>':'')+'</span></label>'
+      + '<label>名稱<input id="lk_n" value="'+esc(lk?lk.n:"")+'"></label>'
+      + '<label>備註<input id="lk_note" value="'+esc(lk&&lk.note||"")+'"></label>'
+      + '<div class="err" id="lk_err" hidden></div>'
+      + '<div class="actions"><button type="submit" class="btn primary">'+(isNew?"新增":"儲存")+'</button><button type="button" class="btn" data-close>取消</button></div></form>', isNew?"新增連結":"編輯連結");
+    var p = $("lk_paste");
+    if(p) p.addEventListener("click", function(){ navigator.clipboard.readText().then(function(v){ $("lk_u").value = v.trim(); }).catch(function(){}); });
+    $("lkForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      var u = normUrl($("lk_u").value), er = $("lk_err");
+      if(!u){ er.textContent = "請貼上完整的網址。"; er.hidden = false; return; }
+      var n = $("lk_n").value.trim() || linkKind(u).name, note = $("lk_note").value.trim(), t = curTrip();
+      t.links = t.links || [];
+      if(isNew) t.links.push({ id: uid(), u: u, n: n, note: note });
+      else { lk.u = u; lk.n = n; lk.note = note; }
+      HOME.open.links = true; saveHome(); saveTrips(); closeSheet(); renderHome();
+    });
+  }
+
   // ---- home edit
   function homeEditSheet(){
     function body(){
@@ -1965,7 +2024,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
           + '<button class="sw" role="switch" aria-checked="'+on+'" data-sw="'+k+'" aria-label="在首頁顯示 '+TILE_DEF[k]+'"><i></i></button></li>';
       }).join("");
     }
-    var SECS = [["todo","出發前待辦"],["tips","當地提醒"]];
+    var SECS = [["todo","出發前待辦"],["links","我的連結"],["tips","當地提醒"]];
     function secBody(){ return SECS.map(function(s){ var on = HOME.hideSec.indexOf(s[0]) < 0;
       return '<li class="grow"><span class="g-t">'+s[1]+'</span><button class="sw" role="switch" aria-checked="'+on+'" data-ssw="'+s[0]+'" aria-label="在首頁顯示 '+s[1]+'"><i></i></button></li>'; }).join(""); }
     openSheet('<h2>首頁設定</h2><p class="sub" style="margin:0 0 10px">開關決定要不要顯示，箭頭調整小工具順序。</p><ul class="glist glist-card" id="he_list">'+body()+'</ul>'
@@ -2414,9 +2473,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 
   // ===================== Swipe actions, undo, edge-swipe back =====================
   var SW_W = 216, swOpen = null, tStart = null, swallowUntil = 0;
-  function swActs(kind, id){
+  function swW(li){ return li && li.dataset.sww ? +li.dataset.sww : SW_W; }
+  function swActs(kind, id, noMove){
     return '<div class="sw-acts" aria-hidden="true">'
-      + '<button type="button" class="sa-move" tabindex="-1" data-sact="move" data-skind="'+kind+'" data-sid="'+id+'">移動</button>'
+      + (noMove ? '' : '<button type="button" class="sa-move" tabindex="-1" data-sact="move" data-skind="'+kind+'" data-sid="'+id+'">移動</button>')
       + '<button type="button" class="sa-edit" tabindex="-1" data-sact="edit" data-skind="'+kind+'" data-sid="'+id+'">編輯</button>'
       + '<button type="button" class="sa-del" tabindex="-1" data-sact="del" data-skind="'+kind+'" data-sid="'+id+'">刪除</button></div>';
   }
@@ -2446,7 +2506,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var t = e.touches[0], li = e.target.closest(".swr");
     var edge = t.clientX < 24 && canBack();
     if(swOpen && li !== swOpen && !e.target.closest(".sw-acts")){ swClose(); swallowClick(); return; }
-    tStart = { x: t.clientX, y: t.clientY, li: edge ? null : li, edge: edge, base: (li && li === swOpen) ? -SW_W : 0, dir: null, dx: 0, sx: 0 };
+    tStart = { x: t.clientX, y: t.clientY, li: edge ? null : li, edge: edge, base: (li && li === swOpen) ? -swW(li) : 0, dir: null, dx: 0, sx: 0 };
   }, { passive: true });
   document.addEventListener("touchmove", function(e){
     var s = tStart; if(!s) return;
@@ -2456,7 +2516,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     if(s.edge){ e.preventDefault(); s.dx = dx; $("view-"+view).style.transform = "translateX(" + Math.max(0, dx) + "px)"; return; }
     if(!s.li) return;
     e.preventDefault();
-    s.sx = Math.min(0, Math.max(-SW_W - 30, s.base + dx));
+    s.sx = Math.min(0, Math.max(-swW(s.li) - 30, s.base + dx));
     swSet(s.li, s.sx, false);
   }, { passive: false });
   function touchEnd(){
@@ -2470,7 +2530,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       return;
     }
     if(!s.li) return;
-    if(s.sx < -60){ if(swOpen && swOpen !== s.li) swClose(); swSet(s.li, -SW_W, true); swOpen = s.li; }
+    if(s.sx < -60){ if(swOpen && swOpen !== s.li) swClose(); swSet(s.li, -swW(s.li), true); swOpen = s.li; }
     else { swSet(s.li, 0, true); if(swOpen === s.li) swOpen = null; }
   }
   document.addEventListener("touchend", touchEnd);
@@ -2484,6 +2544,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var kind = b.dataset.skind, id = b.dataset.sid, a = b.dataset.sact;
     swClose();
     if(kind === "b"){ if(a === "edit") editBuy(id); else if(a === "del") delBuy(id); else moveSheet("b", id); return; }
+    if(kind === "l"){ var tl = curTrip(), lk = (tl.links||[]).filter(function(x){ return x.id === id; })[0]; if(!lk) return;
+      if(a === "edit") linkSheet(lk); else { var li = tl.links.indexOf(lk); tl.links.splice(li, 1); saveTrips(); renderHome();
+        toast("已刪除「" + lk.n + "」", function(){ tl.links.splice(Math.min(li, tl.links.length), 0, lk); saveTrips(); renderHome(); }); }
+      return; }
     var l = findPack(packOpen); if(!l) return;
     if(a === "edit") editPackItem(l, id); else if(a === "del") delPack(l, id); else moveSheet("p", id);
   });
