@@ -1,4 +1,4 @@
-const CACHE = "nekobasu-v4";
+const CACHE = "nekobasu-1022-0935";
 const SHELL = ["./", "./index.html", "./stellar.json", "./apia.json", "./tokyu.json", "./daimaru.json", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
