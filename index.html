@@ -604,7 +604,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/23 07:44）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/23 19:41）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -873,7 +873,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function closeSheet(){ $("sheetBg").hidden = true; $("sheet").innerHTML=""; if(lastFocus && lastFocus.focus) lastFocus.focus(); }
   function findShop(key){
     var i = key.indexOf(":"), m = key.slice(0,i), id = key.slice(i+1), arr = (DATA[m]||{}).shops||[];
-    if(m === "otaru") return (typeof OT_BY !== "undefined" && OT_BY[id]) || null;
+    if(m === "otaru") return (typeof OT_ON !== "undefined" && OT_ON && typeof OT_BY !== "undefined" && OT_BY[id]) || null;
     for(var j=0;j<arr.length;j++) if(arr[j].id===id){ arr[j]._m = m; return arr[j]; }
     return null;
   }
@@ -1689,6 +1689,18 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var def = TODO_DEFAULT[x.country] || TODO_DEFAULT._, td = x.todos || [];
     if(td.length === def.length && td.every(function(d, i){ return !d.done && d.n === def[i]; })) x.todos = [];
   });
+  var OTMAP_LINK = { u:"https://otaru-sakaimachi.com/wp-content/uploads/2026/07/sakaimachi-map202607-zh-tw.pdf", n:"小樽堺町通官方地圖", note:"商店街官方・繁中 PDF" };
+  if(store(true, "sp-otoff-v1") !== "1"){
+    // Otaru guide removed: add the official map to Hokkaido trips once, and tidy Otaru-only data
+    TR.list.forEach(function(x){ if(x.guide === "sapporo"){ x.links = x.links || [];
+      if(!x.links.some(function(l){ return l.u === OTMAP_LINK.u; })) x.links.push({ id: uid(), u: OTMAP_LINK.u, n: OTMAP_LINK.n, note: OTMAP_LINK.note }); } });
+    try{ for(var oi=0; oi<localStorage.length; oi++){ var ok = localStorage.key(oi); if(ok && ok.indexOf("sp-buy-")===0){ var ob = load(ok, null);
+      if(ob && ob.items){ var ch = false; ob.items.forEach(function(it){ if(it.shop && it.shop.indexOf("otaru:")===0){ it.shop = ""; ch = true; } }); if(ch) save(ok, ob); } } } }catch(e){}
+    Object.keys(favs).forEach(function(k){ if(k.indexOf("otaru:") === 0) delete favs[k]; });
+    var ofv = load("sp-favs-v2", null); if(Array.isArray(ofv)) save("sp-favs-v2", ofv.filter(function(k){ return String(k).indexOf("otaru:") !== 0; }));
+    storeDel("sp-otph-v1"); storeDel("sp-guide-v1");
+    store(false, "sp-otoff-v1", "1");
+  }
   save(TRIP_KEY, TR);
   function saveTrips(){ save(TRIP_KEY, TR); }
   function curTrip(){ for(var i=0;i<TR.list.length;i++) if(TR.list[i].id === TR.current) return TR.list[i]; TR.current = TR.list[0].id; return TR.list[0]; }
@@ -1952,6 +1964,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       if(!rec.guide) rec.guide = guideFor(city);
       if(isNew){
         rec.buyKey = "sp-buy-" + rec.id;
+        if(rec.guide === "sapporo") rec.links = [{ id: uid(), u: OTMAP_LINK.u, n: OTMAP_LINK.n, note: OTMAP_LINK.note }];
         if($("tp_pack").checked){
           var mo = rec.dmode==="full" ? +rec.start.split("-")[1] : rec.dmode==="month" ? +rec.month.split("-")[1] : 0;
           var l = newPack(city + (mo ? " " + mo + " 月" : ""), true);
@@ -1978,6 +1991,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function linkKind(u){
     var h = linkHost(u), p = ""; try{ p = new URL(u).pathname; }catch(e){}
     if(/(^|\.)maps\.google\.|maps\.app\.goo\.gl|goo\.gl$/.test(h) || (/google\./.test(h) && /^\/maps/.test(p))) return { name:"Google 地圖", c:"#D9534A", svg: PIN_SVG };
+    if(/otaru-sakaimachi\.com$/.test(h)) return { name:"小樽堺町通官方", c:"#C0392B", svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/></svg>' };
     if(/instagram\.com$/.test(h)) return { name:"Instagram", c:"#C13584", ch:"IG" };
     if(/youtube\.com$|youtu\.be$/.test(h)) return { name:"YouTube", c:"#E0302A", ch:"▶" };
     if(/threads\.(net|com)$|facebook\.com$/.test(h)) return { name: /facebook/.test(h) ? "Facebook" : "Threads", c:"#3B5998", ch:"@" };
@@ -2106,7 +2120,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function helpSheet(){
     openSheet('<h2>使用說明</h2><div class="help">'
       + '<p><b>首頁</b>顯示目前旅程的倒數和重點。點主視覺的「編輯」可以改城市和日期；「我的旅程」可以切換或新增旅程。</p>'
-      + '<p><b>指南</b>上方切換札幌站和小樽。札幌站可以搜尋四個商場的店家，點樓層標題可以收起那一層；小樽有示意圖、地點清單和兩條推薦路線，點地點可以導航、加入購物清單。</p>'
+      + '<p><b>指南</b>搜尋札幌站四個商場的店家，點樓層標題可以收起那一層，點店名可以加入購物清單。</p>'
       + '<p><b>購物</b>每趟旅程各有一份。輸入東西會自動找店，可以切換「逛街順序」（依商場樓層）或「依分類」（分類自己建）；填單價會換算台幣。</p>'
       + '<p><b>照片</b>購物清單的每一項可以拍照或從相簿選，最多 3 張。點清單上的相機圖示會全螢幕顯示，可以直接給店員看。照片只存在你的手機，請從主畫面打開 App，並定期備份。</p>'
       + '<p><b>行李</b>可以建立多份，從空白開始自己加分類和物品。勾「記住」的東西會變成「我的常用物品」，建立新清單時可以一次帶入。</p>'
@@ -2117,7 +2131,6 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function sourcesSheet(){
     openSheet('<h2>資料來源</h2><div class="help">'
       + MALLS.map(function(m){ return '<p><b>'+esc(m.name)+'</b>'+esc(DATA[m.id].meta.source||"")+'，'+esc(DATA[m.id].meta.updated||"")+' 整理。<a href="'+m.map+'" target="_blank" rel="noopener">官方網站</a></p>'; }).join("")
-      + '<p><b>小樽</b>小樽觀光協會、北海道官方觀光網站（HOKKAIDO LOVE!），2026-10-23 整理。</p>'
       + '<p><b>免稅制度</b>日本觀光廳。</p><p><b>匯率</b>ExchangeRate-API，備援 currency-api。</p></div>'
       + '<div class="actions"><button class="btn primary" data-close>好</button></div>', "資料來源");
   }
@@ -2133,7 +2146,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   var guideSel = store(true, GUIDE_KEY) || "sapporo";
   var otMode = "spots", otCat = "all", otRoute = null, otHow = false, otHl = null, otOpenRoute = { A: true };
   var OTPH = load(OTPH_KEY, {}); if(!OTPH || typeof OTPH !== "object") OTPH = {};
-  function tripGuides(){ var t = curTrip(); return t && t.guide === "sapporo" ? ["sapporo","otaru"] : ["sapporo"]; }
+  var OT_ON = false; // Otaru guide is switched off (official map is offered as a link instead)
+  function tripGuides(){ var t = curTrip(); return OT_ON && t && t.guide === "sapporo" ? ["sapporo","otaru"] : ["sapporo"]; }
   function otDot(s, big){ return '<span class="ot-dot'+(big?" ot-dot-b":"")+'" style="background:'+OT_CAT[s.cat].c+'" aria-hidden="true">'+s.n+'</span>'; }
   function otWalk(a, b){
     var x = (b.lng - a.lng) * Math.cos(a.lat * Math.PI / 180) * 111320, y = (b.lat - a.lat) * 110540;
@@ -2642,7 +2656,54 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     }
   });
 
+
+  // ===================== Browser vs home-screen storage reminder =====================
+  var MIG_KEY = "sp-mig-v1";
+  function hasUserData(){
+    try{
+      for(var i=0;i<localStorage.length;i++){
+        var k = localStorage.key(i), o;
+        if(k.indexOf("sp-buy-")===0){ o = load(k, null); if(o && o.items && o.items.length) return true; }
+      }
+    }catch(e){}
+    var pk = load("sp-pack-v1", null); if(pk && pk.lists && pk.lists.length) return true;
+    if(Object.keys(favs).length) return true;
+    var tr = load("sp-trips-v1", null);
+    if(tr && tr.list && (tr.list.length > 1 || tr.list.some(function(x){ return (x.todos||[]).length || (x.links||[]).length || x.dmode !== "none"; }))) return true;
+    return false;
+  }
+  function storageCheck(){
+    if(BUILD !== "pwa" || !$("sheetBg").hidden) return;
+    var seen = store(true, MIG_KEY) || "", line = /\bLine\//i.test(navigator.userAgent || "");
+    if(line && seen.indexOf("line") < 0){
+      var u = location.origin + location.pathname + "?openExternalBrowser=1";
+      openSheet('<h2>請改用 Safari 打開</h2><p>你現在是在 LINE 裡面開的網頁，這裡存的清單很容易被清掉。</p>'
+        + '<ol class="steps"><li>按下面的「用 Safari 打開」</li><li>在 Safari 按「分享」→「加入主畫面」</li><li>之後都從主畫面的 Nekobasu 打開</li></ol>'
+        + (hasUserData() ? '<p class="sub">這裡已經有資料的話，先按「備份」存下來，再到主畫面的 App「設定 → 從備份還原」。</p>' : '')
+        + '<div class="actions"><a class="btn primary" href="'+u+'">用 Safari 打開</a>'+(hasUserData()?'<button type="button" class="btn" id="mg_bk">備份</button>':'')+'<button type="button" class="btn" data-close>稍後</button></div>', "請改用 Safari");
+      store(false, MIG_KEY, seen + "line,");
+      var bk = $("mg_bk"); if(bk) bk.addEventListener("click", doBackup);
+      return;
+    }
+    if(line) return;
+    if(!isStandalone()){
+      if(seen.indexOf("browser") >= 0 || !hasUserData() || store(true, A2HS_KEY) === "never") return;
+      openSheet('<h2>資料只存在這個瀏覽器</h2><p>從主畫面打開的 Nekobasu 是另一個獨立空間，看不到這裡的清單。</p>'
+        + '<ol class="steps"><li>先按「備份」，下載備份檔</li><li>在 Safari 按「分享」→「加入主畫面」</li><li>從主畫面打開 →「設定 → 從備份還原」</li></ol>'
+        + '<div class="actions"><button type="button" class="btn primary" id="mg_bk">備份</button><button type="button" class="btn" data-close>知道了</button></div>', "資料存放提醒");
+      store(false, MIG_KEY, seen + "browser,");
+      $("mg_bk").addEventListener("click", doBackup);
+      return;
+    }
+    if(seen.indexOf("home") < 0 && !hasUserData()){
+      openSheet('<h2>歡迎使用 Nekobasu</h2><p>如果你之前用 Safari 打開過、存過清單，那些資料不會自動出現在這裡。</p>'
+        + '<ol class="steps"><li>用 Safari 打開網址 →「設定 → 備份所有資料」</li><li>回到這裡 →「設定 → 從備份還原」</li></ol>'
+        + '<p class="sub">第一次使用的話，直接開始就好。</p><div class="actions"><button type="button" class="btn primary" data-close>好</button></div>', "歡迎");
+      store(false, MIG_KEY, seen + "home,");
+    }
+  }
   setTimeout(phCleanup, 2000);
+  setTimeout(storageCheck, 900);
   syncModes(); applyTrip(); renderAll(); setView(view); checkImport(); fxFetch();
 
   // Published copies of each mall's data file win over the embedded snapshot when newer.
