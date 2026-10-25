@@ -565,7 +565,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   <header class="top">
     <div class="wrap">
       <div class="lt"><h1>指南</h1><span class="lt-s" id="guideSub">札幌站・4 商場</span></div>
-      <span class="seg seg-full guide-seg" id="kindSeg" role="group" aria-label="指南類型" hidden><button data-gk="shop" aria-pressed="true">店鋪</button><button data-gk="sweets" aria-pressed="false">伴手禮</button></span>
+      <span class="seg seg-full guide-seg" id="kindSeg" role="group" aria-label="指南類型" hidden><button data-gk="shop" aria-pressed="true">商場</button><button data-gk="sweets" aria-pressed="false">伴手禮</button></span>
       <span class="seg seg-full guide-seg" id="guideSeg" role="group" aria-label="指南" hidden><button data-g="sapporo" aria-pressed="true">札幌站</button><button data-g="otaru" aria-pressed="false">小樽</button></span>
       <div id="sapCtl">
       <div class="malls" id="malls" role="group" aria-label="商場"></div>
@@ -642,7 +642,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 08:16）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 08:35）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -2159,7 +2159,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function helpSheet(){
     openSheet('<h2>使用說明</h2><div class="help">'
       + '<p><b>首頁</b>顯示目前旅程的倒數和重點。點主視覺的「編輯」可以改城市和日期；「我的旅程」可以切換或新增旅程。</p>'
-      + '<p><b>指南</b>上方切換「店鋪」和「伴手禮」。店鋪可以搜尋札幌站四個商場的店家；伴手禮整理了六花亭、札幌農學校的必買經典、限定商品和店舖，可以直接加入購物清單。</p>'
+      + '<p><b>指南</b>上方切換「商場」和「伴手禮」。商場可以搜尋札幌站四個商場的店家；伴手禮整理了六花亭、札幌農學校的必買經典、限定商品和店鋪，可以直接加入購物清單。</p>'
       + '<p><b>購物</b>每趟旅程各有一份。輸入東西會自動找店，可以切換「逛街順序」（依商場樓層）或「依分類」（分類自己建）；填單價會換算台幣。</p>'
       + '<p><b>照片</b>購物清單的每一項可以拍照或從相簿選，最多 3 張。點清單上的相機圖示會全螢幕顯示，可以直接給店員看。照片只存在你的手機，請從主畫面打開 App，並定期備份。</p>'
       + '<p><b>行李</b>可以建立多份，從空白開始自己加分類和物品。勾「記住」的東西會變成「我的常用物品」，建立新清單時可以一次帶入。</p>'
@@ -2186,7 +2186,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     b.classics.forEach(function(p){ p._b = b.id; p._c = 1; SW_ITEM[p.id] = p; });
     b.limited.forEach(function(p){ p._b = b.id; SW_ITEM[p.id] = p; }); });
   var GKIND_KEY = "sp-gkind-v1", guideKind = store(true, GKIND_KEY) === "sweets" ? "sweets" : "shop";
-  var swBrand = SW.brands[0].id, swSec = "classics";
+  var swBrand = SW.brands[0].id, swSec = "stores";
   function sweetsOn(){ var t = curTrip(); return !!(t && t.guide === "sapporo"); }
   function swImg(path){ return path ? path.replace(/^images\//, "sweets/") : ""; }
   function swPic(path, cls, alt){ return path ? '<span class="sw-pic '+(cls||"")+'"><img src="'+swImg(path)+'" alt="'+esc(alt||"")+'" loading="lazy"><span class="sw-demo">示意圖</span></span>' : '<span class="sw-pic sw-noimg '+(cls||"")+'">沒有圖片</span>'; }
@@ -2204,7 +2204,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     h += '<div class="sw-brands" role="group" aria-label="品牌">' + SW.brands.map(function(x){
       return '<button data-swb="'+x.id+'" aria-pressed="'+(x.id===swBrand)+'" style="--bc:'+x.theme_color+'">'+esc(x.name)+'</button>'; }).join("") + '</div>';
     h += '<p class="sw-intro">'+esc(b.intro)+(b.official_site?' <a href="'+b.official_site+'" target="_blank" rel="noopener">官網</a>':'')+'</p>';
-    h += '<span class="seg seg-full sw-secs" role="group" aria-label="內容"><button data-swsec="classics" aria-pressed="'+(swSec==="classics")+'">必買經典</button><button data-swsec="limited" aria-pressed="'+(swSec==="limited")+'">限定商品</button><button data-swsec="stores" aria-pressed="'+(swSec==="stores")+'">店舖</button></span>';
+    h += '<span class="seg seg-full sw-secs" role="group" aria-label="內容"><button data-swsec="stores" aria-pressed="'+(swSec==="stores")+'">店鋪</button><button data-swsec="classics" aria-pressed="'+(swSec==="classics")+'">必買經典</button><button data-swsec="limited" aria-pressed="'+(swSec==="limited")+'">限定商品</button></span>';
     if(swSec === "classics"){
       h += '<div class="sw-grid">' + b.classics.map(function(p){
         return '<button class="sw-card" data-swp="'+p.id+'">'+swPic(p.image, "sq", p.name)+(p.is_new?'<span class="sw-new">新品</span>':'')
@@ -2243,7 +2243,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 
   function swAddBuy(p){
     var b = SW_BRAND[p._b], shop = "", note = b.name;
-    if(p._c){ note = b.name + "・店舖見「指南 → 伴手禮」"; }
+    if(p._c){ note = b.name + "・店鋪見「指南 → 伴手禮」"; }
     else {
       var mapped = p.stores.filter(function(id){ return SW_MALL[id]; })[0];
       if(mapped) shop = SW_MALL[mapped];
