@@ -112,10 +112,11 @@ main{padding-bottom:calc(var(--nav-h) + 110px)}
 .row{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid var(--line)}
 .row .main{flex:1;min-width:0;border:0;background:none;text-align:left;padding:0;display:flex;gap:12px;align-items:center}
 .wing{flex:none;width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:16px;color:var(--wing-ink)}
-.wing.stellar-C{background:var(--stellar-c)} .wing.stellar-E{background:var(--stellar-e)}
-.wing.apia-W{background:var(--apia-w)} .wing.apia-C{background:var(--apia-c)}
-.wing.tokyu-{background:var(--tokyu);font-family:var(--f-ja);font-size:15px}
-.wing.daimaru-{background:var(--daimaru);font-family:var(--f-ja);font-size:15px}
+.wing{--wc:var(--muted);color:var(--wc);background:color-mix(in srgb,var(--wc) 14%,transparent);border-radius:8px}
+.wing.stellar-C{--wc:var(--stellar-c)} .wing.stellar-E{--wc:var(--stellar-e)}
+.wing.apia-W{--wc:var(--apia-w)} .wing.apia-C{--wc:var(--apia-c)}
+.wing.tokyu-{--wc:var(--tokyu);font-family:var(--f-ja);font-size:15px}
+.wing.daimaru-{--wc:var(--daimaru);font-family:var(--f-ja);font-size:15px}
 .names{min-width:0;flex:1}
 .names>span{display:block}
 .ja{font-family:var(--f-ja);font-weight:700;font-size:16px;line-height:1.35;overflow-wrap:anywhere}
@@ -561,6 +562,26 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 #view-buy .floor-h,#view-pack .floor-h{border-bottom:.5px solid var(--line)}
 #view-buy .floor-h .fl,#view-pack .floor-h .fl{font-family:var(--f-body);font-weight:800}
 @media (max-width:379px){.city{font-size:34px}.tile{padding:12px}.lt h1,.vh h1,.home-brand{font-size:27px}}
+/* v20 tidy */
+.mdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px;flex:none}
+#malls button[aria-pressed="true"] .mdot{box-shadow:0 0 0 1.5px var(--bg)}
+.catrow{align-items:center;margin-top:8px}
+#malls{margin-top:10px}
+.catrow #cats{display:contents}
+.catrow .chip{border:1px solid var(--line);background:transparent}
+#view-shop .catrow .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip-sel{flex:none;-webkit-appearance:none;appearance:none;border:1px solid var(--line);background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8a8e' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center/13px;border-radius:999px;padding:6px 28px 6px 12px;font-size:14px;color:var(--ink);font-family:inherit}
+.chip-sel:not([hidden]){display:block}
+#areaRow{margin-top:8px}
+.row .names .sub{color:var(--muted)}
+.sd-h{display:flex;align-items:flex-start;gap:8px}.sd-t{flex:1;min-width:0}.sd-h h2{margin:0}
+.sd-ic{flex:none;width:36px;height:36px;border-radius:50%;border:0;background:var(--fill);color:var(--muted);display:grid;place-items:center;font-size:18px;padding:0}
+.sd-ic svg{width:16px;height:16px}.sd-fav[aria-pressed="true"]{color:var(--star)}
+.sheet .plate{background:var(--bg);border-radius:14px;padding:12px 14px;margin:14px 0}
+.sheet .plate .sub{display:flex;flex-direction:column;font-size:14px;color:var(--ink);line-height:1.3}.sheet .plate .sub small{color:var(--muted);font-size:12.5px}
+.dl a{color:var(--accent);text-decoration:none}
+.btn.sd-main{display:block;width:100%;margin-top:18px;padding:13px;font-size:16px;font-weight:600;border-radius:14px}
+.sd-edit{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-size:13.5px;padding:6px 10px}
 </style>
 </head>
 <body>
@@ -574,18 +595,14 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <span class="seg seg-full guide-seg" id="kindSeg" role="group" aria-label="指南類型" hidden><button data-gk="shop" aria-pressed="true">商場</button><button data-gk="sweets" aria-pressed="false">伴手禮</button></span>
       <span class="seg seg-full guide-seg" id="guideSeg" role="group" aria-label="指南" hidden><button data-g="sapporo" aria-pressed="true">札幌站</button><button data-g="otaru" aria-pressed="false">小樽</button></span>
       <div id="sapCtl">
-      <div class="malls" id="malls" role="group" aria-label="商場"></div>
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input id="q" type="search" placeholder="搜尋店名或類型" autocomplete="off" enterkeyhint="search" aria-label="搜尋">
         <button class="clear" id="qClear" aria-label="清除搜尋" hidden>×</button>
       </div>
-      <div class="chips" id="cats" role="group" aria-label="分類"></div>
-      <div class="filters">
-        <div class="seg" id="areas" role="group" aria-label="館別" hidden></div>
-        <select id="floorSel" aria-label="樓層"></select>
-        <button class="pill-btn fav-toggle" id="favToggle" aria-pressed="false">★ 想逛</button>
-      </div>
+      <div class="malls" id="malls" role="group" aria-label="商場"></div>
+      <div class="chips catrow"><select id="floorSel" class="chip-sel" aria-label="樓層"></select><button class="chip fav-toggle" id="favToggle" aria-pressed="false">★ 想逛</button><span id="cats" role="group" aria-label="分類"></span></div>
+      <div class="filters" id="areaRow" hidden><div class="seg" id="areas" role="group" aria-label="館別" hidden></div></div>
       </div>
     </div>
   </header>
@@ -648,7 +665,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 08:50）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 13:12）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -799,16 +816,18 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   }
 
   // ---------- render ----------
+  var MALL_DOT = { stellar:"var(--stellar-c)", apia:"var(--apia-w)", tokyu:"var(--tokyu)", daimaru:"var(--daimaru)" };
+  function mallDot(id){ return MALL_DOT[id] ? '<i class="mdot" style="background:'+MALL_DOT[id]+'"></i>' : ''; }
   function renderMalls(){
     var tabs = [["all","全部商場"]].concat(MALLS.map(function(m){ return [m.id, m.name]; }));
     $("malls").innerHTML = tabs.map(function(t){
-      return '<button data-mall="'+t[0]+'" aria-pressed="'+(state.mall===t[0])+'">'+esc(t[1])+'</button>';
+      return '<button data-mall="'+t[0]+'" aria-pressed="'+(state.mall===t[0])+'">'+mallDot(t[0])+esc(t[1])+'</button>';
     }).join("");
   }
   function renderAreas(){
     var m = MALL[state.mall], el = $("areas");
-    if(!m || !m.areas){ el.hidden = true; state.area = "all"; return; }
-    el.hidden = false;
+    if(!m || !m.areas){ el.hidden = true; $("areaRow").hidden = true; state.area = "all"; return; }
+    el.hidden = false; $("areaRow").hidden = false;
     var opts = [["all","全區"]].concat(Object.keys(m.areas).map(function(k){ return [k, m.areas[k]]; }));
     el.innerHTML = opts.map(function(o){ return '<button data-a="'+o[0]+'" aria-pressed="'+(state.area===o[0])+'">'+esc(o[1])+'</button>'; }).join("");
   }
@@ -828,10 +847,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   }
   function rowHTML(s){
     var n = names(s);
-    var intro = (s.note ? '<span class="tag temp">'+esc(s.note)+'</span>' : '')
-      + (state.cat==="all" ? '<span class="tag">'+esc(CAT_NAME[s.c]||"")+'</span>' : '') + esc(s.d||"");
+    var mm = MALL[s._m], parts = [state.cat==="all" ? CAT_NAME[s.c] : "", s.d, mm && mm.areas && state.area==="all" ? (mm.areas[s.b]||s.b) : ""].filter(Boolean);
+    var intro = (s.note ? '<span class="tag temp">'+esc(s.note)+'</span>' : '') + esc(parts.join("・"));
     return '<li class="row">'
-      + '<button class="main" data-open="'+esc(favKey(s))+'">'+badge(s)
+      + '<button class="main" data-open="'+esc(favKey(s))+'">'
       + '<span class="names"><span class="ja">'+esc(n.main)+'</span>'
       + (n.alt ? '<span class="alt">'+esc(n.alt)+'</span>' : '')
       + '<span class="sub">'+intro+'</span></span></button>'
@@ -845,7 +864,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       return mallRank(a._m)-mallRank(b._m) || floorRank(a.f)-floorRank(b.f) || (a.b<b.b?-1:a.b>b.b?1:0) || names(a).main.localeCompare(names(b).main,"ja");
     });
     var total = allShops().length;
-    $("count").textContent = "顯示 " + list.length + " / " + total + " 間";
+    $("count").textContent = list.length !== total ? "顯示 " + list.length + " / " + total + " 間" : "";
     if(!list.length){
       var why = state.fav && !Object.keys(favs).length ? "還沒有想逛的店。點店名旁的 ★ 加入。" :
         state.q ? "找不到「"+state.q+"」。試試片假名、英文，或改選「全部商場」、「全部」分類。" : "這個條件下沒有店鋪。";
@@ -856,7 +875,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     function flush(){
       if(!cur) return;
       var m = MALL[cur._m], hint = m.hints && m.hints[cur.f];
-      var label = (state.mall==="all" ? '<b>'+esc(m.name)+'</b>' : '') + (hint ? (state.mall==="all"?"・":"")+esc(hint) : '');
+      var label = (state.mall==="all" ? '<b>'+mallDot(cur._m)+esc(m.name)+'</b>' : '') + (hint ? (state.mall==="all"?"・":"")+esc(hint) : '');
       var fk = cur._m+"|"+cur.f, shut = !state.q && !!FOLD[fk];
       html += '<section class="floor'+(shut?" shut":"")+'"><button class="floor-h" data-fold="'+esc(fk)+'" aria-expanded="'+(!shut)+'"><span class="fl">'+esc(cur.f)+'</span>'
         + (label ? '<span class="hint">'+label+'</span>' : '')
@@ -926,19 +945,19 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var s = findShop(key); if(!s) return;
     var m = MALL[s._m], link = m.shopLink(s);
     openSheet(
-      '<h2>'+esc(s.en || s.ja)+'</h2>'
-      + '<div class="alt">'+esc([s.en ? s.ja : "", s.zh].filter(Boolean).join("・"))+'</div>'
+      '<div class="sd-h"><div class="sd-t"><h2>'+esc(s.en || s.ja)+'</h2>'
+      + '<div class="alt">'+esc([s.en ? s.ja : "", s.zh].filter(Boolean).join("・"))+'</div></div>'
+      + '<button class="sd-ic sd-fav" data-fav="'+esc(key)+'" aria-pressed="'+(!!favs[key])+'" aria-label="'+(favs[key]?"取消想逛":"加入想逛")+'">'+(favs[key]?"★":"☆")+'</button>'
+      + '<button class="sd-ic" data-close aria-label="關閉"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></div>'
       + (s.d ? '<p style="margin:10px 0 0">'+esc(s.d)+'</p>' : '')
-      + '<div class="plate">'+badge(s)+'<span class="fl">'+esc(s.f)+'</span><span class="sub">'+esc(m.name)+(m.areas?'・'+esc(m.areas[s.b]||s.b):'')+'</span></div>'
+      + '<div class="plate">'+badge(s)+'<span class="fl">'+esc(s.f)+'</span><span class="sub">'+esc(m.name)+(m.areas?'<small>'+esc(m.areas[s.b]||s.b)+' 館</small>':'')+'</span></div>'
       + '<dl class="dl"><dt>分類</dt><dd>'+esc(CAT_NAME[s.c]||s.c)+'</dd>'
-      + (s.tel?'<dt>電話</dt><dd class="tel">'+esc(s.tel)+'</dd>':'')
+      + (s.tel?'<dt>電話</dt><dd class="tel"><a href="tel:'+esc(s.tel.replace(/[^0-9+]/g,""))+'">'+esc(s.tel)+'</a></dd>':'')
+      + (link?'<dt>官網</dt><dd><a href="'+link+'" target="_blank" rel="noopener">'+(m.shopLinkLabel||"官方店鋪頁")+' ↗</a></dd>':'')
       + (s.note?'<dt>備註</dt><dd>'+esc(s.note)+'</dd>':'')
-      + '</dl><div class="actions">'
-      + (link?'<a class="btn" href="'+link+'" target="_blank" rel="noopener">'+(m.shopLinkLabel||"官方店鋪頁")+'</a>':'')
-      + '<button class="btn" data-fav="'+esc(key)+'" aria-pressed="'+(!!favs[key])+'">'+(favs[key]?"★ 想逛":"☆ 想逛")+'</button>'
-      + (inBuy(key) ? '<button class="btn" data-addbuy="'+esc(key)+'" disabled>✓ 已在購買清單</button>' : '<button class="btn primary" data-addbuy="'+esc(key)+'">＋ 購買清單</button>')
-      + '<button class="btn" data-edit="'+esc(key)+'">修改資料</button>'
-      + '<button class="btn" data-close>關閉</button></div>', s.ja);
+      + '</dl>'
+      + (inBuy(key) ? '<button class="btn sd-main" data-addbuy="'+esc(key)+'" disabled>✓ 已在購買清單</button>' : '<button class="btn primary sd-main" data-addbuy="'+esc(key)+'">＋ 加到購買清單</button>')
+      + '<button class="sd-edit" data-edit="'+esc(key)+'">修改資料</button>', s.ja);
   }
   function opt(v,label,cur){ return '<option value="'+esc(v)+'"'+(v===cur?" selected":"")+'>'+esc(label)+'</option>'; }
   function areaOptions(mid, cur){
@@ -1303,7 +1322,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
         var p = k.split("|"), m = MALL[p[1]];
         if(p[1] === "otaru") groups[k].sort(byPlace);
         h += '<section class="floor'+(m?'':' floor-nohead')+'">'
-          + (p[1] === "otaru" ? '<div class="floor-h"><span class="fl fl-sm">小樽</span><span class="hint">依散步順序</span><span class="cnt">'+groups[k].length+' 樣</span></div>' : m ? '<div class="floor-h"><span class="fl">'+esc(p[2])+'</span><span class="hint"><b>'+esc(m.name)+'</b>'+(m.hints&&m.hints[p[2]]?"・"+esc(m.hints[p[2]]):"")+'</span><span class="cnt">'+groups[k].length+' 樣</span></div>' : '')
+          + (p[1] === "otaru" ? '<div class="floor-h"><span class="fl fl-sm">小樽</span><span class="hint">依散步順序</span><span class="cnt">'+groups[k].length+' 樣</span></div>' : m ? '<div class="floor-h"><span class="fl">'+esc(p[2])+'</span><span class="hint"><b>'+mallDot(m.id)+esc(m.name)+'</b>'+(m.hints&&m.hints[p[2]]?"・"+esc(m.hints[p[2]]):"")+'</span><span class="cnt">'+groups[k].length+' 樣</span></div>' : '')
           + '<ul class="list">'+groups[k].map(buyRow).join("")+'</ul></section>';
       });
       if(done.length){
@@ -1854,12 +1873,10 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     var t = curTrip(), st = tripStatus(t), cn = COUNTRY[t.country] ? COUNTRY[t.country].name : "";
     var d = new Date(), wk = "日一二三四五六".charAt(d.getDay());
     var kick = st.k==="during" ? "旅行中・第 "+st.day+" 天／共 "+st.total+" 天" : st.k==="after" ? "已結束的旅程・"+cn : "NEXT TRIP・"+cn;
-    var count = st.k==="before" ? '<div class="cd"><b>'+st.days+'</b><span>天後出發</span></div>'
-      : st.k==="month" ? '<div class="cd"><span class="cd-l">'+esc(dateText(t))+' 出發</span></div>'
-      : st.k==="none" ? '<div class="cd"><span class="cd-l">還沒決定日期</span></div>' : '';
+    var count = st.k==="before" ? '<div class="cd"><b>'+st.days+'</b><span>天後出發</span></div>' : '';
     var h = '<div class="home-top"><div><div class="home-date">'+(d.getMonth()+1)+' 月 '+d.getDate()+' 日 星期'+wk+'</div><div class="home-brand">'+LOGO+'<span>Nekobasu</span></div></div><button class="link-btn" id="homeEdit">編輯</button></div>'
-      + '<section class="hero'+(t.bg==="photo"&&t.bgPh?" hero-photo":"")+'" style="'+heroStyle(t)+'">'+heroBgHTML(t)+'<div class="hero-in"><button class="hero-pill" id="tripEdit">'+(t.dmode==="none"?"填日期":"編輯")+'</button>'
-      + '<div class="kick">'+esc(kick)+'</div><div class="city">'+esc(t.en || CITY_EN[t.city] || t.city)+'</div><div class="cz">'+esc(t.city)+'・'+esc(dateText(t))+'</div>'
+      + '<section class="hero'+(t.bg==="photo"&&t.bgPh?" hero-photo":"")+'" style="'+heroStyle(t)+'">'+heroBgHTML(t)+'<div class="hero-in"><button class="hero-pill" id="tripEdit">'+(st.k==="none"?"＋ 填日期":"編輯")+'</button>'
+      + '<div class="kick">'+esc(kick)+'</div><div class="city">'+esc(t.en || CITY_EN[t.city] || t.city)+'</div><div class="cz">'+esc(t.city)+(st.k==="none"?"":'・'+esc(dateText(t)))+'</div>'
       + (st.k==="during" && GUIDES[t.guide] ? '<button class="hero-search" id="heroSearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>搜尋'+esc(GUIDES[t.guide].name)+'店家</button>' : count)
       + '</div></section>';
     var tiles = HOME.order.filter(function(k){ return HOME.hidden.indexOf(k) < 0; });
