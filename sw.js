@@ -1,4 +1,4 @@
-const CACHE = "nekobasu-1025-1312";
+const CACHE = "nekobasu-1025-1347";
 const SHELL = ["./", "./index.html", "./stellar.json", "./apia.json", "./tokyu.json", "./daimaru.json", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {

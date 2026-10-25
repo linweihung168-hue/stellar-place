@@ -581,6 +581,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .sheet .plate .sub{display:flex;flex-direction:column;font-size:14px;color:var(--ink);line-height:1.3}.sheet .plate .sub small{color:var(--muted);font-size:12.5px}
 .dl a{color:var(--accent);text-decoration:none}
 .btn.sd-main{display:block;width:100%;margin-top:18px;padding:13px;font-size:16px;font-weight:600;border-radius:14px}
+.sd-down{display:block;font-size:12px;color:var(--muted);margin-top:1px}
 .sd-edit{display:block;margin:12px auto 0;border:0;background:none;color:var(--muted);font-size:13.5px;padding:6px 10px}
 </style>
 </head>
@@ -665,7 +666,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 13:12）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 13:47）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -701,14 +702,14 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   var BUILD = "pwa"; // "artifact" or "pwa"
 
   var MALLS = [
-    { id:"stellar", name:"Stellar Place", ja:"札幌ステラプレイス", areas:{C:"Center",E:"East"},
+    { id:"stellar", name:"Stellar Place", ja:"札幌ステラプレイス", siteDown:true, areas:{C:"Center",E:"East"},
       floors:["B1F","1F","2F","3F","4F","5F","6F","7F","9F"],
       map:"https://www.stellarplace.net/floor_map_10",
       shopLink:function(s){ return /^\d+$/.test(s.id) ? "https://www.stellarplace.net/shop_detail/"+s.id : ""; },
       hints:{"6F":"Center 6F 為餐廳樓層","7F":"電影院","9F":"頂樓庭園"},
       tip:"札幌站南口直通。Center 與 East 在 2F–6F 相通；7F、9F 搭 Center 電梯。",
       areaTips:{C:"Center 中心館",E:"East 東館（B1F–6F）"} },
-    { id:"apia", name:"APIA", ja:"アピア", areas:{W:"West",C:"Center"},
+    { id:"apia", name:"APIA", ja:"アピア", gq:"アピア 札幌駅", siteDown:true, areas:{W:"West",C:"Center"},
       floors:["B1F"],
       map:"https://www.apiadome.com/floor_map_1",
       shopLink:function(s){ return /^\d+$/.test(s.id) ? "https://www.apiadome.com/shop_detail/"+s.id : ""; },
@@ -725,7 +726,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
     { id:"daimaru", name:"大丸", ja:"大丸札幌店", areas:null,
       floors:["B1F","1F","2F","3F","4F","5F","6F","7F","8F"],
       map:"https://www.daimaru.co.jp/sapporo/floor/",
-      shopLink:function(s){ return /^\d{6}/.test(s.id) ? "https://shopblog.dmdepart.jp/sapporo/list/?scd="+s.id.slice(0,6) : "https://www.daimaru.co.jp/sapporo/floor/"+s.f.toLowerCase()+".html"; },
+      shopLink:function(s){ return /^\d{6}/.test(s.id) ? "https://shopblog.dmdepart.jp/sapporo/list/?scd="+s.id.slice(0,6) : "https://www.daimaru.co.jp/sapporo/floor/"; },
       shopLinkLabel:"官方頁面",
       hints:{"B1F":"ほっぺタウン 美食街・伴手禮","1F":"化妝品","2F":"精品・飾品","3F":"女裝・包款","4F":"女裝・童裝","5F":"名錶・設計師品牌","6F":"男裝","7F":"生活用品・和服","8F":"餐廳街・寶可夢中心"},
       tip:"札幌站南口西側直通，B1F–6F 每層都與 Stellar Place 相連。", badge:"大",
@@ -953,7 +954,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       + '<div class="plate">'+badge(s)+'<span class="fl">'+esc(s.f)+'</span><span class="sub">'+esc(m.name)+(m.areas?'<small>'+esc(m.areas[s.b]||s.b)+' 館</small>':'')+'</span></div>'
       + '<dl class="dl"><dt>分類</dt><dd>'+esc(CAT_NAME[s.c]||s.c)+'</dd>'
       + (s.tel?'<dt>電話</dt><dd class="tel"><a href="tel:'+esc(s.tel.replace(/[^0-9+]/g,""))+'">'+esc(s.tel)+'</a></dd>':'')
-      + (link?'<dt>官網</dt><dd><a href="'+link+'" target="_blank" rel="noopener">'+(m.shopLinkLabel||"官方店鋪頁")+' ↗</a></dd>':'')
+      + (link?'<dt>官網</dt><dd><a href="'+link+'" target="_blank" rel="noopener">'+(m.shopLinkLabel||"官方店鋪頁")+' ↗</a>'+(m.siteDown?'<small class="sd-down">官網維護中，暫時打不開</small>':'')+'</dd>':'')
+      + '<dt>地圖</dt><dd><a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.ja+" "+(m.gq||m.ja))+'" target="_blank" rel="noopener">在 Google 地圖看 ↗</a></dd>'
       + (s.note?'<dt>備註</dt><dd>'+esc(s.note)+'</dd>':'')
       + '</dl>'
       + (inBuy(key) ? '<button class="btn sd-main" data-addbuy="'+esc(key)+'" disabled>✓ 已在購買清單</button>' : '<button class="btn primary sd-main" data-addbuy="'+esc(key)+'">＋ 加到購買清單</button>')
