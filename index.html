@@ -386,6 +386,11 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .sw-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
 .sw-chip{border:0;background:var(--fill);border-radius:999px;padding:4px 10px;font-size:12.5px;color:var(--ink)}
 .sw-grp{font-size:13px;font-weight:600;color:var(--muted);margin:16px 6px 6px}
+.sw-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#E8892B}
+.sw-chknote{display:flex;align-items:center;gap:7px;margin:12px 4px 0;font-size:13px;color:#B5630F}
+.sw-chk{display:block;margin-top:4px;padding:6px 9px;border-radius:9px;background:rgba(232,137,43,.13);color:#B5630F;font-size:13px;line-height:1.45}
+.sw-chk small{display:block;font-size:11px;opacity:.75}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sw-chk{color:#F2A65A}} :root[data-theme="dark"] .sw-chk{color:#F2A65A} @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sw-chknote{color:#F2A65A}} :root[data-theme="dark"] .sw-chknote{color:#F2A65A}
 .sw-close{flex:none;font-size:11.5px;font-weight:700;color:#fff;background:#D9534A;border-radius:6px;padding:2px 7px}.sw-close.past{background:#8E8E93}
 .sw-mall{flex:none;display:inline-flex;align-items:center;gap:4px}.sw-mall .wing{transform:scale(.8)}.sw-floor{font-size:12px;font-weight:700;color:var(--muted)}
 .sw-n{flex:none;font-size:12px;font-weight:700}
@@ -457,7 +462,8 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
 .ot-showroute{margin:0 14px 12px}
 .ot-src{font-size:12px;color:var(--muted);margin:22px 4px 0;line-height:1.6}
 .ot-wing{color:#fff!important;border-radius:50%!important;font-size:12px}
-.ot-acts .ot-nav{flex:1 1 100%;background:#E5F3EA;color:#2F7D4F;border-color:#CBE6D4;text-align:center;text-decoration:none}
+.ot-acts a.ot-nav{flex:1 1 100%;background:#E5F3EA;color:#2F7D4F;border-color:#CBE6D4;text-align:center;text-decoration:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ot-acts a.ot-nav{background:#173324;color:#6FD49A;border-color:#24503A}} :root[data-theme="dark"] .ot-acts a.ot-nav{background:#173324;color:#6FD49A;border-color:#24503A}
 :root{--f-serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC",serif}
 .home-brand span,.vh h1,.lt h1,.hero .city,.hsec-t b,.tile .tt,#view-buy .floor-h .fl,#view-pack .floor-h .fl{font-family:var(--f-serif);font-weight:700;letter-spacing:.01em}
 .hero .city{letter-spacing:.06em}
@@ -642,7 +648,7 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
       <li class="grow"><button class="g-btn" data-act="a2hs"><span class="g-t">加到主畫面</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="help"><span class="g-t">使用說明</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
       <li class="grow"><button class="g-btn" data-act="sources"><span class="g-t">資料來源</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></li>
-      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 08:35）</span></li>
+      <li class="grow"><span class="g-t">版本</span><span class="g-v">2.1（10/25 08:50）</span></li>
     </ul>
     <div class="about-logo"><svg class="logo" viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" rx="27" fill="#fff"/><path d="M25 44C26 30 30 22 35 22S44 30 45 44Z M75 44C76 30 80 22 85 22S94 30 95 44Z" fill="#1F3A56"/><path d="M35 90V40l50 50V40" fill="none" stroke="#1F3A56" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/><circle cx="99" cy="92" r="7" fill="#E8892B"/></svg><b>Nekobasu</b><span>旅行的小幫手</span></div>
   </main>
@@ -2180,6 +2186,13 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   var SW_KIND = { "外帶":"#2D6FB0", "內用":"#8E5BD6", "店舖限定":"#C4262E", "現場吃":"#2F9E5B", "搶購":"#E8892B" };
   // stores that are also in our mall data (verified by name + floor)
   var SW_MALL = { "r-tokyu":"tokyu:t044", "r-daimaru":"daimaru:001121", "n-jr":"stellar:765", "n-k-daimaru":"daimaru:001120" };
+  // official-site check notes (kept apart from sweets.json; delete when the data is updated)
+  var SW_CHECK_DATE = "10/25", SW_CHECK = {
+    "r-honten": { f:"hours", t:"官網：2F 喫茶室 10:30–16:30（16:00 最後點餐）・週三休" },
+    "r-jingu": { f:"hours", t:"官網：9:00–16:00，3/15 起 9:00–17:00" },
+    "r-makomanai": { f:"hours", t:"官網：週三休的是喫茶室，店舖公休未註明" }
+  };
+  function swChk(id, f){ var c = SW_CHECK[id]; return c && c.f === f ? '<span class="sw-chk">⚠ '+esc(c.t)+'<small>'+SW_CHECK_DATE+' 核對</small></span>' : ""; }
   var SW_BRAND = {}, SW_STORE = {}, SW_ITEM = {};
   SW.brands.forEach(function(b){ SW_BRAND[b.id] = b;
     b.stores.forEach(function(s){ s._b = b.id; SW_STORE[s.id] = s; });
@@ -2218,14 +2231,15 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
           + '<div class="sw-chips">' + p.stores.map(function(id){ var s = SW_STORE[id]; return s ? '<button class="sw-chip" data-sws="'+id+'">'+esc(s.name)+'</button>' : ''; }).join("") + '</div></div>';
       }).join("");
     } else {
-      var types = [];
+      var types = [], nChk = b.stores.filter(function(x){ return SW_CHECK[x.id]; }).length;
+      if(nChk) h += '<p class="sw-chknote"><span class="sw-dot"></span>'+nChk+' 間店的營業時間跟官網不同，點進去看（'+SW_CHECK_DATE+' 核對）</p>';
       b.stores.forEach(function(s){ if(types.indexOf(s.type) < 0) types.push(s.type); });
       types.forEach(function(ty){
         h += '<div class="sw-grp">'+esc(ty)+'</div><ul class="glist">' + b.stores.filter(function(s){ return s.type === ty; }).map(function(s){
           var n = b.limited.filter(function(p){ return p.stores.indexOf(s.id) >= 0; }).length;
           var sub = [s.address, s.access, s.hours].filter(Boolean).slice(0, 2).join("・") || s.area || "";
           return '<li class="grow"><button class="g-btn" data-sws="'+s.id+'"><span class="g-t"><b>'+esc(s.name)+'</b><span>'+esc(sub)+'</span></span>'
-            + swClosing(s) + (SW_MALL[s.id] ? '<span class="sw-mall">'+swMallTag(s.id)+'</span>' : '') + (n ? '<span class="sw-n" style="color:'+b.theme_color+'">限定 '+n+'</span>' : '') + ICON_NEXT+'</button></li>';
+            + swClosing(s) + (SW_CHECK[s.id] ? '<span class="sw-dot" aria-label="與官網不同"></span>' : '') + (SW_MALL[s.id] ? '<span class="sw-mall">'+swMallTag(s.id)+'</span>' : '') + (n ? '<span class="sw-n" style="color:'+b.theme_color+'">限定 '+n+'</span>' : '') + ICON_NEXT+'</button></li>';
         }).join("") + '</ul>';
       });
       if(b.tips && b.tips.length) h += '<div class="sw-tips"><b>小提醒</b><ul>'+b.tips.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join("")+'</ul></div>';
@@ -2267,12 +2281,12 @@ header.top,.vh{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-b
   function swStoreSheet(id){
     var s = SW_STORE[id]; if(!s) return; var b = SW_BRAND[s._b];
     var lim = b.limited.filter(function(p){ return p.stores.indexOf(id) >= 0; });
-    var row = function(k, v){ return v ? '<dt>'+k+'</dt><dd>'+esc(v)+'</dd>' : ''; };
+    var row = function(k, v, f){ return v ? '<dt>'+k+'</dt><dd>'+esc(v)+(f ? swChk(id, f) : '')+'</dd>' : ''; };
     var full = s.address && /^(札幌市|北海道)/.test(s.address);
     var q = encodeURIComponent((/^(きのとや|北海道四季)/.test(s.name) ? s.name : b.name + " " + s.name) + (full ? " " + s.address : ""));
     openSheet('<h2>'+esc(s.name)+'</h2><div class="alt">'+esc([b.name, s.type, s.area].filter(Boolean).join("・"))+'</div>'
       + (s.status === "closing" ? '<p style="margin:8px 0 0">'+swClosing(s)+'</p>' : '')
-      + '<dl class="dl">'+row("地址", s.address)+row("交通", s.access)+row("營業", s.hours)+row("備註", s.note)+'</dl>'
+      + '<dl class="dl">'+row("地址", s.address)+row("交通", s.access)+row("營業", s.hours, "hours")+row("備註", s.note)+'</dl>'
       + (s.images && s.images.length ? '<div class="sw-gal">'+s.images.map(function(x){ return swPic(x, "gal", s.name); }).join("")+'</div>' : '')
       + (lim.length ? '<div class="sw-grp" style="margin:12px 0 6px">這間店的限定商品</div>' + lim.map(function(p){
           return '<button class="sw-mini" data-swpi="'+p.id+'">'+(p.image ? '<img src="'+swImg(p.image)+'" alt="">' : '<span class="sw-mini-no">無圖</span>')+'<span>'+swKind(p.kind)+'<b>'+esc(p.name)+'</b></span>'+ICON_NEXT+'</button>'; }).join("") : '')
